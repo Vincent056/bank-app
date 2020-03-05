@@ -3,6 +3,8 @@ import { Redirect} from 'react-router-dom';
 import Account from './account.js';
 import {myaccounts} from './usermain.js';
 
+//connect database here
+
 class OpenAcc extends React.Component{
     state ={
         acctype: 'checking',

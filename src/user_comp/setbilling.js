@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom';
 
+//connect database here
+
 class Billing extends React.Component {
     state ={
         goBack: false,
