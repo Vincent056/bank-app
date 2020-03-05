@@ -1,0 +1,47 @@
+/**
+ * Require express and mysql to connect to the database
+ */
+const express = require('express');
+const fileUpload = require('express-fileupload');
+const bodyParser = require('body-parser');
+const mysql = require('mysql');
+const path = require('path');
+const app = express();
+const port = 5000;
+
+
+// configure middleware
+app.set('port', process.env.port || port); // set express to use this port
+app.set('views', __dirname + '/'); // set express to look in this folder to render our view
+app.set('view engine', 'ejs'); // configure template engine
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json()); // parse form data client
+app.use(express.static(path.join(__dirname, '/'))); // configure express to use public folder
+app.use(fileUpload()); // configure fileupload
+const db = mysql.createConnection ({
+    host: myhost,
+    user: myuser,
+    password: mypass,
+    port: myport,
+    database: mydatabase
+})
+
+// connect to database
+    db.connect((err) => {
+        if (err) {
+            throw err;
+        }
+        console.log('Connected to database');
+    });
+
+
+//calling query in js
+query = "SELECT * FROM visit WHERE PATIENT_THC = '" + thc +"' ORDER BY VISIT_ID ASC;"
+    // execute query
+    db.query(query, (err, result) => {
+        if (err) {
+           'handle error'
+        }
+           'code'
+        })
+    })
