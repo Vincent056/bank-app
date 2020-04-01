@@ -16,7 +16,7 @@ class Billing extends React.Component {
 
     render(){
         if (this.state.goBack ){
-            return <Redirect to="/"/>
+            return <Redirect to="/usermain/"/>
         } 
         
         return(

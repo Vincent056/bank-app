@@ -6,6 +6,7 @@ import {UserPage,myaccounts} from './user_comp/usermain.js'
 import OpenAcc from './user_comp/openbank.js'
 import Billing from './user_comp/setbilling.js'
 import UpdateInfo from './user_comp/update_Info.js'
+import LoginPage from './login/loginpage.js'
 import './index.css';
 
 //connect to database here
@@ -16,7 +17,10 @@ class App extends React.Component{
     return (
         <main>
             <Switch>
-                <Route exact path = "/" render = {() => 
+				<Route exact path = "/" render = {() => 
+                    <LoginPage/>
+                } />
+                <Route exact path = "/usermain/" render = {() => 
                     <UserPage accounts = {myaccounts}></UserPage>
                 } />
                 <Route exact path = "/update/" render = {() => 

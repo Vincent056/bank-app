@@ -13,7 +13,8 @@ class UserPage extends React.Component{
         this.state = {
             toupdate: false,
             tobilling: false,
-            toopen: false
+            toopen: false,
+			loggedOut: false
         }
         
     }
@@ -50,6 +51,11 @@ class UserPage extends React.Component{
     atmPage(){}
     makeTrans(){}
     accountClick(){}
+	logout = () => {
+		this.setState({
+			loggedOut: true
+		})
+	}
     
     render(){
         if (this.state.toupdate){
@@ -60,6 +66,9 @@ class UserPage extends React.Component{
         } 
         if (this.state.tobilling){
             return <Redirect to="/billing/"/>
+        } 
+		if (this.state.loggedOut){
+            return <Redirect to="/"/>
         } 
         return (
             <div>
@@ -72,6 +81,7 @@ class UserPage extends React.Component{
                     <button onClick={this.updateInfo}>Update Information</button>
                     <button onClick={this.setBilling}>Set Up Billing</button>
                 </div>
+				<button onClick={this.logout}>Log Out</button>
             </div>
             )
         
