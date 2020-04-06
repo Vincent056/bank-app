@@ -11,19 +11,18 @@ class SignUpForm extends Component{
             street: "",
             aptNumber: "",
             city: "",
-            state: "",
+            stateInCountry: "",
             zipCode: "",
             phone: "",
-            email: "",
+            userEmail: "",
             userName: "",
-            password: "",
-            confirmPassword: "",
+            userPassword: "",
+            userConfirmPassword: "",
             birthday: "",
             ssn: ""
-                
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event){
@@ -34,7 +33,8 @@ class SignUpForm extends Component{
     }
 
     handleSubmit(event){
-        event.preventDefault();
+        // alert("A name was submitted: "+this.state.firstName);
+
 
         let customerData = new FormData();
         let addressData = new FormData();
@@ -87,22 +87,19 @@ class SignUpForm extends Component{
         //     })
         // });
 
-        console.log(window.addressData);
-
-        const apiParams = {
-            street: this.state.street,
-            apartment_number: this.state.aptNumber,
-            city: this.state.city,
-            state: this.state.stateInCountry,
-            zipCode: this.state.zipCode
-        }
+        // const apiParams = {
+        //     street: this.state.street,
+        //     apartment_number: this.state.aptNumber,
+        //     city: this.state.city,
+        //     state: this.state.stateInCountry,
+        //     zipCode: this.state.zipCode
+        // }
        
         axios({
             method: 'post',
             url: 'http://bank.cvs3.com/bank-app/api/addAddress.php',
-            params: apiParams,
-            headers: {
-                'Content-Type': 'application/json; charset=UTF-8'},
+            data: addressData,
+            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
         }).then(function (response) {
             // handle success
             console.log(response)
@@ -125,6 +122,7 @@ class SignUpForm extends Component{
             // handle error
             console.log(response)
         });
+        event.preventDefault();
         
     }
 
@@ -208,9 +206,9 @@ class SignUpForm extends Component{
                         Email:
                         <input 
                             type="email" 
-                            name="email"
+                            name="userEmail"
                             placeholder="e.g. johndoe@gmail.com" 
-                            value={this.state.email} 
+                            value={this.state.userEmail} 
                             onChange={this.handleChange} 
                         />
                     </label>
@@ -229,7 +227,7 @@ class SignUpForm extends Component{
                         Username:
                         <input 
                             type="text" 
-                            name="username"
+                            name="userName"
                             placeholder="e.g. johndoe" 
                             value={this.state.userName} 
                             onChange={this.handleChange} />
@@ -238,9 +236,9 @@ class SignUpForm extends Component{
                         Password:
                         <input 
                             type="password" 
-                            name="password"
+                            name="userPassword"
                             placeholder="**********" 
-                            value={this.state.password} 
+                            value={this.state.userPassword} 
                             onChange={this.handleChange} 
                         />
                     </label>
@@ -248,9 +246,9 @@ class SignUpForm extends Component{
                         Confirm Password:
                         <input 
                             type="password"
-                            name="confirmPassword"
+                            name="userConfirmPassword"
                             placeholder="**********" 
-                            value={this.state.confirmPassword} 
+                            value={this.state.userConfirmPassword} 
                             onChange={this.handleChange} 
                         />
                     </label>
