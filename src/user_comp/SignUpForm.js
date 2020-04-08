@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import axios from 'axios'
-import qs from 'qs'
 
 class SignUpForm extends Component{
     constructor(){
@@ -33,97 +32,68 @@ class SignUpForm extends Component{
     }
 
     handleSubmit(event){
-        // alert("A name was submitted: "+this.state.firstName);
+        event.preventDefault();
 
+        // let customerData = new FormData();
+        // let addressData = new FormData();
 
-        let customerData = new FormData();
-        let addressData = new FormData();
+        // customerData.append('first_name', this.state.firstName);
+        // customerData.append('last_name', this.state.lastName);
+        // customerData.append('phone', this.state.phone);
+        // customerData.append('email', this.state.userEmail);
+        // customerData.append('username', this.state.userName);
+        // customerData.append('password', this.state.userPassword);
+        // customerData.append('ssn', this.state.ssn);
 
-        customerData.append('first_name', this.state.firstName);
-        customerData.append('last_name', this.state.lastName);
-        customerData.append('phone', this.state.phone);
-        customerData.append('email', this.state.email);
-        customerData.append('username', this.state.username);
-        customerData.append('password', this.state.password);
-        customerData.append('ssn', this.state.ssn);
+        // addressData.append('street', this.state.street);
+        // addressData.append('apartment_number', this.state.aptNumber);
+        // addressData.append('city', this.state.city);
+        // addressData.append('state', this.state.stateInCountry);
+        // addressData.append('zipCode', this.state.zipCode);
 
-        addressData.append('street', this.state.street);
-        addressData.append('apartment_number', this.state.aptNumber);
-        addressData.append('city', this.state.city);
-        addressData.append('state', this.state.stateInCountry);
-        addressData.append('zipCode', this.state.zipCode);
+        let formData = new FormData();
 
-        // Customer's Address
-        // fetch('bank.cvs3.com/bank-app/api/addAddress.php', {
-        //     method: 'POST',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type':'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         street: this.state.street,
-        //         aptNumber: this.state.aptNumber,
-        //         city: this.state.city,
-        //         stateInCountry: this.state.stateInCountry,
-        //         zipCode: this.state.zipCode
-        //     })
-        // });
-
-        //Customer Details
-        // fetch('bank.cvs3.com/bank-app/api/addCustomer.php', {
-        //     method: 'POST',
-        //     headers: {
-        //         Accept: 'application/json',
-        //         'Content-Type':'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         first_name: this.state.firstName,
-        //         last_name: this.state.lastName,
-        //         phone: this.state.phone,
-        //         email: this.state.email,
-        //         username: this.state.username,
-        //         password: this.state.password,
-        //         ssn: this.state.ssn 
-        //     })
-        // });
-
-        // const apiParams = {
-        //     street: this.state.street,
-        //     apartment_number: this.state.aptNumber,
-        //     city: this.state.city,
-        //     state: this.state.stateInCountry,
-        //     zipCode: this.state.zipCode
-        // }
+        formData.append('first_name', this.state.firstName);
+        formData.append('last_name', this.state.lastName);
+        formData.append('street', this.state.street);
+        formData.append('apartment_number', this.state.aptNumber);
+        formData.append('city', this.state.city);
+        formData.append('stateInCountry', this.state.stateInCountry);
+        formData.append('zipCode', this.state.zipCode);
+        formData.append('phone', this.state.phone);
+        formData.append('userEmail', this.state.userEmail);
+        formData.append('userName', this.state.userName);
+        formData.append('userPassword', this.state.userPassword);
+        formData.append('userConfirmPassword', this.state.userConfirmPassword);
+        formData.append('ssn', this.state.ssn);
+        
        
+        // axios({
+        //     method: 'post',
+        //     url: 'http://bank.cvs3.com/bank-app/api/addAddress.php',
+        //     data: addressData,
+        //     config: {headers: {'Content-Type':'x-www-form-urlencoded'}}
+        // }).then(function (response) {
+        //     // handle success
+        //     console.log(response)
+        // }).catch(function(response) {
+        //     // handle error
+        //     console.log(response)
+        // });
+
         axios({
             method: 'post',
-            url: 'http://bank.cvs3.com/bank-app/api/addAddress.php',
-            data: addressData,
+            url: 'http://bank.cvs3.com/bank-app/api/signup.php',
+            data: formData,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
         }).then(function (response) {
             // handle success
             console.log(response)
-        }).catch(function(response) {
+        }).catch(function(error) {
             // handle error
-            console.log(response)
+            console.log(error)
         });
 
-        axios({
-            method: 'post',
-            url: 'http://bank.cvs3.com/bank-app/api/addCustomer.php',
-            data: customerData,
-            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
-        })
-        .then(function (response) {
-            // handle success
-            console.log(response)
-        })
-        .catch(function(response) {
-            // handle error
-            console.log(response)
-        });
-        event.preventDefault();
-        
     }
 
     render(){
