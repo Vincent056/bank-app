@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom';
-import Account from './account.js';
-import {myaccounts} from './usermain.js';
+//import Account from './account.js';
+//import {myaccounts} from './usermain.js';
 
 //connect database here
 
@@ -13,8 +13,8 @@ class OpenAcc extends React.Component{
     handleSubmit= () => {
         //code to be changed
         
-        var newacc = new Account(this.state.acctype)
-        myaccounts.push(newacc)
+        //var newacc = new Account(this.state.acctype)
+        //myaccounts.push(newacc)
         this.setState({
             goBack: true
         })
