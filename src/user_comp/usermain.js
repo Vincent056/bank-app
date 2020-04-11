@@ -12,6 +12,8 @@ class UserPage extends React.Component{
         super(props)
         this.accounts = []
         this.state = {
+            firstname: '',
+            lastname: '',
             accounts: [],
             toupdate: false,
             tobilling: false,
@@ -25,16 +27,21 @@ class UserPage extends React.Component{
     componentDidMount(){
         axios({
             method: 'get',
-            url: 'http://bank.cvs3.com/bank-app/api/login1.php',
+            url: 'http://bank.cvs3.com/bank-app/api/usermain.php',
+            //data: {
+            //    username: this.props.user
+            //},
             config: {headers: {'Content-Type': 'application/json'}}
         }).then( (response) => {   
+            
             let temp = []
             temp.push(response.data)  
             this.setState({
                 accounts: temp,
+                firstname: temp[0].firstname,
+                lastname: temp[0].lastname
             })
-            console.log(this.state.accounts) //just to check, delete later
-            
+            console.log(this.state.accounts) //just to check, delete later        
         }).catch(function(error) {
             // handle error
             console.log(error)
@@ -97,7 +104,7 @@ class UserPage extends React.Component{
         } 
         return (
             <div>
-                <h1>User Page</h1>
+                <h1>Welcome {this.state.firstname} {this.state.lastname}</h1>
                 <div>
                     {this.renderAcc(this.state.accounts)}
                 </div>

@@ -2,11 +2,11 @@ import React from 'react';
 import {BrowserRouter,Route,
     Switch} from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import {UserPage,myaccounts} from './user_comp/usermain.js'
+import UserPage from './user_comp/usermain.js'
 import OpenAcc from './user_comp/openbank.js'
 import Billing from './user_comp/setbilling.js'
 import UpdateInfo from './user_comp/update_Info.js'
-import LoginPage from './login/loginpage.js'
+import {LoginPage, username} from './login/loginpage.js'
 import './index.css';
 
 //connect to database here
@@ -21,16 +21,16 @@ class App extends React.Component{
                     <LoginPage/>
                 } />
                 <Route exact path = "/usermain/" render = {() => 
-                    <UserPage accounts = {myaccounts}></UserPage>
+                    <UserPage user = {username} ></UserPage>
                 } />
                 <Route exact path = "/update/" render = {() => 
-                    <UpdateInfo/>
+                    <UpdateInfo user = {username}></UpdateInfo>
                 } />
                 <Route exact path = "/openacc/" render = {() => 
-                    <OpenAcc/>
+                    <OpenAcc user = {username}></OpenAcc>
                 } />
                 <Route exact path = "/billing/" render = {() => 
-                    <Billing/>
+                    <Billing user = {username}></Billing>
                 } />
             </Switch>
         </main>
