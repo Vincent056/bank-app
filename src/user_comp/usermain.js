@@ -3,7 +3,6 @@ import { Redirect} from 'react-router-dom';
 import axios from 'axios'
 //import Account from './account.js';
 
-//connect to the database here ?
 
 /*********************retrieve username from login.js user's input 
 (for right now I just choose a random user from the database)*/
@@ -11,6 +10,7 @@ import axios from 'axios'
 class UserPage extends React.Component{
     constructor (props){
         super(props)
+        this.accounts = []
         this.state = {
             accounts: [],
             toupdate: false,
@@ -18,9 +18,28 @@ class UserPage extends React.Component{
             toopen: false,
 			loggedOut: false
         }
-        
     }
-
+    /****use this function to mount to the class
+     * do not use axios in render as it will cause 
+     * an infinity loop*/
+    componentDidMount(){
+        axios({
+            method: 'get',
+            url: 'http://bank.cvs3.com/bank-app/api/login1.php',
+            config: {headers: {'Content-Type': 'application/json'}}
+        }).then( (response) => {   
+            let temp = []
+            temp.push(response.data)  
+            this.setState({
+                accounts: temp,
+            })
+            console.log(this.state.accounts) //just to check, delete later
+            
+        }).catch(function(error) {
+            // handle error
+            console.log(error)
+        });
+    }
     addAccount(a){
         this.props.accounts.push(a)
     }
@@ -29,8 +48,8 @@ class UserPage extends React.Component{
         return (
                 a.map(account => (
                     <div className = 'account' key ={account}>
-                        <li>ID: {account.account_id}</li> 
-                        <li>Type: {account.account_type}</li>
+                        <li>ID: {account.accountID}</li> 
+                        <li>Type: {account.accountType}</li>
                         <li>Balance: {account.balance}</li>
                         <li>Status: {account.status}</li>
                     </div>)    
@@ -61,21 +80,9 @@ class UserPage extends React.Component{
 			loggedOut: true
 		})
 	}
-    /**Adding a proxy to the url is no a good approach... */
-    render(){
-        axios({
-            method: 'get',
-            url: 'https://cors-anywhere.herokuapp.com/http://bank.cvs3.com/bank-app/api/login1.php',
-            config: {headers: {'Content-Type': 'application/json'}}
-        }).then( (response) => {
-            this.setState({
-                accounts: response.data,
-            })
-        }).catch(function(error) {
-            // handle error
-            console.log(error)
-        });
 
+    render(){
+        
         if (this.state.toupdate){
             return <Redirect to="/update/"/>
         } 
