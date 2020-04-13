@@ -32,14 +32,9 @@ class UserPage extends React.Component{
             url: 'http://bank.cvs3.com/bank-app/api/usermain.php',
             data: userInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'}}
-        }).then( (response) => {   
-            
-            let temp = []
-            temp.push(response.data)  
+        }).then( (response) => {  
             this.setState({
-                accounts: temp,
-                firstname: temp[0].firstname,
-                lastname: temp[0].lastname
+                accounts: response.data,
             })
             console.log(this.state.accounts) //just to check, delete later        
         }).catch(function(error) {
@@ -55,8 +50,8 @@ class UserPage extends React.Component{
         return (
                 a.map(account => (
                     <div className = 'account' key ={account}>
-                        <li>ID: {account.accountID}</li> 
-                        <li>Type: {account.accountType}</li>
+                        <li>ID: {account.account_id}</li> 
+                        <li>Type: {account.account_type}</li>
                         <li>Balance: {account.balance}</li>
                         <li>Status: {account.status}</li>
                     </div>)    
