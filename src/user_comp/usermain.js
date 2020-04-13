@@ -25,13 +25,13 @@ class UserPage extends React.Component{
      * do not use axios in render as it will cause 
      * an infinity loop*/
     componentDidMount(){
+        let userInfo = new FormData();
+        userInfo.append('username',this.props.user)
         axios({
             method: 'post',
             url: 'http://bank.cvs3.com/bank-app/api/usermain.php',
-            data: {
-                username: this.props.user
-            },
-            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
+            data: userInfo,
+            config: {headers: {'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'}}
         }).then( (response) => {   
             
             let temp = []
