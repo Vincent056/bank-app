@@ -26,12 +26,12 @@ class UserPage extends React.Component{
      * an infinity loop*/
     componentDidMount(){
         axios({
-            method: 'get',
+            method: 'post',
             url: 'http://bank.cvs3.com/bank-app/api/usermain.php',
-            //data: {
-            //    username: this.props.user
-            //},
-            config: {headers: {'Content-Type': 'application/json'}}
+            data: {
+                username: this.props.user
+            },
+            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
         }).then( (response) => {   
             
             let temp = []

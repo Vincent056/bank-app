@@ -1,6 +1,11 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom';
 
+//this variable will be exported to index.js so that usermain.js 
+//and others know what data to send to backend
+//if check credential pass, assign the input username with this
+let username = '';
+
 class LoginPage extends React.Component {
     state ={
         loggedIn: false,
@@ -11,7 +16,8 @@ class LoginPage extends React.Component {
         //***********code to check databased data here
         this.setState({
             loggedIn: true
-        })
+		})
+		
     }
 	managerLog = () => {
 		this.setState({
@@ -55,5 +61,8 @@ class LoginPage extends React.Component {
         )
     }
 }
-
-export default LoginPage
+//if backend return true, assign the username global variable 'username'
+		//for right now I'm just test with this username
+		username = "JDoe"
+export{
+	LoginPage, username}
