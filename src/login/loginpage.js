@@ -10,7 +10,8 @@ class LoginPage extends React.Component {
     state ={
         loggedIn: false,
 		forgotPassword: false,
-		managerLogin: false
+		managerLogin: false,
+		signUp: false
     }
     handleSubmit= () => {
         //***********code to check databased data here
@@ -29,6 +30,11 @@ class LoginPage extends React.Component {
             forgotPassword: true
         })
 	}
+	sign = () => {
+		this.setState({
+            signUp: true
+        })
+	}
 
     render(){
         if (this.state.loggedIn ){
@@ -36,11 +42,15 @@ class LoginPage extends React.Component {
             return <Redirect to="/usermain/"/>
         } 
 		if (this.state.managerLogin ){
-            //return <Redirect to="/managerlogin/"/>
+            return <Redirect to="/managerlogin/"/>
         } 
 		if (this.state.forgotPassword ){
 			
             //return <Redirect to="/forgotpassword/"/>
+        } 
+		if (this.state.signUp ){
+			
+            //return <Redirect to="/signUp/"/>
         } 
         
         return(
@@ -54,6 +64,7 @@ class LoginPage extends React.Component {
 					<button onClick={this.handleSubmit}>Submit</button>
 				</form>
 				<div>
+						<button onClick={this.sign}>Sign Up</button>
 						<button onClick={this.forgotPass}>Forgot Pasword?</button>
 						<button onClick={this.managerLog}>Manager Login</button>
 				</div>
