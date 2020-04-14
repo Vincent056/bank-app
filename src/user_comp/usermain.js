@@ -35,6 +35,9 @@ class UserPage extends React.Component{
         }).then( (response) => {  
             this.setState({
                 accounts: response.data,
+                firstname: response.data[0].first_name,
+                lastname: response.data[0].last_name,
+
             })
             console.log(this.state.accounts) //just to check, delete later        
         }).catch(function(error) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom';
 import axios from 'axios';
+
 //import Account from './account.js';
 //import {myaccounts} from './usermain.js';
 
@@ -18,21 +19,17 @@ class OpenAcc extends React.Component{
         userInfo.append('acctype',this.state.acctype)
         axios({
             method: 'post',
-            //url: 'http://bank.cvs3.com/bank-app/api/signup.php',
-            url: 'http://localhost/openbank.php',
-            data: formData,
+            url: 'http://bank.cvs3.com/bank-app/api/openbank.php',
+            //url: 'http://localhost/openbank.php',
+            data: userInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
         }).then(function (response) {
             // handle success
-            console.log(response)
+            console.log(response.data)
         }).catch(function(error) {
             // handle error
             console.log(error)
         })
-        this.setState({
-            goBack: true
-        })
-    
     }
     handleChange = (event) => {
         this.setState({
