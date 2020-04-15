@@ -47,21 +47,6 @@ class UserPage extends React.Component{
         });
     }
 
-    renderAcc(a){ //for now it will like this
-        if (a.length === 0) return <p>No Account.</p>
-        return (
-                a.map(account => (
-                    <div>
-                        <div className = 'account' key ={account}>
-                            <li>ID: {account.account_id}</li> 
-                            <li>Type: {account.account_type}</li>
-                            <li>Balance: {account.balance}</li>
-                            <li>Status: {account.status}</li>
-                        </div> 
-                    </div> 
-                )
-            ) ) 
-    }
     setBilling = () => {
         this.setState({
             tobilling: true
@@ -77,6 +62,7 @@ class UserPage extends React.Component{
             toupdate: true
         })
     }
+    handleDelete(){}
     deposit(){}
     atmPage(){}
     makeTrans(){}
@@ -105,12 +91,23 @@ class UserPage extends React.Component{
             <div>
                 <h1>Welcome {this.state.firstname} {this.state.lastname}</h1>
                 <div>
-                    {this.renderAcc(this.state.accounts)}
+                    {this.state.accounts.map(account => (
+                    <div>
+                        <div className = 'account' key ={account}>
+                            <li>ID: {account.account_id}</li> 
+                            <li>Type: {account.account_type}</li>
+                            <li>Balance: {account.balance}</li>
+                            <li>Status: {account.status}</li>
+                        </div>
+                        <button onClick={this.handleDelete}>Delete</button><br></br><br></br> 
+                    </div> 
+                )
+             ) }
                 </div>
                 <div>
                     <button onClick={this.openAcc}>Open New Account</button>
                     <button onClick={this.updateInfo}>Update Information</button>
-                    <button onClick={this.setBilling}>Set Up Billing</button>
+                    <button onClick={this.setBilling}>Set Up Billing</button><br></br>
                 </div>
 				<button onClick={this.logout}>Log Out</button>
             </div>
