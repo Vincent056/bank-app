@@ -26,13 +26,14 @@ class UserPage extends React.Component{
      * an infinity loop*/
     componentDidMount(){
         let userInfo = new FormData();
-        userInfo.append('username',this.props.user)
+        userInfo.append('id',this.props.cus_id)
+        console.log(this.props.cus_id)
         axios({
             method: 'post',
             url: 'http://bank.cvs3.com/bank-app/api/usermain.php',
             data: userInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'}}
-        }).then( (response) => {  
+        }).then( (response) => {
             this.setState({
                 accounts: response.data,
                 firstname: response.data[0].first_name,
@@ -45,21 +46,21 @@ class UserPage extends React.Component{
             console.log(error)
         });
     }
-    addAccount(a){
-        this.props.accounts.push(a)
-    }
+
     renderAcc(a){ //for now it will like this
         if (a.length === 0) return <p>No Account.</p>
         return (
                 a.map(account => (
-                    <div className = 'account' key ={account}>
-                        <li>ID: {account.account_id}</li> 
-                        <li>Type: {account.account_type}</li>
-                        <li>Balance: {account.balance}</li>
-                        <li>Status: {account.status}</li>
-                    </div>)    
+                    <div>
+                        <div className = 'account' key ={account}>
+                            <li>ID: {account.account_id}</li> 
+                            <li>Type: {account.account_type}</li>
+                            <li>Balance: {account.balance}</li>
+                            <li>Status: {account.status}</li>
+                        </div> 
+                    </div> 
                 )
-            )  
+            ) ) 
     }
     setBilling = () => {
         this.setState({

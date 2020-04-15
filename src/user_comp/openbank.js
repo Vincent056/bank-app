@@ -7,15 +7,20 @@ import axios from 'axios';
 
 
 class OpenAcc extends React.Component{
-    state ={
-        acctype: 'checking',
-        goBack: false,
+    constructor(){
+        super()
+        this.state ={
+            acctype: 'checking',
+            goBack: false,
+            message: "",
+        }
     }
-    handleSubmit= () => {
-        //event.preventDefault();
+    
+    handleSubmit= (event) => {
+        event.preventDefault();
 
         let userInfo = new FormData();
-        userInfo.append('username',this.props.user)
+        userInfo.append('id',this.props.cus_id)
         userInfo.append('acctype',this.state.acctype)
         axios({
             method: 'post',
@@ -23,9 +28,12 @@ class OpenAcc extends React.Component{
             //url: 'http://localhost/openbank.php',
             data: userInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
-        }).then(function (response) {
+        }).then( (response) => {  
             // handle success
             console.log(response.data)
+            this.setState({
+                message: "Account created!"
+            })
         }).catch(function(error) {
             // handle error
             console.log(error)
@@ -47,6 +55,7 @@ class OpenAcc extends React.Component{
         } 
         
         return(
+            <div>
             <form >
                 <h1>Open New Account</h1>
                 <select value ={this.state.acctype}
@@ -55,8 +64,10 @@ class OpenAcc extends React.Component{
                         <option value= "saving">Saving </option>
                     </select>
                 <button onClick={this.handleSubmit}>Submit</button>
-                <button onClick={this.handleCancel}>Cancel</button>
+                <button onClick={this.handleCancel}>Back</button>
             </form>
+            <div>{this.state.message}</div>
+            </div>
         )
     }
 }

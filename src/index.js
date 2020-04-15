@@ -6,7 +6,7 @@ import UserPage from './user_comp/usermain.js'
 import OpenAcc from './user_comp/openbank.js'
 import Billing from './user_comp/setbilling.js'
 import UpdateInfo from './user_comp/update_Info.js'
-import {LoginPage, username} from './login/loginpage.js'
+import {LoginPage, id} from './login/loginpage.js'
 import ManagerLogin from './login/managerlogin.js'
 import SignUpForm from './user_comp/SignUpForm.js'
 import './index.css';
@@ -23,22 +23,22 @@ class App extends React.Component{
                     <LoginPage/>
                 } />
 				<Route exact path = "/signUp/" render = {() => 
-                     <SignUpForm/>
+                     <SignUpForm cus_id = {id}></SignUpForm>
                 } />
 				<Route exact path = "/managerlogin/" render = {() => 
-                    <ManagerLogin/>
+                    <ManagerLogin cus_id = {id}></ManagerLogin>
                 } />
                 <Route exact path = "/usermain/" render = {() => 
-                    <UserPage user = {username} ></UserPage>
+                    <UserPage cus_id = {id} ></UserPage>
                 } />
                 <Route exact path = "/update/" render = {() => 
-                    <UpdateInfo user = {username}></UpdateInfo>
+                    <UpdateInfo cus_id = {id}></UpdateInfo>
                 } />
                 <Route exact path = "/openacc/" render = {() => 
-                    <OpenAcc user = {username}></OpenAcc>
+                    <OpenAcc cus_id = {id}></OpenAcc>
                 } />
                 <Route exact path = "/billing/" render = {() => 
-                    <Billing user = {username}></Billing>
+                    <Billing cus_id = {id}></Billing>
                 } />
             </Switch>
         </main>
