@@ -12,3 +12,5 @@ npm install axios
 npm start
 
 git reset --hard origin/master
+
+git pull
