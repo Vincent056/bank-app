@@ -10,3 +10,5 @@ npm install --save react-router-dom
 npm install axios
 
 npm start
+
+git reset --hard origin/master
