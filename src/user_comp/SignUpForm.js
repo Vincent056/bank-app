@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Redirect} from 'react-router-dom';
 import axios from 'axios'
 
 class SignUpForm extends Component{
@@ -18,7 +19,9 @@ class SignUpForm extends Component{
             userPassword: "",
             userConfirmPassword: "",
             birthday: "",
-            ssn: ""
+            ssn: "",
+            loginRedirect: false,
+            goBack: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,23 +36,6 @@ class SignUpForm extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-
-        // let customerData = new FormData();
-        // let addressData = new FormData();
-
-        // customerData.append('first_name', this.state.firstName);
-        // customerData.append('last_name', this.state.lastName);
-        // customerData.append('phone', this.state.phone);
-        // customerData.append('email', this.state.userEmail);
-        // customerData.append('username', this.state.userName);
-        // customerData.append('password', this.state.userPassword);
-        // customerData.append('ssn', this.state.ssn);
-
-        // addressData.append('street', this.state.street);
-        // addressData.append('apartment_number', this.state.aptNumber);
-        // addressData.append('city', this.state.city);
-        // addressData.append('state', this.state.stateInCountry);
-        // addressData.append('zipCode', this.state.zipCode);
 
         let formData = new FormData();
 
@@ -67,36 +53,48 @@ class SignUpForm extends Component{
         formData.append('userConfirmPassword', this.state.userConfirmPassword);
         formData.append('ssn', this.state.ssn);
         
-       
-        // axios({
-        //     method: 'post',
-        //     url: 'http://bank.cvs3.com/bank-app/api/addAddress.php',
-        //     data: addressData,
-        //     config: {headers: {'Content-Type':'x-www-form-urlencoded'}}
-        // }).then(function (response) {
-        //     // handle success
-        //     console.log(response)
-        // }).catch(function(response) {
-        //     // handle error
-        //     console.log(response)
-        // });
-
+        var self = this;
         axios({
             method: 'post',
-            url: 'http://bank.cvs3.com/bank-app/api/signup.php',
+            url: 'http://bank.cvs3.com/bank-app/api/userSignUp.php',
             data: formData,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
         }).then(function (response) {
-            // handle success
+            // Successfully added user
+            // Redirect user to login page
+            // Determine how to successfully add a user
+            // console.log(response.data.customerAdded);
+            if(response.data.customerAdded === true){
+                self.login();
+            }
             console.log(response)
         }).catch(function(error) {
             // handle error
             console.log(error)
         });
+    }
 
+    handleCancel =() =>{
+        this.setState({
+            goBack: true
+        })
+    }
+
+    login = () => {
+        this.setState({
+            loginRedirect: true
+        })
     }
 
     render(){
+        if(this.state.loginRedirect){
+            return <Redirect to="/" />
+        }
+
+        if(this.state.goBack){
+            return <Redirect to="/" />
+        }
+
         return (
             <div>
                 <h2>Sign Up</h2>
@@ -157,7 +155,7 @@ class SignUpForm extends Component{
                         <input
                             type="text"
                             name="stateInCountry"
-                            placeholder="e.g. California"
+                            placeholder="e.g. CA"
                             value={this.state.stateInCountry}
                             onChange={this.handleChange}
                         />
@@ -223,12 +221,9 @@ class SignUpForm extends Component{
                         />
                     </label>
                     <label>
-                        Birthday:
-                    </label>
-                    <label>
                         Social Security Number(SSN):
                         <input 
-                            type="text" 
+                            type="password" 
                             name="ssn"
                             placeholder="xxxxxxxxx" 
                             value={this.state.ssn} 
@@ -237,6 +232,9 @@ class SignUpForm extends Component{
                     </label>
                     <input type="submit" value="Submit" />
                 </form> 
+                <div>
+                    <button onClick={this.handleCancel}>Back</button>
+                </div>
             </div>   
         );
     }
