@@ -2,12 +2,15 @@ import React from 'react';
 import axios from 'axios';
 import { Redirect} from 'react-router-dom';
 
+var manID;
 class ManagerLogin extends React.Component {
     constructor(){
         super()
         this.state ={
+			manID: 0,
             username: "",
             password: "",
+			invalid: "",
             temp: "ManagerLogin",
             loggedIn: false,
             customerLogin: false,
@@ -35,22 +38,29 @@ class ManagerLogin extends React.Component {
             method: 'post',
             url: 'http://bank.cvs3.com/bank-app/api/managerlogin.php',
             data: loginInfo,
-            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
+            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}},
+            /*validateStatus: (status) => {
+                return true; // I'm always returning true, you may want to do it depending on the status received
+              }*/
         }).then((response) => {
             console.log(response);
-			
-			//Successful Log in
-            if(response.data.id){
-                this.setState({
-                    loggedIn: true
-                })
-            }
-			
-			}).catch(function(error) {
+			let user_id = response.data
+            //Successful Log in
+            if (user_id === 0){
+				this.setState({
+					invalid : "Invalid Username or Password! Please enter again!"
+				})
+			}
+			else{
+				this.setState({
+					manID: user_id,
+					loggedIn : true,
+				})
+			}
+            }).catch(function(error) {
             // handle error
             console.log(error)
         });
-        
         
     }
 	customerLog = () => {
@@ -60,8 +70,7 @@ class ManagerLogin extends React.Component {
 	}
     render(){
         if (this.state.loggedIn ){
-			//***********code to check databased data here
-            return <Redirect to="/signUp/"/>
+            return <Redirect to="/managerdashboard/"/>
         } 
 		if (this.state.customerLogin ){
             return <Redirect to="/"/>
@@ -90,8 +99,10 @@ class ManagerLogin extends React.Component {
 				<div>
 					<button onClick={this.customerLog}>Customer Login</button>
 				</div>
+				<div>{this.state.invalid}</div>
 			</div>
         )
     }
 }
-export default ManagerLogin        
+export {
+	ManagerLogin, manID}	
