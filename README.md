@@ -22,3 +22,6 @@ SSH to the server, cd /var/www/html/bank-app
 git pull
 
 "
+
+systemctl restart bank.service 
+after the update
