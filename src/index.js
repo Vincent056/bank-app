@@ -9,6 +9,8 @@ import UpdateInfo from './user_comp/update_Info.js'
 import {LoginPage, id} from './login/loginpage.js'
 import ManagerLogin from './login/managerlogin.js'
 import SignUpForm from './user_comp/SignUpForm.js'
+import Transfer from './user_comp/transaction.js'
+
 import './index.css';
 
 //connect to database here
@@ -39,6 +41,9 @@ class App extends React.Component{
                 } />
                 <Route exact path = "/billing/" render = {() => 
                     <Billing cus_id = {id}></Billing>
+                } />
+                 <Route exact path = "/transfer/" render = {() => 
+                    <Transfer cus_id = {id}></Transfer>
                 } />
             </Switch>
         </main>

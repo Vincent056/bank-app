@@ -18,7 +18,9 @@ class UserPage extends React.Component{
             toupdate: false,
             tobilling: false,
             toopen: false,
-			loggedOut: false
+            loggedOut: false,
+            totrans: false,
+            deposit: "Check",
         }
     }
     /****use this function to mount to the class
@@ -65,14 +67,23 @@ class UserPage extends React.Component{
     handleDelete(){}
     deposit(){}
     atmPage(){}
-    makeTrans(){}
+    maketrans = () => {
+		this.setState({
+			totrans: true
+		})
+	}
     accountClick(){}
 	logout = () => {
 		this.setState({
 			loggedOut: true
 		})
 	}
-
+    handleChange = (event) => {
+        const {name, value} = event.target
+        this.setState({
+            [name]: value
+        })
+    }
     render(){
         
         if (this.state.toupdate){
@@ -87,13 +98,16 @@ class UserPage extends React.Component{
 		if (this.state.loggedOut){
             return <Redirect to="/"/>
         } 
+        if (this.state.totrans){
+            return <Redirect to="/transfer"/>
+        } 
         return (
             <div>
                 <h1>Welcome {this.state.firstname} {this.state.lastname}</h1>
                 <div>
                     {this.state.accounts.map(account => (
                     <div>
-                        <div className = 'account' key ={account}>
+                        <div className = 'account' key ={account.account_id}>
                             <li>ID: {account.account_id}</li> 
                             <li>Type: {account.account_type}</li>
                             <li>Balance: {account.balance}</li>
@@ -108,6 +122,13 @@ class UserPage extends React.Component{
                     <button onClick={this.openAcc}>Open New Account</button>
                     <button onClick={this.updateInfo}>Update Information</button>
                     <button onClick={this.setBilling}>Set Up Billing</button><br></br>
+                    <button onClick={this.maketrans}>Make A Transfer</button><br></br>
+                    <label>Deposit </label>
+                    <select value ={this.state.deposit}
+                        onChange={this.handleChange} >
+                        <option value= "Check">Check </option>
+                        <option value= "Cash">Cash </option>
+                    </select><br></br><br></br>
                 </div>
 				<button onClick={this.logout}>Log Out</button>
             </div>
