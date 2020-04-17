@@ -44,7 +44,8 @@ class ManagerLogin extends React.Component {
               }*/
         }).then((response) => {
             console.log(response);
-			let user_id = response.data
+			let user_id = Number(response.data)
+			console.log(user_id);
             //Successful Log in
             if (user_id === 0){
 				this.setState({
