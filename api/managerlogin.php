@@ -19,18 +19,14 @@
             $result = $conn->query($query);
             $rows = $result->fetch_array(MYSQLI_NUM)[0];
             if($rows == 0){
-                echo "Incorrect Password and/or Username";
+                $id = 0;
+                echo json_encode(strval($id));
             }
             else{  
                 $query = "SELECT manager_id FROM bank_manager WHERE username = '$Username'";
                 $result = $conn->query($query); 
                 $row = $result->fetch_array();
                 $id = $row['manager_id'];       
-                // echo "<script>console.log('Debug Objects: " . $id . "' );</script>";
-                //$json = array
-                  //  (
-                    //    "id" => $id
-                    //);
                 echo json_encode(strval($id));
                 
             }
