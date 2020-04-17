@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom';
-import axios from 'axios'
+import axios from 'axios';
+import styles from './../mystyle.module.css';
 //import Account from './account.js';
 
 
@@ -102,9 +103,12 @@ class UserPage extends React.Component{
             return <Redirect to="/transfer"/>
         } 
         return (
-            <div>
-                <h1>Welcome {this.state.firstname} {this.state.lastname}</h1>
-                <div>
+            <div className={styles.center}>
+                <div className={styles.topnav}>
+					<a>Welcome {this.state.firstname} {this.state.lastname}</a>\
+					<a><button onClick={this.logout}>Log Out</button></a>
+				</div>
+                <div className={styles.main}>
                     {this.state.accounts.map(account => (
                     <div>
                         <div className = 'account' key ={account.account_id}>
@@ -118,19 +122,19 @@ class UserPage extends React.Component{
                 )
              ) }
                 </div>
-                <div>
-                    <button onClick={this.openAcc}>Open New Account</button>
-                    <button onClick={this.updateInfo}>Update Information</button>
-                    <button onClick={this.setBilling}>Set Up Billing</button><br></br>
-                    <button onClick={this.maketrans}>Make A Transfer</button><br></br>
+                <div className={styles.sidenav}>
+                    <a><button className={styles.button} onClick={this.openAcc}>Open New Account</button></a>
+                    <a><button className={styles.button} onClick={this.updateInfo}>Update Information</button></a>
+                    <a><button className={styles.button} onClick={this.setBilling}>Set Up Billing</button></a>
+                    <a><button className={styles.button} onClick={this.maketrans}>Make A Transfer</button></a>
                     <label>Deposit </label>
                     <select value ={this.state.deposit}
                         onChange={this.handleChange} >
                         <option value= "Check">Check </option>
                         <option value= "Cash">Cash </option>
-                    </select><br></br><br></br>
+                    </select>
                 </div>
-				<button onClick={this.logout}>Log Out</button>
+				
             </div>
             )
         
