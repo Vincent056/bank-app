@@ -5,11 +5,11 @@ include 'db_connection.php';
 
 $conn = OpenCon();
 
-$street = $_POST['street'];
-$aptNumber = $_POST['aptNumber'];
-$city = $_POST['city'];
-$state = $_POST['stateInCountry'];
-$zipCode = $_POST['zipCode'];
+$street =  mysql_entities_fix_string($_POST['street']);
+$aptNumber = mysql_entities_fix_string($_POST['aptNumber']);
+$city = mysql_entities_fix_string($_POST['city']);
+$state = mysql_entities_fix_string($_POST['stateInCountry']);
+$zipCode = mysql_entities_fix_string($_POST['zipCode']);
 		
 $userQuery = "INSERT INTO address (street, apartment_number, city, state, zip_code) VALUES ('$street', '$aptNumber', '$city', '$state', '$zipCode')";
 		
@@ -20,4 +20,15 @@ if(mysqli_query($conn, $userQuery)){
 }
 	
 CloseCon($conn);
+
+function mysql_entities_fix_string($conn, $string){
+    return htmlentities(mysql_fix_string($conn, $string));
+}	
+
+function mysql_fix_string($conn, $string){
+    if(get_magic_quotes_gpc()) $string = stripslashes($string);
+	return $conn->real_escape_string($string);
+}
+
+
 ?>
