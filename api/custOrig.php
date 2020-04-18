@@ -7,13 +7,13 @@ $conn = OpenCon();
 
 if(isset($_POST['firstName']) && isset[$_POST
 
-$firstName = $_POST['firstName'];
-$lastName = $_POST[ 'lastName'];
-$phone = $_POST['phone'];
-$email = $_POST['userEmail'];
-$username = $_POST['userName'];
-$password = $_POST['userPassword'];
-$ssn = $_POST['ssn'];
+$firstName = mysql_entities_fix_string($conn, $_POST['firstName']);
+$lastName = mysql_entities_fix_string($conn, $_POST[ 'lastName']);
+$phone = mysql_entities_fix_string($conn, $_POST['phone']);
+$email = mysql_entities_fix_string($conn, $_POST['userEmail']);
+$username = mysql_entities_fix_string($conn, $_POST['userName']);
+$password = mysql_entities_fix_string($conn, $_POST['userPassword']);
+$ssn = mysql_entities_fix_string($conn, $_POST['ssn']);
 $salt1 = uniqid();
 $salt2 = uniqid();
 }
@@ -27,4 +27,14 @@ else{
 	echo "Error: ".$userQuery."<br>".mysqli_error($conn);
 }
 CloseCon($conn);
+				       
+function mysql_entities_fix_string($conn, $string){
+    return htmlentities(mysql_fix_string($conn, $string));
+}	
+
+function mysql_fix_string($conn, $string){
+    if(get_magic_quotes_gpc()) $string = stripslashes($string);
+	return $conn->real_escape_string($string);
+}				       
+				       
 ?>
