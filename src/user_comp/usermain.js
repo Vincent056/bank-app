@@ -33,7 +33,7 @@ class UserPage extends React.Component{
         console.log(this.props.cus_id)
         axios({
             method: 'post',
-            url: 'http://bank.cvs3.com/bank-app/api/usermain.php',
+            url: 'https://bank.cvs3.com/bank-app/api/usermain.php',
             data: userInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'}}
         }).then( (response) => {
