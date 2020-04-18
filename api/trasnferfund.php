@@ -58,7 +58,7 @@ if (isset($_POST['id']) && isset($_POST['transtype']) && isset($_POST['acctype']
                 }
                 if($transtype == 'internal'){
                     
-                    $query2 = "INSERT INTO transaction (recipient, recipient_account_num, transaction_type, amount, bank_acccount_account_id) VALUES ('$receiver','$acct_num','$transtype','$amount','$row[0]')";
+                    $query2 = "INSERT INTO transaction (transaction_id, routing_number, recipient, recipient_account_num, transaction_type, amount, date, bank_account_account_id) VALUES (NULL, NULL,'$receiver','$acct_num','$transtype','$amount',current_timestamp(),'$row[0]');";
                     $query2 .= "UPDATE bank_account SET balance = balance - $amount WHERE bank_account.account_id = '$row[0]';";
                     $query2 .= "UPDATE bank_account SET balance = balance + $amount WHERE bank_account.account_id = '$acct_num';";
                 }
