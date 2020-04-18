@@ -14,7 +14,7 @@
     
     $today = date('Y-m-d');
     echo date("Y-m-d h:i:sa") . ": script started";
-    echo "<br>";
+    echo "\r\n";
     $query = "SELECT * FROM automated_billing WHERE start_date <= '$today' AND end_date >= '$today' AND last_date < '$today' or last_date is NULL;";
     $result = $conn -> query($query);
     if (!$result) die (mysql_fatal_error());
@@ -31,7 +31,7 @@
         $query2 .= "UPDATE bank_account SET balance = balance + $row[2] WHERE bank_account.account_id = '$row[1]';";
         $query2 .= "UPDATE automated_billing SET last_date = '$today' WHERE auto_billing_id = '$row[0]';";
         
-        echo "<br>";
+        echo "\r\n";
     }
         $conn->multi_query($query2);
 
