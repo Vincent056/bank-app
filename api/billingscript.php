@@ -35,8 +35,8 @@
     }
         $conn->multi_query($query2);
 
-
-$conn->close();
+    $result->close();
+    $conn->close();
     function mysql_entities_fix_string($conn, $string){
         return htmlentities(mysql_fix_string($conn, $string));
     }
