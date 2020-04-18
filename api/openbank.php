@@ -1,12 +1,12 @@
 <?php
 
-header('Access-Control-Allow-Origin: *');
-$servername = "localhost";
-$user = "root";
-$password = "cs160team2%";
-$db = "BankingDB";
+    require_once 'login.php';
+    header('Access-Control-Allow-Origin: *');
 
-$conn = new mysqli($servername, $user, $password, $db) or die("Connect failed: %s\n".$conn->error);
+    
+    $conn = new mysqli($servername, $user, $password, $db);
+    if($conn->connect_error) die($conn->connect_error);
+
 
 if (isset($_POST['id']) && isset($_POST['acctype'])){
     $id = $_POST['id'];
