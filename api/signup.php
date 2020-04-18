@@ -1,9 +1,10 @@
 <?php
     require_once 'login.php';
     header('Access-Control-Allow-Origin: *');
+    header('Access-Control-Allow-Methods: GET, POST');
+    header("Access-Control-Allow-Headers: X-Requested-With");
     $conn = new mysqli($servername, $user, $password, $db);
     if($conn->connect_error) die($conn->connect_error);
-
 if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['street']) && isset($_POST['city']) && isset($_POST['stateInCountry']) && isset($_POST['zipCode']) && isset($_POST['phone']) && isset($_POST['userEmail']) && isset($_POST['userName']) && isset($_POST['userPassword']) && isset($_POST['userConfirmPassword']) && isset($_POST['ssn'])){
 
 	$first_name = mysql_entities_fix_string($conn, $_POST['first_name']);
