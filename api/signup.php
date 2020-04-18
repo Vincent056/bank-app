@@ -1,12 +1,8 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-$servername = "localhost";
-$user = "root";
-$dbpassword = "cs160team2%";
-$db = "BankingDB";
-
-$conn = new mysqli($servername, $user, $dbpassword, $db); 
-if($conn->connect_error) die($conn->connect_error);
+    require_once 'login.php';
+    header('Access-Control-Allow-Origin: *');
+    $conn = new mysqli($servername, $user, $password, $db);
+    if($conn->connect_error) die($conn->connect_error);
 
 if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['street']) && isset($_POST['city']) && isset($_POST['stateInCountry']) && isset($_POST['zipCode']) && isset($_POST['phone']) && isset($_POST['userEmail']) && isset($_POST['userName']) && isset($_POST['userPassword']) && isset($_POST['userConfirmPassword']) && isset($_POST['ssn'])){
 
