@@ -29,7 +29,7 @@ class ManagerDashboard extends React.Component{
         userInfo.append('username',this.props.user)
         axios({
             method: 'post',
-            url: 'http://bank.cvs3.com/bank-app/api/usermain.php',
+            url: 'https://bank.cvs3.com/bank-app/api/usermain.php',
             data: userInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'}}
         }).then( (response) => {  
