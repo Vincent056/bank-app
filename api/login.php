@@ -1,9 +1,9 @@
 <?php
 
-$hn = 'localhost';
-$un = 'jim';
-$pw = 'RPgZ6T@YvW.q';
-$db = 'midtermdata';
+ $servername = "localhost";
+ $user = "root";
+ $password = "cs160team2%";
+ $db = "BankingDB";
+    
 
 ?>
-
