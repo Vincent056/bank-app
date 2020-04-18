@@ -31,7 +31,7 @@ if(isset($_POST['id']) && isset($_POST['street']) && isset($_POST['city']) && is
     
 
 }
-mysqli_close($conn);
+$conn->close();
 
 function mysql_entities_fix_string($conn, $string){
     return htmlentities(mysql_fix_string($conn, $string));
