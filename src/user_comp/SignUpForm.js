@@ -56,7 +56,7 @@ class SignUpForm extends Component{
         var self = this;
         axios({
             method: 'post',
-            url: 'http://bank.cvs3.com/bank-app/api/userSignUp.php',
+            url: 'https://bank.cvs3.com/bank-app/api/userSignUp.php',
             data: formData,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
         }).then(function (response) {
