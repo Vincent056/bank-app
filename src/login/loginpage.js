@@ -32,7 +32,7 @@ class LoginPage extends React.Component {
 		userInfo.append('password',this.state.password)
         axios({
             method: 'post',
-            url: 'http://bank.cvs3.com/bank-app/api/userLogin.php',
+            url: 'http://localhost/bank-app/api/userLogin.php',
             data: userInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'}}
         }).then( (response) => {  
