@@ -24,7 +24,7 @@ class OpenAcc extends React.Component{
         userInfo.append('acctype',this.state.acctype)
         axios({
             method: 'post',
-            url: 'http://bank.cvs3.com/bank-app/api/openbank.php',
+            url: 'https://bank.cvs3.com/bank-app/api/openbank.php',
             //url: 'http://localhost/openbank.php',
             data: userInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
