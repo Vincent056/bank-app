@@ -52,7 +52,7 @@ if (isset($_POST['id']) && isset($_POST['transtype']) && isset($_POST['acctype']
             }else
             {
                 if($transtype == 'external'){
-                    $query2 = "INSERT INTO transaction (routing_number, recipient, recipient_account_num, transaction_type, amount, bank_acccount_account_id) VALUES ('$routing','$receiver','$acct_num',$transtype','$amount','$row[0]')";
+                    $query2 = "INSERT INTO transaction (transaction_id, routing_number, recipient, recipient_account_num, transaction_type, amount, date, bank_account_account_id) VALUES (NULL,'$routing','$receiver','$acct_num',$transtype','$amount',current_timestamp(),'$row[0]')";
                     echo "external transfer";
                     
                 }
