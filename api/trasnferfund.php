@@ -71,7 +71,7 @@ if (isset($_POST['id']) && isset($_POST['transtype']) && isset($_POST['acctype']
     
 }
 
-
+$conn->close();
 function mysql_entities_fix_string($conn, $string){
     return htmlentities(mysql_fix_string($conn, $string));
 }
