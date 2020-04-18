@@ -38,7 +38,7 @@
     
     
     
-    
+    $conn->close();
 
 
 function mysql_entities_fix_string($conn, $string){
