@@ -5,11 +5,11 @@ include 'db_connection.php';
 
 $conn = OpenCon();
 
-$street =  mysql_entities_fix_string($_POST['street']);
-$aptNumber = mysql_entities_fix_string($_POST['aptNumber']);
-$city = mysql_entities_fix_string($_POST['city']);
-$state = mysql_entities_fix_string($_POST['stateInCountry']);
-$zipCode = mysql_entities_fix_string($_POST['zipCode']);
+$street =  mysql_entities_fix_string($conn, $_POST['street']);
+$aptNumber = mysql_entities_fix_string($conn, $_POST['aptNumber']);
+$city = mysql_entities_fix_string($conn, $_POST['city']);
+$state = mysql_entities_fix_string($conn, $_POST['stateInCountry']);
+$zipCode = mysql_entities_fix_string($conn, $_POST['zipCode']);
 		
 $userQuery = "INSERT INTO address (street, apartment_number, city, state, zip_code) VALUES ('$street', '$aptNumber', '$city', '$state', '$zipCode')";
 		
