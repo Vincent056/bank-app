@@ -1,11 +1,7 @@
 <?php
+    require_once 'login.php';
     header('Access-Control-Allow-Origin: *');
-    $servername = "localhost";
-    $user = "root";
-    $dbpassword = "cs160team2%";
-    $db = "BankingDB";
-
-    $conn = new mysqli($servername, $user, $dbpassword, $db);
+    $conn = new mysqli($servername, $user, $password, $db);
     if($conn->connect_error) die($conn->connect_error);
 
 
