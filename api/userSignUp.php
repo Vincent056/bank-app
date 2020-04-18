@@ -19,8 +19,8 @@ if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['st
 	$password = mysql_entities_fix_string($conn, $_POST['userPassword']);
 	$confirmPassword = mysql_entities_fix_string($conn, $_POST['userConfirmPassword']);
 	$ssn = mysql_entities_fix_string($conn, $_POST['ssn']);
-	$salt1 = "qm&h*";
-	$salt2 = "pg!@";
+	$salt1 = uniqid();
+	$salt2 = uniqid();
 
 	if($password == $confirmPassword){
 		// Check if user is in database
