@@ -36,7 +36,7 @@ class ManagerLogin extends React.Component {
 		
 		axios({
             method: 'post',
-            url: 'http://bank.cvs3.com/bank-app/api/managerlogin.php',
+            url: 'https://bank.cvs3.com/bank-app/api/managerlogin.php',
             data: loginInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded'}},
             /*validateStatus: (status) => {
