@@ -37,7 +37,7 @@
     
     
     
-    
+    $result->close();
     $conn->close();
 
 
