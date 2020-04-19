@@ -25,7 +25,7 @@ if(isset($_POST['id']) && isset($_POST['street']) && isset($_POST['city']) && is
         $apartment_number = "none";
     }
     //Query address_id
-    $query =  "Select address_address_id from customer where customer_id = '$id'";
+    $query =  "Select address_address_id from customer where customer_id = '$id';";
     $result = $conn->query($query);  
     $row = $result->fetch_array();
 
