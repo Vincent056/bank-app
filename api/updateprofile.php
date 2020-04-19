@@ -36,7 +36,7 @@ if(isset($_POST['id']) && isset($_POST['street']) && isset($_POST['city']) && is
     $conn->multi_query($query2);
     echo "Updated";
 }
-echo "Missing Info";
+else echo "Missing Info";
 $conn->close();
 
 function mysql_entities_fix_string($conn, $string){
