@@ -15,7 +15,7 @@
          $reciver_acc = mysql_entities_fix_string($conn, $_POST['reciver_acc']);
          $amount = mysql_entities_fix_string($conn, $_POST['amount']);
          
-         $query = "SELECT * FROM bank_account WHERE customer_customer_id = '$id' AND account_type = 'checking'";
+         $query = "SELECT * FROM bank_account WHERE account_id = '$id' AND account_type = 'checking'";
          $result = $conn->query($query);
          $result->data_seek(0);
          $row = $result->fetch_array(MYSQLI_NUM);
@@ -26,15 +26,10 @@
         }else
         {
             $query1 = "INSERT INTO automated_billing (destination, amount, start_date, end_date, bank_account_account_id) VALUES ('$reciver_acc', '$amount', '$start','$end', '$row[0]');";
-        }
-         
-         
-         
-         
-         
-        
+            echo "Added!";
+        }          
     }
-    
+    else echo "Missing Info!";
     
     
     $result->close();
