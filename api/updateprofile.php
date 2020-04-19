@@ -24,8 +24,13 @@ if(isset($_POST['id']) && isset($_POST['street']) && isset($_POST['city']) && is
     {
         $apartment_number = "none";
     }
+    //Query address_id
+    $query =  "Select address_address_id from customer where customer_id = '$id'";
+    $result = $conn->query($query);  
+    $row = $result->fetch_array();
+    $addressId = $row['address_address_id'];    
     
-    $query = "UPDATE address SET street = '123 Resl Fke street', city = 'san josef',apartment_number = '$apartment_number', zip_code = '12325' WHERE address.address_id = $id;"; 
+    $query = "UPDATE address SET street = '$street', city = '$city', apartment_number = '$apartment_number', zip_code = '$zip_code' WHERE address.address_id = '$addressId';"; 
     $query .= "UPDATE customer SET email = '$email', phone = '$phone' WHERE customer.customer_id = $id;";
     
     $conn->multi_query($query2);
