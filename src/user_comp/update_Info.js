@@ -1,17 +1,65 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom';
+import axios from 'axios';
+
 
 class UpdateInfo extends React.Component {
-    state ={
-        goBack: false,
+    constructor(){
+        super()
+        this.state = {
+            email: "",
+            phone: "",
+            street: "",
+            city: "",
+            state: "",
+            zipcode: "",
+            aptnum: "",
+            goBack: false
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
-    handleSubmit= () => {
-        //***********code to modified databased data here
+    handleChange(event){
+        const {name, value} = event.target
+        this.setState({
+            [name]: value
+        })
+    }
+
+    handleSubmit= (event) => {
+        event.preventDefault();
+
+        let userInfo = new FormData();
+        userInfo.append('id',this.props.accid)
+        userInfo.append('street',this.state.street)
+        userInfo.append('city',this.state.city)
+        userInfo.append('stateInCountry',this.state.state)
+        userInfo.append('phone',this.state.phone)
+        userInfo.append('userEmail',this.state.email)
+        userInfo.append('zipCode',this.state.zipcode)
+        userInfo.append('apartment_number',this.state.aptnum)
+
+        axios({
+            method: 'post',
+            url: 'https://bank.cvs3.com/bank-app/api/updateprofile.php',
+           
+            data: userInfo,
+            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
+        }).then( (response) => {  
+            // handle success
+            console.log(response.data)
+            
+        }).catch(function(error) {
+            // handle error
+            console.log(error)
+        })
+    }
+
+    handleCancel= () => {
         this.setState({
             goBack: true
         })
     }
-
     render(){
         if (this.state.goBack ){
             return <Redirect to="/usermain/"/>
@@ -21,19 +69,43 @@ class UpdateInfo extends React.Component {
             <form >
                 <h1>Update Information</h1>
                 <label>Email</label><br></br>
-                <input type ='email' name='u_email'></input><br></br>
+                <input type ='text'
+                    name = 'email'
+                    value = {this.state.email}
+                    onChange={this.handleChange}
+                    ></input><br></br>
                 <label>Phone</label><br></br>
-                <input type ='tel' name='u_phone' 
-                        pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}'></input><br></br>
+                <input type ='text'
+                    name = 'phone'
+                    onChange={this.handleChange}
+                    value = {this.state.phone}></input><br></br>
                 <label>Street</label><br></br>
-                <input type ='text' name = 'u_street'></input><br></br>
+                <input type ='text'
+                    name = 'street'
+                    onChange={this.handleChange} 
+                    value = {this.state.street}></input><br></br>
+                <label>City</label><br></br>
+                <input type ='text'
+                    name = 'city'
+                    onChange={this.handleChange} 
+                    value = {this.state.city}></input><br></br>
                 <label>State</label><br></br>
-                <input type = 'text' name = 'u_state' pattern = '[A-Za-z]{2}'></input><br></br>
+                <input type = 'text'
+                    name = 'state'
+                    onChange={this.handleChange}
+                    value = {this.state.state}></input><br></br>
                 <label>ZipCode</label><br></br>
-                <input type='text' name = 'u_zip'pattern= '[0-9]{5}'></input><br></br>
+                <input type='text'
+                    name = 'zipcode'
+                    onChange={this.handleChange}
+                    value = {this.state.zipcode}></input><br></br>
                 <label>Apt Number (optional)</label><br></br>
-                <input type='text' name ='u_aptnum'></input><br></br>
+                <input type='text' 
+                    name = 'aptnum'
+                    onChange={this.handleChange}
+                    value = {this.state.aptnum}></input><br></br>
                 <button onClick={this.handleSubmit}>Submit</button>
+                <button onClick={this.handleCancel}>Cancel</button>
             </form>
         )
     }

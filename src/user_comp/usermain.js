@@ -2,11 +2,10 @@ import React from 'react';
 import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 import styles from './../mystyle.module.css';
-//import Account from './account.js';
+import Account from './account.js';
+import {Route,Switch} from 'react-router-dom';
+import AccSum from './accsum.js'
 
-
-/*********************retrieve username from login.js user's input 
-(for right now I just choose a random user from the database)*/
 
 class UserPage extends React.Component{
     constructor (props){
@@ -21,13 +20,19 @@ class UserPage extends React.Component{
             toopen: false,
             loggedOut: false,
             totrans: false,
+            tosum: false,
             deposit: "Check",
+            chosenacc: 0
         }
     }
     /****use this function to mount to the class
      * do not use axios in render as it will cause 
      * an infinity loop*/
     componentDidMount(){
+        this.apicall()
+    }
+
+    apicall =() =>{
         let userInfo = new FormData();
         userInfo.append('id',this.props.cus_id)
         console.log(this.props.cus_id)
@@ -49,7 +54,6 @@ class UserPage extends React.Component{
             console.log(error)
         });
     }
-
     setBilling = () => {
         this.setState({
             tobilling: true
@@ -65,7 +69,12 @@ class UserPage extends React.Component{
             toupdate: true
         })
     }
-    handleDelete(){}
+   accsum = (id) => {
+        this.setState({
+            chosenacc : id,
+            tosum : true
+        })
+    }
     deposit(){}
     atmPage(){}
     maketrans = () => {
@@ -73,7 +82,6 @@ class UserPage extends React.Component{
 			totrans: true
 		})
 	}
-    accountClick(){}
 	logout = () => {
 		this.setState({
 			loggedOut: true
@@ -85,7 +93,15 @@ class UserPage extends React.Component{
             [name]: value
         })
     }
+    sumback = () => {
+        this.setState({
+            tosum : false
+        })
+        this.apicall()
+       
+    }
     render(){
+    
         
         if (this.state.toupdate){
             return <Redirect to="/update/"/>
@@ -102,6 +118,15 @@ class UserPage extends React.Component{
         if (this.state.totrans){
             return <Redirect to="/transfer"/>
         } 
+        if (this.state.tosum){     
+            return(
+                <div>
+                    <AccSum accid = {this.state.chosenacc}
+                            goback ={this.sumback}/>
+                </div>
+            ) 
+        }
+        
         return (
             <div className={styles.center}>
                 <div className={styles.topnav}>
@@ -110,17 +135,10 @@ class UserPage extends React.Component{
 				</div>
                 <div className={styles.main}>
                     {this.state.accounts.map(account => (
-                    <div>
-                        <div className = 'account' key ={account.account_id}>
-                            <li>ID: {account.account_id}</li> 
-                            <li>Type: {account.account_type}</li>
-                            <li>Balance: {account.balance}</li>
-                            <li>Status: {account.status}</li>
-                        </div>
-                        <button onClick={this.handleDelete}>Delete</button><br></br><br></br> 
-                    </div> 
-                )
-             ) }
+                    <Account acc = {account}
+                             key ={account.account_id}
+                             sum = {() => this.accsum(account.account_id)}/>
+                ))}
                 </div>
                 <div className={styles.sidenav}>
                     <a><button className={styles.button} onClick={this.openAcc}>Open New Account</button></a>
@@ -134,10 +152,8 @@ class UserPage extends React.Component{
                         <option value= "Cash">Cash </option>
                     </select>
                 </div>
-				
             </div>
-            )
-        
+            )      
     }
 }
 export default UserPage
