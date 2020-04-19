@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import {Redirect} from 'react-router-dom';
-import axios from 'axios'
+import axios from 'axios';
+import styles from './../mystyle.module.css';
+
 
 class SignUpForm extends Component{
     constructor(){
@@ -96,140 +98,140 @@ class SignUpForm extends Component{
         }
 
         return (
-            <div>
+            <div className={styles.signup}>
                 <h2>Sign Up</h2>
                 <p>Please fill out the following information to sign up for an account</p>
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         First Name:
-                        <input 
+                    </label> <br/>
+					<input 
                             type="text" 
                             name="firstName" 
                             placeholder="e.g. John" 
                             value={this.state.firstName} 
                             onChange={this.handleChange} 
-                        />
-                    </label>
+                        /><br/>
                     <label>
-                        Last Name:
-                        <input 
+                        Last Name
+                    </label> <br/>
+					<input 
                             type="text" 
                             name="lastName" 
                             placeholder="e.g. Doe" 
                             value={this.state.lastName} 
                             onChange={this.handleChange} 
-                        />
-                    </label>
+                        /><br/>
                     <label>
                         Street:
-                        <input
+                    </label> <br/>
+					<input
                             type="text"
                             name="street"
                             placeholder="e.g. 1st Street"
                             value={this.state.street}
                             onChange={this.handleChange}
-                        />
-                    </label>
+                        /><br/>
                     <label>
                         Apt. No.:
-                        <input
+                    </label> <br/>
+					<input
                             type="text"
                             name="aptNumber"
                             placeholder="e.g. 123"
                             value={this.state.aptNumber}
                             onChange={this.handleChange}
-                        />
-                    </label>
+                        /><br/>
                     <label>
                         City:
-                        <input
+                    </label> <br/>
+					<input
                             type="text"
                             name="city"
                             placeholder="e.g. San Francisco"
                             value={this.state.city}
                             onChange={this.handleChange}
-                        />
-                    </label>
+                        /><br/>
                     <label>
                         State:
-                        <input
+                    </label> <br/>
+					<input
                             type="text"
                             name="stateInCountry"
                             placeholder="e.g. CA"
                             value={this.state.stateInCountry}
                             onChange={this.handleChange}
-                        />
-                    </label>
+                        /><br/>
                     <label>
                         Zip Code:
-                        <input 
+                    </label> <br/>
+					<input 
                             type="text"
                             name="zipCode"
                             placeholder="e.g. 12345"
                             value={this.state.zipCode}
                             onChange={this.handleChange}
-                        />
-                    </label>
+                        /><br/>
                     <label>
                         Email:
-                        <input 
+                    </label> <br/>
+					<input 
                             type="email" 
                             name="userEmail"
                             placeholder="e.g. johndoe@gmail.com" 
                             value={this.state.userEmail} 
                             onChange={this.handleChange} 
-                        />
-                    </label>
+                        /><br/>
                     <label>
                         Mobile Number:
-                        <input 
+                    </label> <br/>
+					<input 
                             type="tel" 
                             name="phone"
                             placeholder="e.g. 5555555555" 
                             value={this.state.phone} 
                             onChange={this.handleChange} 
-                        />
-                    </label>
-                    
+                        /><br/>
                     <label>
                         Username:
-                        <input 
+                    </label> <br/>
+					<input 
                             type="text" 
                             name="userName"
                             placeholder="e.g. johndoe" 
                             value={this.state.userName} 
-                            onChange={this.handleChange} />
-                    </label>
+                            onChange={this.handleChange} 
+						/><br/>
                     <label>
                         Password:
-                        <input 
+                    </label> <br/>
+					<input 
                             type="password" 
                             name="userPassword"
                             placeholder="**********" 
                             value={this.state.userPassword} 
                             onChange={this.handleChange} 
-                        />
-                    </label>
+                        /><br/>
                     <label>
                         Confirm Password:
-                        <input 
+                    </label> <br/>
+					<input 
                             type="password"
                             name="userConfirmPassword"
                             placeholder="**********" 
                             value={this.state.userConfirmPassword} 
                             onChange={this.handleChange} 
-                        />
-                    </label>
+                        /><br/>
                     <label>
                         Social Security Number(SSN):
-                        <input 
+                    </label> <br/>
+					<input 
                             type="password" 
                             name="ssn"
                             placeholder="xxxxxxxxx" 
                             value={this.state.ssn} 
                             onChange={this.handleChange} 
-                        />
-                    </label>
+                        /><br/>
                     <input type="submit" value="Submit" />
                 </form> 
                 <div>

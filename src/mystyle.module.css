@@ -21,10 +21,6 @@
   display: block;
 }
 
-.sidenav a:hover {
-  color: #064579;
-}
-
 .button {
   background-color: #800000; /* Maroon*/
   border: none;
@@ -65,3 +61,18 @@
   /*padding: 0px 10px;*/
   float: right;
 }
+
+.signup {
+  width: 1000px;
+  margin: auto;
+}
+
+.signup input {
+	width: 50%;
+	clear: both;
+}
+
+.signup input[type=submit] {
+	width: 10em;
+}
+
