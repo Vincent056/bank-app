@@ -10,11 +10,9 @@
 if (isset($_POST['id']) && isset($_POST['acct_num']) && isset($_POST['amount'])){
 
      $id = mysql_entities_fix_string($conn, $_POST['id']);
-     $acctype = mysql_entities_fix_string($conn, $_POST['acctype']);
      $acct_num = mysql_entities_fix_string($conn, $_POST['acct_num']);
      $amount = mysql_entities_fix_string($conn, $_POST['amount']);
-     $transtype = mysql_entities_fix_string($conn, $_POST['transtype']);
-     
+
      $query = "SELECT balance FROM bank_account WHERE account_id = '$id'";
      $result = $conn->query($query);
      $result->data_seek(0);
