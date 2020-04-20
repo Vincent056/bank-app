@@ -23,8 +23,6 @@
     }
     else echo "Missing Info!";
     
-    
-    $result->close();
     $conn->close();
 
 
