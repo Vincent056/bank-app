@@ -37,6 +37,8 @@ if (isset($_POST['id']) && isset($_POST['acct_num']) && isset($_POST['amount'])&
                     $trans_type = "Internal";
                     $query2 = "INSERT INTO transaction (routing_number, recipient, recipient_account_num, transaction_type, amount, date, bank_account_account_id) 
                                 VALUES (NULL,'$receiver','$acct_num','$trans_type','$amount',current_timestamp(),'$id');";
+                    $query2 = "INSERT INTO transaction (routing_number, recipient, recipient_account_num, transaction_type, amount, date, bank_account_account_id) 
+                                VALUES (NULL,NULL,'$acct_num','Received','$amount',current_timestamp(),'$acct_num');"
                     $query2 .= "UPDATE bank_account SET balance = balance - $amount WHERE bank_account.account_id = '$id';";
                     $query2 .= "UPDATE bank_account SET balance = balance + $amount WHERE bank_account.account_id = '$acct_num';";
                     echo "internal transfered";

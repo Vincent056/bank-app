@@ -1,6 +1,8 @@
 <?php
-    require_once 'login.php';
-    header('Access-Control-Allow-Origin: *');
+     require_once 'login.php';
+     header('Access-Control-Allow-Origin: *');
+     header('Access-Control-Allow-Methods: GET, POST');
+     header("Access-Control-Allow-Headers: X-Requested-With");
     $conn = new mysqli($servername, $user, $password, $db);
     if($conn->connect_error) die($conn->connect_error);
 
@@ -25,13 +27,6 @@
             $json_array[] = $row;
         }
 
-        //Query for account's automated billings
-        $query = "SELECT * FROM automated_billing WHERE bank_account_account_id = '$acc_id'";
-        $result = $conn->query($query);
-        if(!$result) die("Database access failed:" .$conn->error);
-        while($row = mysqli_fetch_assoc($result)){
-            $json_array[] = $row;
-        }
         echo json_encode($json_array); 
         
         $result->close();
