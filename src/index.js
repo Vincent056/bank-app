@@ -11,6 +11,7 @@ import {ManagerLogin, manID} from './login/managerlogin.js'
 import ManagerDashboard from './manager/managerdashboard.js'
 import SignUpForm from './user_comp/SignUpForm.js'
 import Transfer from './user_comp/transaction.js'
+import AccSum from './user_comp/accsum.js'
 
 import './index.css';
 
@@ -34,8 +35,8 @@ class App extends React.Component{
 				<Route exact path = "/managerdashboard/" render = {() => 
                     <ManagerDashboard man_id = {manID}></ManagerDashboard>
                 } />
-                <Route exact path = "/usermain/" render = {() => 
-                    <UserPage cus_id = {id} ></UserPage>
+                <Route path = "/usermain/" render = {(props) => 
+                    <UserPage cus_id = {id} {...props} ></UserPage>
                 } />
                 <Route exact path = "/update/" render = {() => 
                     <UpdateInfo cus_id = {id}></UpdateInfo>

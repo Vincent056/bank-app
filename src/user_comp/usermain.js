@@ -3,8 +3,8 @@ import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 import styles from './../mystyle.module.css';
 import Account from './account.js';
-import {Route,Switch} from 'react-router-dom';
 import AccSum from './accsum.js'
+import Transfer from './transaction.js'
 
 
 class UserPage extends React.Component{
@@ -87,15 +87,16 @@ class UserPage extends React.Component{
 			loggedOut: true
 		})
 	}
-    handleChange = (event) => {
-        const {name, value} = event.target
-        this.setState({
-            [name]: value
-        })
-    }
     sumback = () => {
         this.setState({
             tosum : false
+        })
+        this.apicall()
+       
+    }
+    transback = () => {
+        this.setState({
+            totrans : false
         })
         this.apicall()
        
@@ -116,7 +117,12 @@ class UserPage extends React.Component{
             return <Redirect to="/"/>
         } 
         if (this.state.totrans){
-            return <Redirect to="/transfer"/>
+            return(
+                <div>
+                    <Transfer accounts= {this.state.accounts}
+                            goback ={this.transback}/>
+                </div>
+            ) 
         } 
         if (this.state.tosum){     
             return(

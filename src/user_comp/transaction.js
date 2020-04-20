@@ -3,25 +3,57 @@ import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 class Transfer extends React.Component{
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state ={
-            acctotype: 'internal',
-            accfrom: 'checking',
-            rounting: '',
-            acc_id: 0,
+            accto: this.props.accounts[0].account_id,
+            accfrom: this.props.accounts[0].account_id,
+            external: false,
+            externalacc: '',
+            routing: '',
             recipient: '',
             amount: '',
             goBack: false,
             message: "",
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     
     handleSubmit= (event) => {
         event.preventDefault();
+       
+        let userInfo = new FormData();
+        userInfo.append('id',this.state.accfrom)
+        if (this.state.externalacc === ''){
+            userInfo.append('acct_num',this.state.accto)
+        } 
+        else {
+            userInfo.append('acct_num',this.state.externalacc)
+            userInfo.append('routing',this.state.routing)
+        }
+        userInfo.append('receiver',this.state.recipient)
+        userInfo.append('amount',this.state.amount)
+        
+        axios({
+            method: 'post',
+            url: 'https://bank.cvs3.com/bank-app/api/trasnferfund.php',
+            data: userInfo,
+            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
+        }).then( (response) => {  
+            // handle success
+            console.log(response.data)
+            this.setState({
+                message: "Sent!"
+            })
+        }).catch(function(error) {
+            // handle error
+            console.log(error)
+        })
         this.setState({
             goBack: true
         })
+        
     }
     handleChange = (event) => {
         const {name, value} = event.target
@@ -30,39 +62,64 @@ class Transfer extends React.Component{
         })
     }
     handleCancel =() =>{
-        this.setState({
-            goBack: true
-        })
+        this.props.goback()
     }
     render(){
-        if (this.state.goBack ){
-            return <Redirect to="/usermain/"/>
-        } 
         
         return(
             <div>
             <form >
-                <h1>Transaction</h1>
-                <label>Transfer To</label><br></br>
-                <select value ={this.state.acctotype}
-                        onChange={this.handleChange} >
-                        <option value= "internal">Internal Account </option>
-                        <option value= "external">External Account </option>
-                    </select><br></br><br></br>
+                <h1>Transfer Money</h1>
                 <label>Transfer From</label><br></br>
-                <select value ={this.state.accfrom}
+                <select  name = 'accfrom'
+                        value = {this.state.accfrom}
                         onChange={this.handleChange} >
-                        <option value= "checking">Checking </option>
-                        <option value= "saving">Saving </option>
+                             {this.props.accounts.map(account => (
+                           <option key = {account.account_id}
+                                value= {account.account_id}>{account.account_id} 
+                                        - {account.account_type}: {account.balance} </option>
+                ))}
+                        
                     </select><br></br><br></br>
-                <label>Routing Number</label><br></br>
-                <input type ='text' name='routing' value = {this.state.routing}></input><br></br>
-                <label>Account Number</label><br></br>
-                <input type ='text' name='account'value = {this.state.acc_id}></input><br></br>
-                <label>Recipient</label><br></br>
-                <input type ='text' name='recipient' value = {this.state.recipient}></input><br></br>
+                <label>Transfer To</label><br></br>
+                <select 
+                        name = 'accto'
+                        value = {this.state.accto}
+                        onChange={this.handleChange} >
+                             {this.props.accounts.map(account => (
+                           <option key = {account.account_id}
+                                value= {account.account_id}>{account.account_id} 
+                                        - {account.account_type}: {account.balance} </option>
+                ))}
+                            <option 
+                                value = {0} >External Account</option>
+                    </select><br></br><br></br>
+                    
+                {this.state.accto == 0 &&
+                    <div>
+                        <label>Routing Number</label><br></br>
+                        <input type ='text'
+                        name = 'routing'
+                        onChange={this.handleChange}
+                        value = {this.state.routing}></input><br></br>
+
+                        <label>External Account Number</label><br></br>
+                        <input type ='text'
+                        name = 'externalacc'
+                        onChange={this.handleChange}
+                        value = {this.state.externalacc}></input><br></br>
+                        <br></br>
+                    </div>}<br></br>           
+              
+                    <label>Recipient Name</label><br></br>
+                        <input type ='text' 
+                        name='recipient'
+                        onChange={this.handleChange}
+                        value = {this.state.recipient} ></input><br></br>
                 <label>Amount</label><br></br>
-                <input type ='text' name='amount' value = {this.state.routing}></input><br></br>
+                <input type ='text' name='amount'
+                        onChange={this.handleChange}
+                        value ={this.state.amount} ></input><br></br>
                 <button onClick={this.handleSubmit}>Submit</button>
                 <button onClick={this.handleCancel}>Back</button>
             </form>
