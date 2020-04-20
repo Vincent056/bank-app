@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom';
 import axios from 'axios'
+import styles from './../mystyle.module.css';
 
 
 //this variable will be exported to index.js so that usermain.js 
@@ -97,9 +98,10 @@ class LoginPage extends React.Component {
 		} 
 		
         return(
-			<div>
+			<div className={styles.login}>
+			<h1>Silicon Bank</h1>
 				<form>
-					<h1>Login</h1>
+					<h2>Login</h2>
 					<label>Username</label><br></br>
 					<input type ="text" 
 							name="username" 
@@ -109,14 +111,14 @@ class LoginPage extends React.Component {
 					<input type ="password" 
 							name = "password"
 							value={this.state.password} 
-                            onChange={this.handleChange}/><br></br>
-					<button onClick={this.handleSubmit}>Submit</button>
-				</form>
+                            onChange={this.handleChange}/><br/><br/>
+					<button onClick={this.handleSubmit}>Log In</button> 
+				</form><br/>
 				<div>
-						<button onClick={this.sign}>Sign Up</button>
-						<button onClick={this.forgotPass}>Forgot Pasword?</button>
+						<button onClick={this.sign}>Sign Up</button> <br/>
+						<button onClick={this.forgotPass}>Forgot Pasword?</button> <br/>
 						<button onClick={this.managerLog}>Manager Login</button>
-				</div>
+				</div><br/>
 				<div>{this.state.invalid}</div>
 			</div>
         )
