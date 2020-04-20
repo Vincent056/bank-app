@@ -9,16 +9,6 @@
         $amount = mysql_entities_fix_string($conn, $_POST['amount']);
         $type = mysql_entities_fix_string($conn, $_POST['type']);
 
-        $query =  "SELECT COUNT(*) FROM bank_account WHERE account_id = '$acc_id'";
-        $result = $conn->query($query);
-        $rows = $result->fetch_array(MYSQLI_NUM)[0];
-        if($rows == 0){
-            //account does not exist
-            $id = 0;
-            echo json_encode(strval($id));
-        }
-        else{
-
             if($type == 'deposit'){
                 $query = "INSERT into transaction(transaction_type, amount, date, bank_account_account_id) 
                          values('Deposit', '$amount', sysdate(), '$acc_id')";
@@ -27,6 +17,7 @@
                 //Update account
                 $query = "UPDATE bank_account set balance = balance + '$amount' where account_id = '$acc_id'";
                 $result = $conn->query($query);
+                $result->close();
             }
             if($type == 'withdraw'){
                 //Withdraw
@@ -35,7 +26,7 @@
                 $row = $result->fetch_array();
                 $balance = $row['balance'];
 
-                if($balance - $amount < 0){
+                if($balance < $amount){
                     echo "Not enough funds to withdraw set amount";
                     //return
                     $id = 0;
@@ -50,10 +41,9 @@
                     $query = "UPDATE bank_account SET balance = balance - '$amount' WHERE bank_account_id = '$acc_id'";
                     $result = $conn->query($query);
                     echo "withdraw";
+                    $result->close();
                 }
             }
-        }
-        $result->close();
         $conn->close();
     }
 
