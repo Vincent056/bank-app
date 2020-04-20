@@ -30,7 +30,7 @@ class UpdateInfo extends React.Component {
         event.preventDefault();
 
         let userInfo = new FormData();
-        userInfo.append('id',this.props.accid)
+        userInfo.append('id',this.props.cus_id)
         userInfo.append('street',this.state.street)
         userInfo.append('city',this.state.city)
         userInfo.append('stateInCountry',this.state.state)
@@ -48,7 +48,9 @@ class UpdateInfo extends React.Component {
         }).then( (response) => {  
             // handle success
             console.log(response.data)
-            
+            this.setState({
+                goBack: true
+            })
         }).catch(function(error) {
             // handle error
             console.log(error)

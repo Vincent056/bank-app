@@ -11,7 +11,6 @@ import {ManagerLogin, manID} from './login/managerlogin.js'
 import ManagerDashboard from './manager/managerdashboard.js'
 import SignUpForm from './user_comp/SignUpForm.js'
 import Transfer from './user_comp/transaction.js'
-import AccSum from './user_comp/accsum.js'
 
 import './index.css';
 

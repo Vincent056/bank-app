@@ -20,7 +20,8 @@
         else{
 
             if($type == 'deposit'){
-                $query = "INSERT into transaction(transaction_type, amount, date, bank_account_account_id)  values('deposit', '$amount', sysdate(), '$acc_id')";
+                $query = "INSERT into transaction(transaction_type, amount, date, bank_account_account_id) 
+                         values('Deposit', '$amount', sysdate(), '$acc_id')";
                 $result = $conn->query($query);
 
                 //Update account
@@ -42,12 +43,13 @@
                 }
                 else{
                     $query = "INSERT into transaction(transaction_type, amount, date, bank_account_account_id)  
-                    values('withdraw', '$amount', sysdate(), '$acc_id')";
+                    values('Withdraw', '$amount', sysdate(), '$acc_id')";
                     $result = $conn->query($query);
 
                     //Update balance value by subtracting the amount value specified by user
                     $query = "UPDATE bank_account SET balance = balance - '$amount' WHERE bank_account_id = '$acc_id'";
                     $result = $conn->query($query);
+                    echo "withdraw";
                 }
             }
         }

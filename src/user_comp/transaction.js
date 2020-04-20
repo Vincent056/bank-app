@@ -13,7 +13,7 @@ class Transfer extends React.Component{
             routing: '',
             recipient: '',
             amount: '',
-            goBack: false,
+            
             message: "",
         }
         this.handleChange = this.handleChange.bind(this);
@@ -49,9 +49,6 @@ class Transfer extends React.Component{
         }).catch(function(error) {
             // handle error
             console.log(error)
-        })
-        this.setState({
-            goBack: true
         })
         
     }

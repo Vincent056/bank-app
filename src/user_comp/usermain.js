@@ -5,7 +5,8 @@ import styles from './../mystyle.module.css';
 import Account from './account.js';
 import AccSum from './accsum.js'
 import Transfer from './transaction.js'
-
+import Billing from './setbilling.js'
+import ATM from './setbilling.js'
 
 class UserPage extends React.Component{
     constructor (props){
@@ -21,6 +22,8 @@ class UserPage extends React.Component{
             loggedOut: false,
             totrans: false,
             tosum: false,
+            toatm: false,
+            openatm: false,
             deposit: "Check",
             chosenacc: 0
         }
@@ -69,6 +72,11 @@ class UserPage extends React.Component{
             toupdate: true
         })
     }
+    FindATM = () => {
+        this.setState({
+            toatm: true
+        })
+    }
    accsum = (id) => {
         this.setState({
             chosenacc : id,
@@ -101,6 +109,23 @@ class UserPage extends React.Component{
         this.apicall()
        
     }
+    billback = () => {
+        this.setState({
+            tobilling : false
+        })
+        this.apicall() 
+    }
+    fakeatm =() => {
+        this.setState({
+            openatm: true
+        })
+    }
+    atmback = () => {
+        this.setState({
+            tobilling : false
+        })
+        this.apicall() 
+    }
     render(){
     
         
@@ -110,8 +135,31 @@ class UserPage extends React.Component{
         if (this.state.toopen){
             return <Redirect to="/openacc/"/>
         } 
+        if (this.state.toatm){
+            return(
+                <div>
+                    <p>Mapping class or something goes here. Each Atm location found
+                    will have this button (just an ATM simulation)</p>
+                    <button onClick = {this.fakeatm}>Choose this ATM (Simulation)</button>
+                </div>
+            )
+        } 
+        if (this.state.openatm){
+            return(
+                
+                <div>
+                    <ATM accounts= {this.state.accounts}
+                            goback ={this.atmback}/>
+                </div>
+            ) 
+        } 
         if (this.state.tobilling){
-            return <Redirect to="/billing/"/>
+            return(
+                <div>
+                    <Billing accounts= {this.state.accounts}
+                            goback ={this.billback}/>
+                </div>
+            ) 
         } 
 		if (this.state.loggedOut){
             return <Redirect to="/"/>
@@ -152,7 +200,7 @@ class UserPage extends React.Component{
                     <a><button className={styles.button} onClick={this.setBilling}>Set Up Billing</button></a>
                     <a><button className={styles.button} onClick={this.maketrans}>Make A Transfer</button></a>
 					<a> <button className={styles.button} onClick={this.depositcheck}>Deposit Check</button></a>
-					<a> <button className={styles.button} onClick={this.depositcash}>Deposit Cash</button></a>
+					<a> <button className={styles.button} onClick={this.FindATM}>Find ATM</button></a>
                 </div>
             </div>
             )      
