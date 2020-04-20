@@ -7,17 +7,17 @@
     $conn = new mysqli($servername, $user, $password, $db);
     if($conn->connect_error) die($conn->connect_error);
 
-    if (isset($_POST['id'])&&isset($_POST['start'])&&isset($_POST['end'])&&isset($_POST['reciver_acc'])&&isset($_POST['amount'])){
+    if (isset($_POST['id'])&&isset($_POST['start'])&&isset($_POST['end'])&&isset($_POST['dayinmonth'])&&isset($_POST['reciver_acc'])&&isset($_POST['amount'])){
         
          $id = mysql_entities_fix_string($conn, $_POST['id']);
          $start = mysql_entities_fix_string($conn, $_POST['start']);
          $end = mysql_entities_fix_string($conn, $_POST['end']);
          $reciver_acc = mysql_entities_fix_string($conn, $_POST['reciver_acc']);
          $amount = mysql_entities_fix_string($conn, $_POST['amount']);
-         
+         $dayinmonth = mysql_entities_fix_string($conn, $_POST['dayinmonth']);
         
-            $query1 = "INSERT INTO automated_billing (destination, amount, start_date, end_date, bank_account_account_id) 
-            VALUES ('$reciver_acc', '$amount', '$start','$end', '$id');";
+            $query1 = "INSERT INTO automated_billing (destination, amount, start_date, end_date, day, bank_account_account_id) 
+            VALUES ('$reciver_acc', '$amount', '$start','$end','$dayinmonth','$id');";
             echo "Added!";
                   
     }
