@@ -31,6 +31,7 @@ if (isset($_POST['id']) && isset($_POST['acct_num']) && isset($_POST['amount'])&
                                 VALUES ('$routing','$receiver','$acct_num',$trans_type','$amount',current_timestamp(),'$id');";
                     $query2 .= "UPDATE bank_account SET balance = balance - $amount WHERE bank_account.account_id = '$id';";
                     echo "external transfered";
+                    $conn->multi_query($query2);
                 }
                 else{ //internal
                     $trans_type = "Internal";
@@ -39,11 +40,13 @@ if (isset($_POST['id']) && isset($_POST['acct_num']) && isset($_POST['amount'])&
                     $query2 .= "UPDATE bank_account SET balance = balance - $amount WHERE bank_account.account_id = '$id';";
                     $query2 .= "UPDATE bank_account SET balance = balance + $amount WHERE bank_account.account_id = '$acct_num';";
                     echo "internal transfered";
+                    $conn->multi_query($query2);
                 }
-                $conn->multi_query($query2);
+                
                 
             }
     }
+    else echo "Missing Info";
 
 
 $conn->close();
