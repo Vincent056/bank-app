@@ -5,7 +5,6 @@
     header('Access-Control-Allow-Methods: GET, POST');
     header("Access-Control-Allow-Headers: X-Requested-With");
     $conn = new mysqli($servername, $user, $password, $db);
-    if($conn->connect_error) die($conn->connect_error);
 
     if (isset($_POST['id'])){
         
