@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -12,13 +11,15 @@ class Billing extends React.Component {
             addbill: false,
             destination: '',
             amount: '',
-            start: '',
+            day: '',
             end: '',
+            billid:'',
             billing: [],
             message: "",
         }
         this.handleChange = this.handleChange.bind(this);
         this.submitAccount = this.submitAccount.bind(this);
+        this.DeleteBill = this.DeleteBill.bind(this)
     }
     //go back to usermain
     handleCancel =() =>{
@@ -35,6 +36,7 @@ class Billing extends React.Component {
 
     //api call to show all the billing of chosen account
     showBilling(){
+        console.log(this.state.chosenacc)
         let userInfo = new FormData();
         userInfo.append('id',this.state.chosenacc)
     
@@ -65,6 +67,7 @@ class Billing extends React.Component {
     //handle button when user click add bill, a form shows up
     addBilling =() => {
         this.setState({
+            showbill:false,
             addbill: true
         })
     }
@@ -77,11 +80,12 @@ class Billing extends React.Component {
     }
 
     //api call to add the given info of new billing to database
-    AddBill = () =>{
+    AddBill = (event) =>{
+        event.preventDefault();
         let userInfo = new FormData();
         userInfo.append('id',this.state.chosenacc)
         userInfo.append('reciver_acc',this.state.destination)
-        userInfo.append('start',this.state.start)
+        userInfo.append('dayinmonth',this.state.day)
         userInfo.append('end',this.state.end)
         userInfo.append('amount',this.state.amount)
        
@@ -94,7 +98,11 @@ class Billing extends React.Component {
             // handle success
             console.log(response.data)
             this.setState({
-                addbill: false
+                addbill: false,
+                destination: '',
+                amount: '',
+                day: '',
+                end: ''
             })
         }).catch(function(error) {
             // handle error
@@ -103,9 +111,10 @@ class Billing extends React.Component {
         this.showBilling()
     }
 
-    DeleteBill =(id) =>{
+    DeleteBill =(event) =>{
+        event.preventDefault()
         let userInfo = new FormData();
-        userInfo.append('id',id)
+        userInfo.append('id',this.state.billid)
 
         axios({
             method: 'post',
@@ -119,18 +128,28 @@ class Billing extends React.Component {
             // handle error
             console.log(error)
         })
-        this.showBilling()
+    }
+    DeleteBilling = (id) =>{
+        console.log(id)
+        this.setState({
+            billid:id,
+        })
+        
     }
     render(){
         
         return(
+            <div>
             <form >
                 <h1>Set Up Billing</h1>
                 <label>Select the account</label><br></br>
                 <select  name = 'chosenacc'
                         value = {this.state.chosenacc}
                         onChange={this.handleChange} >
-                             {this.props.accounts.map(account => (
+                             {this.props.accounts.filter(account =>{
+                                 if (account.account_type === "saving") return false
+                                 return true
+                             }).map(account => (
                            <option key = {account.account_id}
                                 value= {account.account_id}>{account.account_id} 
                                         - {account.account_type} </option>
@@ -140,27 +159,29 @@ class Billing extends React.Component {
                 <button onClick={this.handleCancel}>Cancel</button><br></br>
                 {this.state.showbill === true && this.state.billing.length !== 0 &&
                 <div>
-                    <button onClick = {this.addBilling}>Add Billing</button>
+                    <button onClick = {this.addBilling}>Add Billing</button><br></br>
                     <h3>Billings</h3>
                     <table>
                         <thead>
+                        <tr>
                         <th scope ='col'>Destination</th>
                             <th scope ='col'>Amount</th>
                             <th scope ='col'>Start Date</th>
                             <th scope ='col'>End Date</th>
-                            <th scope ='col'>Last Date</th>
+                            <th scope ='col'>Day</th>
                             <th scope ='col'> </th>
+                            </tr>
                         </thead>
                         <tbody>
-                            {this.state.billing.map(bill => (
+                            {this.state.billing.map((bill,index) => (
                                 <tr key = {bill.auto_billing_id}>
-                                    <td>{bill.destination}</td>
-                                    <td>{bill.amount}</td>
-                                    <td>{bill.start_date}</td>
-                                    <td>{bill.end_date}</td>
-                                    <td>{bill.last_date}</td>
-                                    <td>
-                                        <button onClick = {() => this.DeleteBill(bill.auto_billing_id)}>
+                                    <td key ={index}>{bill.destination}</td>
+                                    <td  key ={index}>{bill.amount}</td>
+                                    <td  key ={index}>{bill.start_date}</td>
+                                    <td  key ={index}>{bill.end_date}</td>
+                                    <td  key ={index}>{bill.day}</td>
+                                    <td key ={index}>
+                                        <button onClick = {() => {this.DeleteBilling(bill.auto_billing_id)}}>
                                             Cancel
                                         </button>
                                     </td>
@@ -171,37 +192,42 @@ class Billing extends React.Component {
                     </div>}
                     {this.state.billing.length === 0 && this.state.showbill === true &&
                     <div>
-                        <button onClick = {this.addBilling}>Add Billing</button>
+                        <button onClick = {this.addBilling}>Add Billing</button><br></br>
                         No billing.
                         </div>}
+                    </form>
                     {this.state.addbill === true &&
                     <form>
+                        <label>To Internal Account</label><br></br>
                         <input type ='text' 
                         onChange ={this.handleChange}
                         name = 'destination'
-                        value = {this.state.destination}></input>
+                        value = {this.state.destination}></input><br></br>
 
+                        <label>Amount</label><br></br>
                         <input type ='text' 
                         onChange ={this.handleChange}
-                        name = 'destination'
-                        value = {this.state.destination}></input>
+                        name = 'amount'
+                        value = {this.state.amount}></input><br></br>
 
-                        <input type ='date' pattern ="YYYY-MM-DD"
-                        placeholder = "YYYY-MM-DD"
+                        <label>Day</label><br></br>
+                        <input type ='text'
+                        title ='Enter a day from 1 to 28'
                         onChange ={this.handleChange}
-                        name = 'start'
-                        value = {this.state.start}></input>
+                        name = 'day'
+                        value = {this.state.day}></input><br></br>
 
-                        <input type ='date' pattern ="YYYY-MM-DD"
+                        <label>End Date (optional)</label><br></br>
+                        <input type ='text' pattern ='YYYY-MM-DD'
                         placeholder = "YYYY-MM-DD"
                         onChange ={this.handleChange}
                         name = 'end'
-                        value = {this.state.end}></input>
+                        value = {this.state.end}></input><br></br>
 
                         <button onClick={this.AddBill}>Submit</button>
                         <button onClick={this.CancelAdd}>Cancel</button><br></br>
                     </form>}
-            </form>
+                    </div>
         )
     }
 }

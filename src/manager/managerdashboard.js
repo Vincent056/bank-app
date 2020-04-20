@@ -14,37 +14,14 @@ class ManagerDashboard extends React.Component{
             attribute: "",
             input: "", 
 			firstname: '',
-            lastname: '', 
+            lastname: '',
+            showdashboar: false, 
 			Dashboard: [],
 			loggedOut: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
-	
-	/****use this function to mount to the class
-     * do not use axios in render as it will cause 
-     * an infinity loop*/
-    componentDidMount(){
-        let userInfo = new FormData();
-        userInfo.append('username',this.props.user)
-        axios({
-            method: 'post',
-            url: 'https://bank.cvs3.com/bank-app/api/usermain.php',
-            data: userInfo,
-            config: {headers: {'Content-Type': 'x-www-form-urlencoded; charset=UTF-8'}}
-        }).then( (response) => {  
-            this.setState({
-                firstname: response.data[0].first_name,
-                lastname: response.data[0].last_name,
-
-            })
-            console.log(this.state.accounts) //just to check, delete later        
-        }).catch(function(error) {
-            // handle error
-            console.log(error)
-        });
-    }
-
 
     handleSubmit(event){
         event.preventDefault();
@@ -54,33 +31,22 @@ class ManagerDashboard extends React.Component{
         formData.append('input', this.state.input);
         
        
-        // axios({
-        //     method: 'post',
-        //     url: 'http://bank.cvs3.com/bank-app/api/addAddress.php',
-        //     data: addressData,
-        //     config: {headers: {'Content-Type':'x-www-form-urlencoded'}}
-        // }).then(function (response) {
-        //     // handle success
-        //     console.log(response)
-        // }).catch(function(response) {
-        //     // handle error
-        //     console.log(response)
-        // });
-
-/*
         axios({
-            method: 'post',
-            url: 'http://bank.cvs3.com/bank-app/api/signup.php',
-            data: formData,
-            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
-        }).then(function (response) {
-            // handle success
-            console.log(response)
-        }).catch(function(error) {
-            // handle error
-            console.log(error)
-        });
-*/
+           method: 'post',
+             url: 'http://bank.cvs3.com/bank-app/api/managerquery.php',
+             data: formData,
+             config: {headers: {'Content-Type':'x-www-form-urlencoded'}}
+         }).then(function (response) {
+             this.setState({
+                 Dashboard: response.data,
+                 showdashboar: true
+             })
+             console.log(response)
+         }).catch(function(response) {
+             // handle error
+             console.log(response)
+         });
+
 
     }
 	
@@ -89,6 +55,12 @@ class ManagerDashboard extends React.Component{
 			loggedOut: true
 		})
 	}
+    handleChange = (event) => {
+        const {name, value} = event.target
+        this.setState({
+            [name]: value
+        })
+    }
 
     render(){
 		if (this.state.loggedOut){
@@ -102,26 +74,67 @@ class ManagerDashboard extends React.Component{
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Customer Attribute:
-                        <input 
-                            type="text" 
-                            name="attribute" 
-                            placeholder="e.g. Zipcode" 
-                            value={this.state.attribute} 
-                            onChange={this.handleChange} 
-                        />
+                        <select onChange ={this.handleChange}
+                                name = 'attribute'
+                                value = {this.state.attribute}>
+                                    <option value = 'state'>State</option>
+                                    <option value = 'city'>City</option>
+                                    <option value = 'zip_code'>ZipCode</option>
+                                    <option value = 'street'>Street</option>
+                                    <option value = 'customer_id'>ID</option>
+                                    <option value = 'username'>Username</option>
+                                    <option value = 'first_name'>First Name</option>
+                                    <option value = 'last_name'>Last Name</option>
+                                </select>
                     </label>
                     <label>
                         Attribute Input:
                         <input 
                             type="text" 
                             name="input" 
-                            placeholder="e.g. 46232" 
                             value={this.state.input} 
                             onChange={this.handleChange} 
                         />
                     </label>
-                    <input type="submit" value="Submit" />
-                </form> 
+                    <button onClick={this.handleSubmit}>Submit</button>
+                </form>
+                {this.state.showdashboar === true &&
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CustomerID</th>
+                            <th>AddressID</th>
+                            <th>Username</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Street</th>
+                            <th>Apt</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Zipcode</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {this.state.Dashboard.map((info,index) => (
+                                <tr key = {index}>
+                                    <td>{info.customer_id}</td>
+                                    <td>{info.address_id}</td>
+                                    <td>{info.username}</td>
+                                    <td>{info.first_name}</td>
+                                    <td>{info.last_name}</td>
+                                    <td>{info.street}</td>
+                                    <td>{info.apartment_number}</td>
+                                    <td>{info.city}</td>
+                                    <td>{info.state}</td>
+                                    <td>{info.zip_code}</td>
+                                    <td>{info.email}</td>
+                                    <td>{info.phone}</td>
+                                </tr>
+                            ))}
+                    </tbody>
+                </table>} 
 				<button onClick={this.logout}>Log Out</button>
             </div>   
         );

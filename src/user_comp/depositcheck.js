@@ -2,13 +2,12 @@ import React from 'react';
 import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 
-class ATM extends React.Component{
+class Check extends React.Component{
     constructor(props){
         super(props)
         this.state ={
             accid: this.props.accounts[0].account_id,
             amount: 0,
-            type: '',
             message: ''
         }
         this.handleChange = this.handleChange.bind(this);
@@ -21,7 +20,7 @@ class ATM extends React.Component{
         let userInfo = new FormData();
         userInfo.append('acc_id',this.state.accid)
         userInfo.append('amount',this.state.amount)
-        userInfo.append('type',this.state.type)
+        userInfo.append('type','deposit')
         axios({
             method: 'post',
             url: 'https://bank.cvs3.com/bank-app/api/atmtransaction.php',
@@ -31,7 +30,7 @@ class ATM extends React.Component{
             // handle success
             console.log(response.data)
             this.setState({
-                message: "Transaction Complete!"
+                message: "Deposit Complete!"
             })
         }).catch(function(error) {
             // handle error
@@ -53,7 +52,7 @@ class ATM extends React.Component{
         return(
             <div>
             <form >
-                <h1>ATM</h1>
+                <h1>Deposit Check</h1>
                 <label>Choose An Account</label><br></br>
                 <select  name = 'accid'
                         value = {this.state.accfrom}
@@ -64,24 +63,18 @@ class ATM extends React.Component{
                                         - {account.account_type}: {account.balance} </option>
                             ))}    
                     </select><br></br><br></br>
-                    <select  name = 'type'
-                        value = {this.state.type}
-                        onChange={this.handleChange} >
-                             <option value = ''>Deposit/Withdraw</option>
-                             <option value = 'deposit'>Deposit</option>
-                             <option value = 'withdraw'>Withdraw</option> 
-                    </select><br></br>
+                    
                 <label>Amount</label><br></br>
                 <input type ='text' 
                         onChange ={this.handleChange}
                         name = 'amount'
                         value = {this.state.amount}></input>
-                <button onClick ={this.handleSubmit}>Go</button>
-                <button onClick ={this.handleCancel}>Back To Bank</button>
+                <button onClick ={this.handleSubmit}>Deposit</button>
+                <button onClick ={this.handleCancel}>Back</button>
             </form>
             {this.state.message}
             </div>
         )
     }
 }
-export default ATM
+export default Check

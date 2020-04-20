@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 class Transfer extends React.Component{
@@ -92,7 +91,7 @@ class Transfer extends React.Component{
                                 value = {0} >External Account</option>
                     </select><br></br><br></br>
                     
-                {this.state.accto == 0 &&
+                {this.state.accto === 0 &&
                     <div>
                         <label>Routing Number</label><br></br>
                         <input type ='text'
