@@ -7,11 +7,11 @@
     $conn = new mysqli($servername, $user, $password, $db);
 
     if (isset($_POST['id'])){
-        
+        $id = mysql_entities_fix_string($conn, $_POST['acc_id']);
+
             $query = "SELECT destination,amount,start_date,end_date,day FROM automated_billing 
                     WHERE bank_account_account_id = '$id'";
              $result = $conn->query($query);
-             if(!$result) die("Database access failed:" .$conn->error);
              $json_array = array();
             while($row = mysqli_fetch_assoc($result)){
 	            $json_array[] = $row;
