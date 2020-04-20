@@ -12,8 +12,7 @@
         $attribute = mysql_entities_fix_string($conn, $_POST['attribute']);
 
         $query = "SELECT customer_id, address_id, username, first_name, last_name, street, apartment_number, city, state, zip_code, email, phone 
-        FROM customer LEFT OUTER JOIN address ON customer.address_address_id = address.address_id 
-        WHERE $attribute = '$input'";
+        FROM customer INNER JOIN address ON customer.address_address_id = address.address_id WHERE $attribute = '$input'";
     
         $result = $conn->query($query);
         if(!$result) die("Database access failed:" .$conn->error);
