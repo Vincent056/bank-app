@@ -7,7 +7,7 @@
     $conn = new mysqli($servername, $user, $password, $db);
 
     if (isset($_POST['id'])){
-        $id = mysql_entities_fix_string($conn, $_POST['acc_id']);
+        $id = mysql_entities_fix_string($conn, $_POST['id']);
 
             $query = "SELECT destination,amount,start_date,end_date,day FROM automated_billing 
                     WHERE bank_account_account_id = '$id'";
