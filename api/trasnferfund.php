@@ -27,8 +27,8 @@ if (isset($_POST['id']) && isset($_POST['acct_num']) && isset($_POST['amount'])&
                     $routing = mysql_entities_fix_string($conn, $_POST['routing']);
            
                     $trans_type = "External";
-                    $query2 = "INSERT INTO transaction (routing_number, recipient, recipient_account_num, transaction_type, amount, date, bank_account_account_id) 
-                                VALUES ('$routing','$receiver','$acct_num',$trans_type','$amount',current_timestamp(),'$id');";
+                     $query2 = "INSERT INTO transaction (routing_number, recipient, recipient_account_num, transaction_type, amount, date, bank_account_account_id) 
+                     VALUES ('$routing','$receiver','$acct_num','$trans_type','$amount',current_timestamp(),'$id');";
                     $query2 .= "UPDATE bank_account SET balance = balance - $amount WHERE bank_account.account_id = '$id';";
                     echo "external transfered";
                     $conn->multi_query($query2);
