@@ -44,8 +44,7 @@ if (isset($_POST['id']) && isset($_POST['acct_num']) && isset($_POST['amount'])&
                     $query2 .= "UPDATE bank_account SET balance = balance + $amount WHERE bank_account.account_id = '$acct_num';";
                     echo "internal transfered";
                    
-                    $result = $conn->multi_query($query2);
-                    if(!$result) die("Database access failed:" .$conn->error);
+                    $conn->multi_query($query2);
                 }
                 
                 
