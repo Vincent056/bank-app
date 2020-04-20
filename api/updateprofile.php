@@ -31,7 +31,7 @@ if(isset($_POST['id']) && isset($_POST['street']) && isset($_POST['city']) && is
     $row = $result->fetch_array(MYSQLI_NUM);
     $addressId = $row[11];
 	
-    echo "address: $addressId";
+    echo "id: $id, address: $addressId";
     $query2 = "UPDATE address SET street = '$street', city = '$city', apartment_number = '$apartment_number', zip_code = '$zip_code' WHERE address.address_id = '$addressId';"; 
     $query2 .= "UPDATE customer SET email = '$email', phone = '$phone' WHERE customer.customer_id = $id;";
     
