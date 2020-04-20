@@ -17,6 +17,7 @@
         
             $query1 = "INSERT INTO automated_billing (destination, amount, start_date, end_date, day, bank_account_account_id) 
             VALUES ('$reciver_acc', '$amount', sysdate(),'$end','$dayinmonth','$id');";
+             $conn->query($query1);
             echo "Added!";
                   
     }
