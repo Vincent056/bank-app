@@ -1,4 +1,6 @@
 .account{
     border: 1px solid black;
     display: block;
+    width: 220px;
+    font-size: 16px;
 }
