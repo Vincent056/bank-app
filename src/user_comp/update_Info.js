@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom';
 import axios from 'axios';
-
+import styles from './../mystyle.module.css';
 
 class UpdateInfo extends React.Component {
     constructor(){
@@ -66,7 +66,7 @@ class UpdateInfo extends React.Component {
         } 
         
         return(
-            <form >
+            <form className={styles.signup}>
                 <h1>Update Information</h1>
                 <label>Email</label><br></br>
                 <input type ='text'
@@ -104,7 +104,7 @@ class UpdateInfo extends React.Component {
                     name = 'aptnum'
                     onChange={this.handleChange}
                     value = {this.state.aptnum}></input><br></br>
-                <button onClick={this.handleSubmit}>Submit</button>
+                <button onClick={this.handleSubmit}>Submit</button> <br/>
                 <button onClick={this.handleCancel}>Cancel</button>
             </form>
         )
