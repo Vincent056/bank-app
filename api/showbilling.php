@@ -11,6 +11,7 @@
             $query = "SELECT destination,amount,start_date,end_date,day FROM automated_billing 
                     WHERE bank_account_account_id = '$id'";
              $result = $conn->query($query);
+             if(!$result) die("Database access failed:" .$conn->error);
              $json_array = array();
             while($row = mysqli_fetch_assoc($result)){
 	            $json_array[] = $row;
