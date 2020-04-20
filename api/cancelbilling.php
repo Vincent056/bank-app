@@ -11,7 +11,7 @@
          $bill_id = mysql_entities_fix_string($conn, $_POST['id']);
         
          $query = 
-         "DELETE FROM automated_billing WHERE auto_billing_id = '$bill_id'";
+         "DELETE FROM automated_billing WHERE auto_billing_id = '$bill_id';";
             $result = $conn->query($query);
             echo "deleted";     
         $result->close();
