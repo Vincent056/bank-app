@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Redirect} from 'react-router-dom';
+import styles from './../mystyle.module.css';
 
 var manID;
 class ManagerLogin extends React.Component {
@@ -78,9 +79,10 @@ class ManagerLogin extends React.Component {
         }
 		
 		return(
-			<div>
+			<div className={styles.login}>
+			<h1>Silicon Bank</h1>
 				<form >
-					<h1>Manager Login</h1>
+					<h2>Manager Login</h2>
 					<label>Username</label><br></br>
                     <input 
                             type ='text' 
@@ -94,12 +96,12 @@ class ManagerLogin extends React.Component {
                             name = 'password' 
                             value={this.state.password}
                             onChange={this.handleChange} 
-                        ></input><br></br>
-					<button onClick={this.handleSubmit}>Submit</button>
-				</form>
+                        ></input><br/><br/>
+					<button onClick={this.handleSubmit}>Log In</button>
+				</form><br/>
 				<div>
 					<button onClick={this.customerLog}>Customer Login</button>
-				</div>
+				</div><br/>
 				<div>{this.state.invalid}</div>
 			</div>
         )
