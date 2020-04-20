@@ -8,7 +8,7 @@
 
     if (isset($_POST['id'])){
         
-            $query = "SELECT * FROM automated_billing 
+            $query = "SELECT destination,amount,start_date,end_date,day FROM automated_billing 
                     WHERE bank_account_account_id = '$id'";
              $result = $conn->query($query);
              $json_array = array();
