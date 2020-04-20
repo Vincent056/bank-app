@@ -131,7 +131,8 @@ class UserPage extends React.Component{
             <div className={styles.center}>
                 <div className={styles.topnav}>
 					<a>Welcome {this.state.firstname} {this.state.lastname}</a>\
-					<a><button onClick={this.logout}>Log Out</button></a>
+					<a><button className={styles.buttontopnav} onClick={this.logout}>Log Out</button></a>
+					<a><button className={styles.buttontopnav} onClick={this.updateInfo}>Update Information</button></a>
 				</div>
                 <div className={styles.main}>
                     {this.state.accounts.map(account => (
@@ -142,15 +143,10 @@ class UserPage extends React.Component{
                 </div>
                 <div className={styles.sidenav}>
                     <a><button className={styles.button} onClick={this.openAcc}>Open New Account</button></a>
-                    <a><button className={styles.button} onClick={this.updateInfo}>Update Information</button></a>
                     <a><button className={styles.button} onClick={this.setBilling}>Set Up Billing</button></a>
                     <a><button className={styles.button} onClick={this.maketrans}>Make A Transfer</button></a>
-                    <label>Deposit </label>
-                    <select value ={this.state.deposit}
-                        onChange={this.handleChange} >
-                        <option value= "Check">Check </option>
-                        <option value= "Cash">Cash </option>
-                    </select>
+					<a> <button className={styles.button} onClick={this.depositcheck}>Deposit Check</button></a>
+					<a> <button className={styles.button} onClick={this.depositcash}>Deposit Cash</button></a>
                 </div>
             </div>
             )      
