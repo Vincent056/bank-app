@@ -33,6 +33,30 @@
   Width: 180px;
 }
 
+.buttontopnav {
+  background-color: #800000; /* Maroon*/
+  border: none;
+  color: white;
+  padding: 2px 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  Width: 10em;
+}
+
+.buttonsmall{
+  background-color: #800000; /* Maroon*/
+  border: none;
+  color: white;
+  padding: 2px 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  Width: 8em;
+}
+
 .center {
   width: 1000px;
   margin: auto;
@@ -73,6 +97,45 @@
 }
 
 .signup input[type=submit] {
-	width: 10em;
+  background-color: #800000; /* Maroon*/
+  border: none;
+  color: white;
+  padding: 2px 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  Width: 8em;
 }
 
+.signup button{
+  background-color: #800000; /* Maroon*/
+  border: none;
+  color: white;
+  padding: 2px 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  Width: 8em;
+}
+
+.login {
+  width: 350px;
+  height: 350px;
+  text-align: center;
+  margin: auto;
+  background-color: #DCDCDC;
+}
+
+.login button{
+  background-color: #800000; /* Maroon*/
+  border: none;
+  color: white;
+  padding: 2px 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  Width: 8em;
+}
