@@ -42,10 +42,8 @@ if (isset($_POST['id']) && isset($_POST['acct_num']) && isset($_POST['amount']))
                 $conn->multi_query($query2);
                 
             }
-        }
     }
-    
-}
+
 
 $conn->close();
 function mysql_entities_fix_string($conn, $string){
