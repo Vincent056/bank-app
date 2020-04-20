@@ -7,7 +7,7 @@
     $conn = new mysqli($servername, $user, $password, $db);
     if($conn->connect_error) die($conn->connect_error);
 
-    if (isset($_POST['id'])&&isset($_POST['start'])&&isset($_POST['end'])&&isset($_POST['dayinmonth'])&&isset($_POST['reciver_acc'])&&isset($_POST['amount'])){
+    if (isset($_POST['id'])&&isset($_POST['end'])&&isset($_POST['dayinmonth'])&&isset($_POST['reciver_acc'])&&isset($_POST['amount'])){
         
          $id = mysql_entities_fix_string($conn, $_POST['id']);
          $end = mysql_entities_fix_string($conn, $_POST['end']);
