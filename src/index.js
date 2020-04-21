@@ -11,6 +11,8 @@ import {ManagerLogin, manID,manuser} from './login/managerlogin.js'
 import ManagerDashboard from './manager/managerdashboard.js'
 import SignUpForm from './user_comp/SignUpForm.js'
 import Transfer from './user_comp/transaction.js'
+import MapContainer from './user_comp/BankMap.js'
+import ATM from './user_comp/atm.js'
 import './index.css';
 
 //connect to database here
