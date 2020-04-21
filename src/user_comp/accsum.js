@@ -103,14 +103,16 @@ class AccSum extends React.Component{
     }
     render(){
         return(
-            <div>
-                <button onClick={this.handleCancel}>Back</button>
-                <button onClick={this.handleDelete}>Delete This Account</button>  
+            <div className={styles.center}>
+				<div className={styles.topnav}>
+					<a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
+					<a><button className={styles.buttontopnav} onClick={this.handleDelete}>Delete This Account</button> </a> 
+				</div>
                 <h3>{(this.state.acc_type).toUpperCase()}</h3>
                 <h4>Account: {this.props.accid}</h4>
                 <p>Available balance:  {this.state.balance}</p><br></br>
-                <button onClick ={this.ViewTransactions}>Transactions</button>
-                <button onClick ={this.ViewBillings}>Billings</button>
+                <button className={styles.buttonsmall} onClick ={this.ViewTransactions}>Transactions</button>
+                <button className={styles.buttonsmall} onClick ={this.ViewBillings}>Billings</button>
                 {this.state.trans_view === true && 
                 <div>
                     {this.state.trans.length === 0 &&
