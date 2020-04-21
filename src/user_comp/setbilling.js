@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Bill from './bill.js'
 
 
 class Billing extends React.Component {
@@ -13,13 +14,12 @@ class Billing extends React.Component {
             amount: '',
             day: '',
             end: '',
-            billid:'',
             billing: [],
             message: "",
         }
         this.handleChange = this.handleChange.bind(this);
         this.submitAccount = this.submitAccount.bind(this);
-        this.DeleteBill = this.DeleteBill.bind(this)
+       
     }
     //go back to usermain
     handleCancel =() =>{
@@ -111,29 +111,26 @@ class Billing extends React.Component {
         this.showBilling()
     }
 
-    DeleteBill =(event) =>{
-        event.preventDefault()
+   
+    DeleteBilling = (id) =>{
+        console.log(id)
         let userInfo = new FormData();
-        userInfo.append('id',this.state.billid)
-
+        userInfo.append('id',id)
         axios({
             method: 'post',
             url: 'https://bank.cvs3.com/bank-app/api/cancelbilling.php',
             data: userInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
         }).then( (response) => {  
-            // handle success
             console.log(response.data)
+            this.setState({
+                showbill: false
+            })
         }).catch(function(error) {
             // handle error
             console.log(error)
         })
-    }
-    DeleteBilling = (id) =>{
-        console.log(id)
-        this.setState({
-            billid:id,
-        })
+        this.showBilling()
         
     }
     render(){
@@ -173,20 +170,11 @@ class Billing extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.billing.map((bill,index) => (
-                                <tr key = {bill.auto_billing_id}>
-                                    <td key ={index}>{bill.destination}</td>
-                                    <td  key ={index}>{bill.amount}</td>
-                                    <td  key ={index}>{bill.start_date}</td>
-                                    <td  key ={index}>{bill.end_date}</td>
-                                    <td  key ={index}>{bill.day}</td>
-                                    <td key ={index}>
-                                        <button onClick = {() => {this.DeleteBilling(bill.auto_billing_id)}}>
-                                            Cancel
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
+                        {this.state.billing.map(bil => (
+                            <Bill bill = {bil}
+                                key ={bil.auto_billing_id}
+                                delete = {() => this.DeleteBilling(bil.auto_billing_id)}/>
+                ))}
                         </tbody>
                     </table>
                     </div>}
