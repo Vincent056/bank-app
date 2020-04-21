@@ -25,3 +25,6 @@ git pull
 
 systemctl restart bank.service 
 after the update
+
+
+crontab -e to change schedule test
