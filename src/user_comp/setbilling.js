@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Bill from './bill.js'
-
+import styles from './../mystyle.module.css';
 
 class Billing extends React.Component {
     constructor(props){
@@ -136,8 +136,11 @@ class Billing extends React.Component {
     render(){
         
         return(
-            <div>
-            <form >
+            <div className={styles.center}>
+				<div className={styles.topnav}>
+					<a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
+				</div>
+            <form className={styles.billing}>
                 <h1>Set Up Billing</h1>
                 <label>Select the account</label><br></br>
                 <select  name = 'chosenacc'
@@ -153,7 +156,6 @@ class Billing extends React.Component {
                 ))}
                 </select><br></br>
                 <button onClick={this.submitAccount}>Submit</button>
-                <button onClick={this.handleCancel}>Cancel</button><br></br>
                 {this.state.showbill === true && this.state.billing.length !== 0 &&
                 <div>
                     <button onClick = {this.addBilling}>Add Billing</button><br></br>
@@ -185,7 +187,7 @@ class Billing extends React.Component {
                         </div>}
                     </form>
                     {this.state.addbill === true &&
-                    <form>
+                    <form className={styles.billing}>
                         <label>To Internal Account</label><br></br>
                         <input type ='text' 
                         onChange ={this.handleChange}

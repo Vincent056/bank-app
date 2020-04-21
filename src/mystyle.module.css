@@ -140,3 +140,35 @@ h1{
   display: inline-block;
   Width: 8em;
 }
+
+.selectbox {
+	font-size: 16px;
+	padding: 5px;
+	/*border-color: red;*/
+	border-radius: 5px;
+}
+
+.billing {
+  width: 1000px;
+  margin: auto;
+}
+
+.billing button{
+  background-color: #800000; /* Maroon*/
+  border: none;
+  color: white;
+  padding: 2px 0;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  Width: 8em;
+  margin: 2px;
+}
+
+.billing select {
+	font-size: 16px;
+	padding: 5px;
+	/*border-color: red;*/
+	border-radius: 5px;
+}
