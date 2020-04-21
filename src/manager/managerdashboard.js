@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios'
+import styles from './../mystyle.module.css';
 
 class ManagerDashboard extends React.Component {
     constructor(props) {
@@ -94,13 +95,16 @@ class ManagerDashboard extends React.Component {
             return <Redirect to="/managerlogin/" />
         }
         return (
-            <div>
-                <h1>Welcome {this.props.man_user}</h1>
+            <div className={styles.center}>
+				<div className={styles.topnav}>
+                    <a>Welcome {this.props.man_user}</a>\
+					<a><button className={styles.buttontopnav} onClick={this.logout}>Log Out</button></a>
+                </div>
                 <p>Fill out the following to perform a search. Attribute is the column being searched, input is what is being searched for.</p>
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Customer Attribute:  </label>
-                        <select onChange={this.handleChange}
+                        <select className={styles.selectbox} onChange={this.handleChange}
                             name='attribute'
                             value={this.state.attribute}>
                             <option value=''>Chose An Attribute</option>
@@ -121,8 +125,8 @@ class ManagerDashboard extends React.Component {
                             name="input"
                             value={this.state.input}
                             onChange={this.handleChange}
-                        />  
-                    <button className ='button' onClick={this.handleSubmit}>Submit</button>
+                        />   <br/>
+                    <button className={styles.buttonsmall} onClick={this.handleSubmit}>Submit</button>
                 </form>
                 <p className='error'>{this.state.message}</p>
                 {this.state.showdashboard === true &&
@@ -162,7 +166,6 @@ class ManagerDashboard extends React.Component {
                             ))}
                         </tbody>
                     </table>}
-                <button className='button' onClick={this.logout}>Log Out</button>
             </div>
         );
     }
