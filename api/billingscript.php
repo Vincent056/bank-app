@@ -16,7 +16,7 @@
     echo date("Y-m-d h:i:sa") . ": script started";
     echo "\r\n";
     echo date("j");
-    $query = "SELECT * FROM automated_billing WHERE start_date <= '$today' AND end_date >= '$today' AND day = date("j") AND last_date < '$today' or last_date is NULL;";
+    $query = "SELECT * FROM automated_billing WHERE start_date <= '$today' AND end_date >= '$today' AND last_date < '$today' or last_date is NULL;";
     $result = $conn -> query($query);
     if (!$result) die (mysql_fatal_error());
     $rows = $result->num_rows;
