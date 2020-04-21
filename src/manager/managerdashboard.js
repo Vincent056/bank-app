@@ -15,7 +15,7 @@ class ManagerDashboard extends React.Component{
             input: "", 
 			firstname: '',
             lastname: '',
-            showdashboar: false, 
+            showdashboard: false, 
 			Dashboard: [],
 			loggedOut: false
         }
@@ -23,7 +23,7 @@ class ManagerDashboard extends React.Component{
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit(event){
+    handleSubmit= (event) =>{
         event.preventDefault();
         let formData = new FormData();
 
@@ -32,21 +32,20 @@ class ManagerDashboard extends React.Component{
         
        
         axios({
-           method: 'post',
-             url: 'https://bank.cvs3.com/bank-app/api/managerquery.php',
-             data: formData,
-             config: {headers: {'Content-Type':'x-www-form-urlencoded'}}
-         }).then(function (response) {
-             this.setState({
-                 Dashboard: response.data,
-                 showdashboar: true
-             })
-             console.log(response)
-         }).catch(function(response) {
-             // handle error
-             console.log(response)
-         });
-
+            method: 'post',
+              url: 'https://bank.cvs3.com/bank-app/api/managerquery.php',
+              data: formData,
+              config: {headers: {'Content-Type':'x-www-form-urlencoded'}}
+          }).then((response) => {
+             console.log(response.data)
+              this.setState({
+                  Dashboard: response.data,
+                  showdashboard: true
+              })
+          }).catch(function(response) {
+              // handle error
+              console.log(response)
+          });
 
     }
 	
@@ -98,7 +97,7 @@ class ManagerDashboard extends React.Component{
                     </label>
                     <button onClick={this.handleSubmit}>Submit</button>
                 </form>
-                {this.state.showdashboar === true &&
+                {this.state.showdashboard === true &&
                 <table>
                     <thead>
                         <tr>
