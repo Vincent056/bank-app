@@ -9,7 +9,7 @@
     if (isset($_POST['id'])){
         $id = mysql_entities_fix_string($conn, $_POST['id']);
 
-            $query = "SELECT destination,amount,start_date,end_date,day FROM automated_billing 
+            $query = "SELECT auto_billing_id,destination,amount,start_date,end_date,day FROM automated_billing 
                     WHERE bank_account_account_id = '$id'";
              $result = $conn->query($query);
              $json_array = array();
