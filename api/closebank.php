@@ -12,7 +12,7 @@ $conn = new mysqli($servername, $user, $password, $db) or die("Connect failed: %
 if (isset($_POST['acc_id'])){
     $acc_id = mysql_entities_fix_string($conn, $_POST['acc_id']);
     $query = 
-            "DELETE FROM bank_account WHERE account_id = '$acc_id'";
+            "UPDATE bank_account SET status = 'close' WHERE bank_account.account_id = $acc_id; ";
     $result = $conn->query($query);
    
     if(!$result) die("Database access failed:" .$conn->error);
