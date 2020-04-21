@@ -33,7 +33,7 @@ class ManagerDashboard extends React.Component{
        
         axios({
            method: 'post',
-             url: 'http://bank.cvs3.com/bank-app/api/managerquery.php',
+             url: 'https://bank.cvs3.com/bank-app/api/managerquery.php',
              data: formData,
              config: {headers: {'Content-Type':'x-www-form-urlencoded'}}
          }).then(function (response) {
