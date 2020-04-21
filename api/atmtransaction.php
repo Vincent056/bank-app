@@ -40,8 +40,8 @@
                     $result = $conn->query($query);
 
                     //Update balance value by subtracting the amount value specified by user
-                    $query = "UPDATE bank_account SET balance = balance - '$amount' WHERE bank_account_id = '$acc_id'";
-                    $result = $conn->query($query);
+                    $query2 = "UPDATE bank_account SET balance = balance - '$amount' WHERE bank_account_id = '$acc_id'";
+                    $result = $conn->query($query2);
                     echo "withdraw";
                     $result->close();
                 }
