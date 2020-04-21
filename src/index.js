@@ -48,6 +48,12 @@ class App extends React.Component{
                  <Route exact path = "/transfer/" render = {() => 
                     <Transfer cus_id = {id}></Transfer>
                 } />
+                <Route exact path="/map/" render = {() => 
+                  <MapContainer />
+                } />
+                <Route exact path="/atm/" render = {() => 
+                  <ATM />
+                } />
             </Switch>
         </main>
     )}
@@ -58,4 +64,3 @@ ReactDOM.render(
         <App />
     </BrowserRouter>,
  document.getElementById("root"));
-
