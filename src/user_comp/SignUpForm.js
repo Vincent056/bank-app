@@ -28,7 +28,18 @@ class SignUpForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /**
+     * Check user input
+     * Return E if one of the fields is empty
+     * Return OK if everything is format correctly
+     * Return error code according to the field
+     */
     checkInput = () => {
+        const state = /^[A-Z]{2}$/
+        const zip = /^[0-9]{5}$/
+        const phone = /^[0-9]{10}$/
+        const email = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+        const ssn = /^[0-9]{9}$/
         if (this.state.firstName === ""
             || this.state.lastName === ""
             || this.state.street === ""
@@ -41,10 +52,16 @@ class SignUpForm extends Component {
             || this.state.userPassword === ""
             || this.state.userConfirmPassword === ""
             || this.state.ssn === "")
-            return false;
-        else return true;
+            return 'E';
+        else if (!(state.test(this.state.stateInCountry))) return 'S'
+        else if (!(zip.test(this.state.zipCode))) return 'Z'
+        else if (!(phone.test(this.state.phone))) return 'P'
+        else if (!(email.test(this.state.userEmail))) return 'EM'
+        else if (!(ssn.test(this.state.ssn))) return 'SN'
+        else return 'OK';
     }
 
+    //store user input in to state variables
     handleChange(event) {
         const { name, value } = event.target
         this.setState({
@@ -52,10 +69,11 @@ class SignUpForm extends Component {
         })
     }
 
+    //check user input, if pass then make an API call to create an new user account
     handleSubmit(event) {
         event.preventDefault();
-
-        if (this.checkInput()) {
+        let check = this.checkInput()
+        if (check === 'OK') { //input check pass
             let formData = new FormData();
             formData.append('first_name', this.state.firstName);
             formData.append('last_name', this.state.lastName);
@@ -71,49 +89,75 @@ class SignUpForm extends Component {
             formData.append('userConfirmPassword', this.state.userConfirmPassword);
             formData.append('ssn', this.state.ssn);
 
-            var self = this;
             axios({
                 method: 'post',
                 url: 'https://bank.cvs3.com/bank-app/api/userSignUp.php',
                 data: formData,
                 config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
-            }).then(function (response) {
+            }).then((response) => {
                 // Successfully added user
                 // Redirect user to login page
                 // Determine how to successfully add a user
                 // console.log(response.data.customerAdded);
                 if (response.data.customerAdded === true) {
-                    self.login();
+                    {
+                        this.setState({
+                            message: 'User Created! Please go back to Login.'
+                        })
+                    }
                 }
-                console.log(response)
             }).catch(function (error) {
                 // handle error
                 console.log(error)
             });
-        } else {
+
+        } else if (check === 'E') { 
             this.setState({
                 message: 'Please fill out required fields!',
             })
         }
+        else if (check === 'S') {
+            this.setState({
+                message: 'Invalid State format!',
+                stateInCountry: ''
+            })
+        }
+        else if (check === 'Z') {
+            this.setState({
+                message: 'Invalid Zip Code format!',
+                zipCode: ''
+            })
+        }
+        else if (check === 'P') {
+            this.setState({
+                message: 'Invalid Phone format!',
+                phone: ''
+            })
+        }
+        else if (check === 'EM') {
+            this.setState({
+                message: 'Invalid Email format!',
+                userEmail: ''
+            })
+        }
+        else if (check === 'SN') {
+            this.setState({
+                message: 'Invalid SSN format!',
+                ssn: ''
+            })
+        }
+
     }
 
+    //set state to go back
     handleCancel = () => {
         this.setState({
             goBack: true
         })
     }
 
-    login = () => {
-        this.setState({
-            loginRedirect: true
-        })
-    }
-
+    //render the page
     render() {
-        if (this.state.loginRedirect) {
-            return <Redirect to="/" />
-        }
-
         if (this.state.goBack) {
             return <Redirect to="/" />
         }
@@ -213,7 +257,7 @@ class SignUpForm extends Component {
                             Mobile Number *:
                     </label> <br />
                         <input
-                            type="tel"
+                            type="text"
                             name="phone"
                             pattern="[0-9]{10}" required
                             title="Please enter only numbers"
