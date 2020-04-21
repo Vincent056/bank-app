@@ -6,13 +6,15 @@
     $conn = new mysqli($servername, $user, $password, $db);
     if($conn->connect_error) die($conn->connect_error);
 
-    if(isset($_POST['attribute']) && isset($_POST['input'])){
+    if(isset($_POST['attribute']) && isset($_POST['input']) && isset($_POST['man_id'])){
             
         $input = mysql_entities_fix_string($conn, $_POST['input']);
         $attribute = mysql_entities_fix_string($conn, $_POST['attribute']);
+        $man_id = mysql_entities_fix_string($conn, $_POST['man_id']);
 
         $query = "SELECT customer_id, address_id, username, first_name, last_name, street, apartment_number, city, state, zip_code, email, phone 
-        FROM customer INNER JOIN address ON customer.address_address_id = address.address_id WHERE $attribute = '$input'";
+        FROM customer INNER JOIN address ON customer.address_address_id = address.address_id 
+        WHERE $attribute = '$input' AND bank_manager_manager_id = '$man_id'";
     
         $result = $conn->query($query);
         if(!$result) die("Database access failed:" .$conn->error);
