@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom';
 import axios from 'axios';
+import styles from './../mystyle.module.css';
 
 //import Account from './account.js';
 //import {myaccounts} from './usermain.js';
@@ -55,16 +56,16 @@ class OpenAcc extends React.Component{
         } 
         
         return(
-            <div>
+            <div className={styles.center}>
             <form >
                 <h1>Open New Account</h1>
-                <select value ={this.state.acctype}
+                <select className={styles.selectbox} value ={this.state.acctype}
                         onChange={this.handleChange} >
                         <option value= "checking">Checking </option>
                         <option value= "saving">Saving </option>
                     </select>
-                <button onClick={this.handleSubmit}>Submit</button>
-                <button onClick={this.handleCancel}>Back</button>
+                <button className={styles.buttonsmall} onClick={this.handleSubmit}>Submit</button>
+                <button className={styles.buttonsmall} onClick={this.handleCancel}>Back</button>
             </form>
             <div>{this.state.message}</div>
             </div>
