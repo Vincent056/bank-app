@@ -10,6 +10,16 @@
 //$_POST = json_decode(file_get_contents("php://input"),true);
 if (isset($_POST['id'])){
     $id = intval($_POST['id']);
+
+    $query = "SELECT first_name, last_name 
+            FROM customer WHERE customer_id = $id";
+    $result = $conn->query($query);
+    if(!$result) die("Database access failed:" .$conn->error);
+    
+    $json_array = array();
+    $row = mysqli_fetch_assoc($result);
+    $json_array[] = $row;
+
     $query = "SELECT first_name, last_name, account_id, account_type, balance, status
     FROM bank_account LEFT OUTER JOIN customer
            ON customer.customer_id = bank_account.customer_customer_id
@@ -18,7 +28,6 @@ if (isset($_POST['id'])){
     $result = $conn->query($query);
     if(!$result) die("Database access failed:" .$conn->error);
     
-    $json_array = array();
     while($row = mysqli_fetch_assoc($result)){
 	$json_array[] = $row;
     }
