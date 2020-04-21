@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import styles from './../mystyle.module.css';
 
 class Transfer extends React.Component {
     constructor(props) {
@@ -63,8 +64,11 @@ class Transfer extends React.Component {
     render() {
 
         return (
-            <div>
-                <form >
+            <div className={styles.center}>
+				<div className={styles.topnav}>
+					<a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
+				</div>
+                <form className={styles.billing}>
                     <h1>Transfer Money</h1>
                     <label>Transfer From</label><br></br>
                     <select name='accfrom'
@@ -117,7 +121,6 @@ class Transfer extends React.Component {
                         onChange={this.handleChange}
                         value={this.state.amount} ></input><br></br>
                     <button onClick={this.handleSubmit}>Submit</button>
-                    <button onClick={this.handleCancel}>Back</button>
                 </form>
                 <div>{this.state.message}</div>
             </div>

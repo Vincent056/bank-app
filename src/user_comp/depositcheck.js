@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect} from 'react-router-dom';
 import axios from 'axios';
+import styles from './../mystyle.module.css';
 
 class Check extends React.Component{
     constructor(props){
@@ -50,8 +51,11 @@ class Check extends React.Component{
     render(){
         
         return(
-            <div>
-            <form >
+            <div className={styles.center}>
+			<div className={styles.topnav}>
+				<a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
+			</div>
+            <form className={styles.billing}>
                 <h1>Deposit Check</h1>
                 <label>Choose An Account</label><br></br>
                 <select  name = 'accid'
@@ -68,9 +72,8 @@ class Check extends React.Component{
                 <input type ='text' 
                         onChange ={this.handleChange}
                         name = 'amount'
-                        value = {this.state.amount}></input>
+                        value = {this.state.amount}></input> <br/>
                 <button onClick ={this.handleSubmit}>Deposit</button>
-                <button onClick ={this.handleCancel}>Back</button>
             </form>
             {this.state.message}
             </div>

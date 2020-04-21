@@ -68,6 +68,10 @@ class UpdateInfo extends React.Component {
         } 
         
         return(
+		<div className={styles.center}>
+			<div className={styles.topnav}>
+				<a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
+			</div>
             <form className={styles.signup}>
                 <h1>Update Information</h1>
                 <label>Email</label><br></br>
@@ -107,8 +111,8 @@ class UpdateInfo extends React.Component {
                     onChange={this.handleChange}
                     value = {this.state.aptnum}></input><br></br>
                 <button onClick={this.handleSubmit}>Submit</button> <br/>
-                <button onClick={this.handleCancel}>Cancel</button>
             </form>
+		</div>
         )
     }
 }
