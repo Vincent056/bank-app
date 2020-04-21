@@ -55,6 +55,7 @@
   display: inline-block;
   font-size: 12px;
   Width: 8em;
+  border: 1px solid black;
 }
 
 .center {
@@ -118,6 +119,7 @@
   display: inline-block;
   font-size: 12px;
   Width: 8em;
+  border: 1px solid black;
 }
 
 .login {
@@ -138,4 +140,10 @@
   display: inline-block;
   font-size: 12px;
   Width: 8em;
+  border: 1px solid black;
+}
+
+.selectbox {
+	font-size: 16px;
+	padding: 5px;
 }
