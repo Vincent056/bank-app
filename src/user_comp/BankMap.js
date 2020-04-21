@@ -11,7 +11,7 @@ const mapStyles = {
     height: "80%",
 };
 
-const googleAPIKey = "AIzaSyAJftp0WQ5M0EYPhGCzVBwoiHtA9v8wZLc";
+const googleAPIKey = "AIzaSyDd8m06Lceut97wZDlpKXejybNGXnjqbyM";
 const proxyCorsSite = "https://cors-anywhere.herokuapp.com/";
 
 export class MapContainer extends Component {
@@ -249,5 +249,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: "AIzaSyAJftp0WQ5M0EYPhGCzVBwoiHtA9v8wZLc",
+    apiKey: "AIzaSyDd8m06Lceut97wZDlpKXejybNGXnjqbyM",
 })(MapContainer);
