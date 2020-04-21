@@ -8,6 +8,7 @@ import Transfer from './transaction.js'
 import Billing from './setbilling.js'
 import ATM from './atm.js'
 import Check from './depositcheck.js'
+import MapContainer from './BankMap.js'
 
 class UserPage extends React.Component {
     constructor(props) {
@@ -199,14 +200,15 @@ class UserPage extends React.Component {
         }
         //go to find atm
         if (this.state.toatm) {
-            return (
-                <div>
-                    <p>Mapping class or something goes here. Each Atm location found
-                    will have this button (just an ATM simulation)</p>
-                    <button onClick={this.fakeatm}>Choose this ATM (Simulation)</button>
-                    <button onClick={this.backfindatm}>Back</button>
-                </div>
-            )
+            // return (
+            //     <div>
+            //         <p>Mapping class or something goes here. Each Atm location found
+            //         will have this button (just an ATM simulation)</p>
+            //         <button onClick={this.fakeatm}>Choose this ATM (Simulation)</button>
+            //         <button onClick={this.backfindatm}>Back</button>
+            //     </div>
+            // )
+            return <Redirect to="/map/" />
         }
         //go to atm simulation
         if (this.state.openatm) {
