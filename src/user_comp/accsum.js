@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import styles from './../mystyle.module.css';
 
-//import Account from './account.js';
-//import {myaccounts} from './usermain.js';
 
 
 class AccSum extends React.Component{
@@ -69,15 +67,14 @@ class AccSum extends React.Component{
     handleCancel =() =>{
         this.props.goback()
     }
-    handleDelete =(event) =>{
+    async handleDelete(event){
         event.preventDefault();
 
         let userInfo = new FormData();
         userInfo.append('acc_id',this.props.accid)
-        axios({
+        await axios({
             method: 'post',
             url: 'https://bank.cvs3.com/bank-app/api/closebank.php',
-            //url: 'http://localhost/openbank.php',
             data: userInfo,
             config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
         }).then( (response) => {  

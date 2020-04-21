@@ -1,6 +1,60 @@
 .account{
-    border: 1px solid black;
+    border-bottom: 1px solid #800000;
+    border-top: 1px solid #800000;
     display: block;
-    width: 220px;
+    width: 300px;
     font-size: 16px;
+    border-radius: 5px;
+    background-color:#edebe9;
+}
+.acc_money{
+    text-align: left;
+    font-size: 30px;
+    height: 5px;
+}
+.acc_name{
+    text-align:left;
+    height: 2px;
+}
+h1{
+    font: bold 40px Verada;
+}
+h2{
+    font: bold 26px Galdugi;
+}
+label{
+    font: bold 20px Garamond;
+}
+input{
+    font: 20px Garamond;
+    border-radius: 10px;
+}
+.login_butt{
+    width: 150%;
+    height: 30px;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+    
+}
+button:hover{
+    background-color: darkgray;
+    color: white;
+  }
+ button:active {
+    background-color: #800000;
+    box-shadow: 0 5px #4f4d4d;
+    transform: translateY(2px);
+  }
+.signup {
+    background-color: #800000;
+    font-size: 35px;
+    width: 550px;
+    padding: 5px;
+    color: white;
+    
+}
+.error{
+    font: 16px Verada;
+    height: 20px;
+    color: red;
 }

@@ -1,22 +1,29 @@
 import React from 'react';
 
 
-class Account extends React.Component{
-    
+class Account extends React.Component {
+
     accsummary = () => {
         this.props.sum()
     }
-    render(){
+    formatAmount(balance) {
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
 
-        return(
+        return formatter.format(balance);
+    }
+    render() {
+
+        return (
             <div>
-            <button className = 'account' 
+                <button className='account'
                     onClick={this.accsummary}>
-                            <li>ID: {this.props.acc.account_id}</li> 
-                            <li>Type: {this.props.acc.account_type}</li>
-                            <li>Balance: {this.props.acc.balance}</li>
-                            <li>Status: {this.props.acc.status}</li>
-                        </button>
+                    <p className ='acc_name'>SILICON  {this.props.acc.account_type.toUpperCase()}   -   {this.props.acc.account_id}</p>
+                    <p className = 'acc_money' >{this.formatAmount(this.props.acc.balance)}</p>
+                    <p className ='acc_name'> {this.props.acc.status}</p>
+                </button><br></br>
             </div>
         )
     }

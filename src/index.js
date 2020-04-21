@@ -7,11 +7,10 @@ import OpenAcc from './user_comp/openbank.js'
 import Billing from './user_comp/setbilling.js'
 import UpdateInfo from './user_comp/update_Info.js'
 import {LoginPage, id} from './login/loginpage.js'
-import {ManagerLogin, manID} from './login/managerlogin.js'
+import {ManagerLogin, manID,manuser} from './login/managerlogin.js'
 import ManagerDashboard from './manager/managerdashboard.js'
 import SignUpForm from './user_comp/SignUpForm.js'
 import Transfer from './user_comp/transaction.js'
-
 import './index.css';
 
 //connect to database here
@@ -32,7 +31,7 @@ class App extends React.Component{
                     <ManagerLogin/>
                 } />
 				<Route exact path = "/managerdashboard/" render = {() => 
-                    <ManagerDashboard man_id = {manID}></ManagerDashboard>
+                    <ManagerDashboard man_id = {manID} man_user ={manuser}></ManagerDashboard>
                 } />
                 <Route path = "/usermain/" render = {(props) => 
                     <UserPage cus_id = {id} {...props} ></UserPage>

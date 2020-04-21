@@ -205,7 +205,7 @@ class Billing extends React.Component {
                         name = 'day'
                         value = {this.state.day}></input><br></br>
 
-                        <label>End Date (optional)</label><br></br>
+                        <label>End Date</label><br></br>
                         <input type ='text' pattern ='YYYY-MM-DD'
                         placeholder = "YYYY-MM-DD"
                         onChange ={this.handleChange}
