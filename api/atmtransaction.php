@@ -30,7 +30,7 @@
                 $row = $result->fetch_array();
                 $balance = $row['balance'];
 
-                if($balance < $amount){
+                if($balance - $amount < 0){
                     echo "Not enough funds to withdraw set amount";
                     //return
                     $id = 0;
