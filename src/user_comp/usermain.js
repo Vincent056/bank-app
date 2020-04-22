@@ -1,14 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import styles from './../mystyle.module.css';
+import styles from './../styles/mystyle.module.css';
 import Account from './account.js';
 import AccSum from './accsum.js'
 import Transfer from './transaction.js'
 import Billing from './setbilling.js'
 import ATM from './atm.js'
 import Check from './depositcheck.js'
-import MapContainer from './BankMap.js'
 
 class UserPage extends React.Component {
     constructor(props) {
@@ -208,7 +207,10 @@ class UserPage extends React.Component {
             //         <button onClick={this.backfindatm}>Back</button>
             //     </div>
             // )
-            return <Redirect to="/map/" />
+            return <Redirect to={{
+                pathname: '/map/',
+                state: {customer_accounts: this.state.accounts} }}
+            />
         }
         //go to atm simulation
         if (this.state.openatm) {
