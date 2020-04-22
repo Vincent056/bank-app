@@ -6,13 +6,21 @@ class ATM extends React.Component{
     constructor(props){
         super(props)
         this.state ={
-            accid: this.props.accounts[0].account_id,
+            accounts: this.props.location.state.customer_accounts,
+            accid: '',
             amount: 0,
             type: '',
-            message: ''
+            message: '',
+            goback: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleCancel =() =>{
+        this.setState({
+            goback: true
+        })
     }
     
     handleSubmit= (event) => {
@@ -31,7 +39,7 @@ class ATM extends React.Component{
             // handle success
             console.log(response.data)
             this.setState({
-                message: "Transaction Complete!"
+                message: "Transaction Complete!",
             })
         }).catch(function(error) {
             // handle error
@@ -45,41 +53,41 @@ class ATM extends React.Component{
             [name]: value
         })
     }
-    handleCancel =() =>{
-        this.props.goback()
-    }
+
     render(){
-        
+        if(this.state.goback){
+            return <Redirect to='/usermain/'/>
+        }
         return(
             <div>
-            <form >
-                <h1>ATM</h1>
-                <label>Choose An Account</label><br></br>
-                <select  name = 'accid'
-                        value = {this.state.accfrom}
-                        onChange={this.handleChange} >
-                             {this.props.accounts.map(account => (
-                           <option key = {account.account_id}
-                                value= {account.account_id}>{account.account_id} 
-                                        - {account.account_type}: {account.balance} </option>
-                            ))}    
-                    </select><br></br><br></br>
-                    <select  name = 'type'
-                        value = {this.state.type}
-                        onChange={this.handleChange} >
-                             <option value = ''>Deposit/Withdraw</option>
-                             <option value = 'deposit'>Deposit</option>
-                             <option value = 'withdraw'>Withdraw</option> 
-                    </select><br></br>
-                <label>Amount</label><br></br>
-                <input type ='text' 
-                        onChange ={this.handleChange}
-                        name = 'amount'
-                        value = {this.state.amount}></input>
-                <button onClick ={this.handleSubmit}>Go</button>
-                <button onClick ={this.handleCancel}>Back To Bank</button>
-            </form>
-            {this.state.message}
+                <form>
+                    <h1>ATM</h1>
+                    <label>Choose An Account</label><br></br>
+                    <select name = 'accid'
+                            value = {this.state.accfrom}
+                            onChange={this.handleChange} >
+                                {this.state.accounts.map(account => (
+                            <option key = {account.account_id}
+                                    value= {account.account_id}>{account.account_id} 
+                                            - {account.account_type}: {account.balance} </option>
+                                ))}    
+                        </select><br></br><br></br>
+                        <select  name = 'type'
+                            value = {this.state.type}
+                            onChange={this.handleChange} >
+                                <option value = ''>Deposit/Withdraw</option>
+                                <option value = 'deposit'>Deposit</option>
+                                <option value = 'withdraw'>Withdraw</option> 
+                        </select><br></br>
+                    <label>Amount</label><br></br>
+                    <input type ='text' 
+                            onChange ={this.handleChange}
+                            name = 'amount'
+                            value = {this.state.amount}></input>
+                    <button onClick ={this.handleSubmit}>Go</button>
+                    <button onClick ={this.handleCancel}>Back To Bank</button>
+                </form>
+                {this.state.message}
             </div>
         )
     }
