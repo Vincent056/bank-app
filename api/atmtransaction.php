@@ -34,7 +34,7 @@
 
                 if($balance - $amount < 0){
                     echo "Not enough funds to withdraw set amount";
-                    echo strval($balance);
+                    echo "<script>console.log('Debug Objects: " . $balance . "' );</script>";
                     //return
                     $id = 0;
                     echo json_encode(strval($id));
