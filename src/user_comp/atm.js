@@ -74,8 +74,7 @@ class ATM extends React.Component {
                     <select name='accid'
                         value={this.state.accid}
                         onChange={this.handleChange} >
-                        //{this.state.accounts.map(account => (
-                        {this.props.accounts.map(account => (
+                        {this.state.accounts.map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>{account.account_id}
                                             - {account.account_type}: {account.balance} </option>
