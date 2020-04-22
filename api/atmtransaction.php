@@ -33,7 +33,7 @@
 
                 if($balance - $amount < 0){
                     echo "Not enough funds to withdraw set amount";
-                    strval($balance);
+                    echo strval($balance);
                     //return
                     $id = 0;
                     echo json_encode(strval($id));
