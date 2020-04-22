@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import styles from './../styles/mystyle.module.css';
+import styles from './../mystyle.module.css';
 import Account from './account.js';
 import AccSum from './accsum.js'
 import Transfer from './transaction.js'
