@@ -190,6 +190,10 @@ export class MapContainer extends Component {
             />
         }
 
+        if(this.state.goBack){
+            return <Redirect to="/usermain/" />
+        }
+
         return (
             <div>
                 <form onSubmit={(event) => this.updateMap(event)}>
