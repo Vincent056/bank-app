@@ -36,9 +36,8 @@ if(isset($_POST['id']) && isset($_POST['street']) && isset($_POST['city']) && is
     $query2 .= "UPDATE customer SET email = '$email', phone = '$phone' WHERE customer.customer_id = $id;";
     
     $conn->multi_query($query2);
-    echo "Updated";
+    echo "OK";
 }
-else echo "Missing Info";
 $conn->close();
 
 function mysql_entities_fix_string($conn, $string){
