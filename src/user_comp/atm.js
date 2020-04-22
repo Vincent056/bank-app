@@ -31,11 +31,13 @@ class ATM extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-
+        console.log(this.state.accid)
+        console.log(this.state.amount)
+        console.log(this.state.type)
         let userInfo = new FormData();
-        userInfo.append('acc_id',this.state.accid)
-        userInfo.append('amount',this.state.amount)
-        userInfo.append('type',this.state.type)
+        userInfo.append('acc_id', this.state.accid)
+        userInfo.append('amount', this.state.amount)
+        userInfo.append('type', this.state.type)
         axios({
             method: 'post',
             url: 'https://bank.cvs3.com/bank-app/api/atmtransaction.php',
@@ -70,7 +72,7 @@ class ATM extends React.Component {
                     <h1>ATM</h1>
                     <label>Choose An Account</label><br></br>
                     <select name='accid'
-                        value={this.state.accfrom}
+                        value={this.state.accid}
                         onChange={this.handleChange} >
                         {this.state.accounts.map(account => (
                             <option key={account.account_id}
