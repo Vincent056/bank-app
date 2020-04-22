@@ -13,7 +13,7 @@
          $query = 
         "DELETE FROM automated_billing WHERE auto_billing_id = '$billid';";
         $result = $conn->query($query);   
-        $result->close();
+      
         $conn->close();   
     }
 
