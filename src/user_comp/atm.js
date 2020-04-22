@@ -6,8 +6,9 @@ class ATM extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            accounts: this.props.location.state.customer_accounts,
-            accid: '',
+            //accounts: this.props.location.state.customer_accounts,
+            //accid: '',
+            accid: this.props.accounts[0].account_id,
             amount: 0.00,
             type: '',
             message: '',
@@ -74,7 +75,8 @@ class ATM extends React.Component {
                     <select name='accid'
                         value={this.state.accid}
                         onChange={this.handleChange} >
-                        {this.state.accounts.map(account => (
+                        //{this.state.accounts.map(account => (
+                        {this.props.accounts.map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>{account.account_id}
                                             - {account.account_type}: {account.balance} </option>
