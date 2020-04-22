@@ -8,7 +8,7 @@ class ATM extends React.Component {
         this.state = {
             accounts: this.props.location.state.customer_accounts,
             accid: '',
-            amount: 0,
+            amount: 0.00,
             type: '',
             message: '',
             goback: false
@@ -86,7 +86,7 @@ class ATM extends React.Component {
                         <option value='withdraw'>Withdraw</option>
                     </select><br></br>
                     <label>Amount</label><br></br>
-                    <input type='text'
+                    <input type='number' step='0.01'
                         onChange={this.handleChange}
                         name='amount'
                         value={this.state.amount}></input>
