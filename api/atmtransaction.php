@@ -11,6 +11,8 @@
         $amount = mysql_entities_fix_string($conn, $_POST['amount']);
         $type = mysql_entities_fix_string($conn, $_POST['type']);
 
+        $amount = floatval($amount);
+
             if($type == 'deposit'){
                 $query = "INSERT into transaction(transaction_type, amount, date, bank_account_account_id) 
                          values('Deposit', '$amount', sysdate(), '$acc_id')";
@@ -28,7 +30,7 @@
                 $row = $result->fetch_array();
                 $balance = $row['balance'];
 
-                if($balance < floatval($amount)){
+                if($balance < $amount){
                     echo "Not enough funds to withdraw set amount";
                     //return
                     $id = 0;
