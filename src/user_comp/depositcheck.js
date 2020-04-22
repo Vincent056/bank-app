@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import styles from './../mystyle.module.css';
 
@@ -7,7 +6,7 @@ class Check extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            accid: this.props.accounts[0].account_id,
+            accid: '',
             amount: 0.00,
             preview_file: null,
             file: null,
@@ -18,7 +17,7 @@ class Check extends React.Component {
         this.previewImage = this.previewImage.bind(this);
     }
     checkInput() {
-        if (this.state.file === null
+        if (this.state.file === null || this.state.accid === ''
             || this.state.amount === 0.00) return "E"
         else if (this.state.file.type !== "image/jpeg"
             && this.state.file.type !== "image/png"
@@ -47,7 +46,6 @@ class Check extends React.Component {
                 config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
             }).then((response) => {
                 // handle success
-                console.log(response.data)
                 this.setState({
                     message: "Deposit Complete!"
                 })
@@ -63,7 +61,7 @@ class Check extends React.Component {
         }
         else if (check === "I") {
             this.setState({
-                message: "Invalid file type!"
+                message: 'Invalid file type! The allowed file types are .jpg, .jpeg, and .png'
             })
         }
         else if (check === "A") {
@@ -75,7 +73,8 @@ class Check extends React.Component {
     handleChange = (event) => {
         const { name, value } = event.target
         this.setState({
-            [name]: value
+            [name]: value,
+            message: ''
         })
     }
     handleCancel = () => {
@@ -89,19 +88,21 @@ class Check extends React.Component {
                     <a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
                 </div>
                 <form className={styles.billing}>
-                    <h1>Deposit Check</h1>
+                    <h1 className='deposit'>Deposit Check</h1>
                     <input type='file'
                         onChange={this.previewImage}
                         name='file'></input><br></br>
                     <img src={this.state.preview_file} width='400' height='200' /><br></br>
                     <label>Choose An Account</label><br></br>
                     <select name='accid'
-                        value={this.state.accfrom}
+                        value={this.state.accid}
                         onChange={this.handleChange} >
+                        <option value=''> </option>
                         {this.props.accounts.map(account => (
                             <option key={account.account_id}
-                                value={account.account_id}>{account.account_id}
-                                        - {account.account_type}: {account.balance} </option>
+                                value={account.account_id}>
+                                {account.account_id} - {account.account_type.toUpperCase()}: ${account.balance}
+                            </option>
                         ))}
                     </select><br></br><br></br>
                     <label>Amount</label><br></br>
@@ -109,10 +110,10 @@ class Check extends React.Component {
                         onChange={this.handleChange}
                         name='amount'
                         value={this.state.amount}></input>
-                    <button onClick={this.handleSubmit}>Deposit</button>
-                    <p className = 'error'>{this.state.message}</p>
+                    <button className='submit_butt' onClick={this.handleSubmit}>Deposit</button>
+                    <p className='error'>{this.state.message}</p>
                 </form>
-                
+
             </div>
         )
     }

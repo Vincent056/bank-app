@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import chase_icon from "../chase_icon.png";
 import { Redirect } from 'react-router-dom';
-
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
-
 import axios from "axios";
+import styles from './../mystyle.module.css';
+
 
 const mapStyles = {
     width: "80%",
@@ -31,10 +31,11 @@ export class MapContainer extends Component {
             showATM: false,
             activeMarker: {},
             selectedPlace: {},
+            message: ''
         };
     }
 
-    handleCancel =() =>{
+    handleCancel = () => {
         this.setState({
             goBack: true
         })
@@ -52,7 +53,6 @@ export class MapContainer extends Component {
         axios
             .get(endPoint + new URLSearchParams(parameters))
             .then((response) => {
-                console.log(response);
                 return response.data.results;
             })
             .then(
@@ -61,24 +61,22 @@ export class MapContainer extends Component {
                         places: placesData,
                         noError: true,
                     });
-                    console.log(placesData);
                     if (placesData.length) {
                         return placesData;
                     } else {
-                        alert("No Chase ATMs nearby. Please search again.");
                         this.setState({
                             search: "",
+                            message: "No Chase ATMs nearby. Please search again."
                         });
                     }
                 },
                 (error) => {
                     if (error) {
-                        alert(
-                            "Unable to connect to database currently. Please try again."
-                        );
+
                         this.setState({
                             places: [],
                             noError: false,
+                            message: "Unable to connect to database currently. Please try again."
                         });
                         return error;
                     }
@@ -104,7 +102,6 @@ export class MapContainer extends Component {
             //         }
             //     )
             .then((response) => {
-                console.log(response);
                 return response.data.results;
             })
             .then(
@@ -113,7 +110,6 @@ export class MapContainer extends Component {
                         address: addressData[0],
                         noAddrError: true,
                     });
-                    console.log(addressData);
 
                     if (addressData.length) {
                         let address = addressData[0];
@@ -126,17 +122,17 @@ export class MapContainer extends Component {
                             longitude: address.geometry.location.lng,
                         });
                     } else {
-                        alert("Invalid address!");
                         this.setState({
+                            message: "Invalid address!",
                             search: "",
                         });
                     }
                 },
                 (error) => {
                     if (error) {
-                        alert("Warning");
                         this.setState({
                             latitude: 37.3352,
+                            message: "Invalid or empty input!",
                             longitude: -121.8811,
                             noError: false,
                         });
@@ -154,6 +150,7 @@ export class MapContainer extends Component {
     updateSearch = (query) => {
         this.setState({
             search: query,
+            message: '',
         });
     };
 
@@ -164,7 +161,6 @@ export class MapContainer extends Component {
             showingInfoWindow: true,
             showATM: true
         });
-        console.log(this.state.selectedPlace);
     };
 
     onMapClicked = (props) => {
@@ -176,27 +172,32 @@ export class MapContainer extends Component {
         }
     };
 
-    
+
 
     componentDidMount() {
         this.getJSON(this.state.latitude, this.state.longitude);
     }
 
     render() {
-        if(this.state.showATM){
+        if (this.state.showATM) {
             return <Redirect to={{
                 pathname: '/atm/',
-                state: {customer_accounts: this.state.accounts} }}
+                state: { customer_accounts: this.state.accounts }
+            }}
             />
         }
 
-        if(this.state.goBack){
+        if (this.state.goBack) {
             return <Redirect to="/usermain/" />
         }
 
         return (
-            <div>
-                <form onSubmit={(event) => this.updateMap(event)}>
+            <div className={styles.center}>
+                <div className={styles.topnav}>
+                    <a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
+                </div>
+                <form className={styles.billing}>
+                    <h1 className='deposit'>Find ATM</h1>
                     <p>Find Chase ATMs in:</p>
                     <input
                         id="location_text"
@@ -206,7 +207,8 @@ export class MapContainer extends Component {
                         onChange={(e) => this.updateSearch(e.target.value)}
                         placeholder="San Jose"
                     />
-                    <input type="submit" />  <button onClick={this.handleCancel}>Back to Main page</button>
+                    <button className='submit_butt' onClick={(event) => this.updateMap(event)}>Submit</button><br></br>
+                    <div className='error'>{this.state.message}</div>
                 </form>
                 <Map
                     google={this.props.google}
@@ -226,7 +228,7 @@ export class MapContainer extends Component {
                             lng: this.state.longitude,
                         }}
                     />
-                    {this.state.places.length > 0 && 
+                    {this.state.places.length > 0 &&
                         this.state.places.map((place) => (
                             <Marker
                                 onClick={this.onMarkerClick}

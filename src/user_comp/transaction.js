@@ -6,23 +6,41 @@ class Transfer extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            accto: this.props.accounts[0].account_id,
-            accfrom: this.props.accounts[0].account_id,
-            external: false,
+            accto: '',
+            accfrom: '',
             externalacc: '',
             routing: '',
             recipient: '',
-            amount: '',
-
-            message: "",
+            amount: 0.00,
+            message: '',
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    formatAmount(balance) {
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+        return formatter.format(balance);
+    }
+
+    checkInput(){
+        if (this.state.accfrom === ''
+            ||this.state.accto ===''
+            ||this.state.amount === 0.00) return 'E'
+        else if(this.state.accto === '-1'&& !(/\d/.test(this.state.externalacc)))
+            return 'X'
+        else if(this.state.accto === '-1'&& !(/\d{9}/.test(this.state.routing)))
+            return 'R'
+        else if (this.state.amount < 0) return 'A'
+        else return 'OK'
+    }
     handleSubmit = (event) => {
         event.preventDefault();
-
+        let check = this.checkInput()
+        if (check === 'OK'){
         let userInfo = new FormData();
         userInfo.append('id', this.state.accfrom)
         if (this.state.externalacc === '') {
@@ -42,20 +60,47 @@ class Transfer extends React.Component {
             config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
         }).then((response) => {
             // handle success
-            console.log(response.data)
+            if (response.data === 'OK'){
             this.setState({
-                message: "Sent!"
-            })
+                message: "Transaction Complete!"
+            })}
+            else{
+                this.setState({
+                    message: "Oops! Something went wrong! Please try again!"
+                }) 
+            }
         }).catch(function (error) {
             // handle error
             console.log(error)
         })
+    }
+    else if (check === 'E'){
+        this.setState({
+            message: 'Please fill out all required fields!',
+        })
+    }
+    else if (check === 'X'){
+        this.setState({
+            message: 'Invalid external account number!',
+        })
+    }
+    else if (check === 'R'){
+        this.setState({
+            message: 'Invalid routing number',
+        })
+    }
+    else if (check === 'A'){
+        this.setState({
+            message: 'Invalid amount!',
+        })
+    }
 
     }
     handleChange = (event) => {
         const { name, value } = event.target
         this.setState({
-            [name]: value
+            [name]: value,
+            message: ''
         })
     }
     handleCancel = () => {
@@ -64,20 +109,22 @@ class Transfer extends React.Component {
     render() {
 
         return (
+            //render the options
             <div className={styles.center}>
-				<div className={styles.topnav}>
-					<a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
-				</div>
+                <div className={styles.topnav}>
+                    <a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
+                </div>
                 <form className={styles.billing}>
-                    <h1>Transfer Money</h1>
+                    <h1 className='transfer'>Transfer Money</h1>
                     <label>Transfer From</label><br></br>
                     <select name='accfrom'
                         value={this.state.accfrom}
                         onChange={this.handleChange} >
+                        <option value=''> </option>
                         {this.props.accounts.map(account => (
                             <option key={account.account_id}
-                                value={account.account_id}>{account.account_id}
-                                        - {account.account_type}: {account.balance} </option>
+                                value={account.account_id}>
+                                    {account.account_id} - {account.account_type.toUpperCase()}: ${account.balance}</option>
                         ))}
 
                     </select><br></br><br></br>
@@ -86,43 +133,52 @@ class Transfer extends React.Component {
                         name='accto'
                         value={this.state.accto}
                         onChange={this.handleChange} >
+                        <option value=''> </option>
                         {this.props.accounts.map(account => (
                             <option key={account.account_id}
-                                value={account.account_id}>{account.account_id}
-                                        - {account.account_type}: {account.balance} </option>
+                                value={account.account_id}>{account.account_id} - {account.account_type.toUpperCase()}:
+                               {account.balance} </option>
                         ))}
+                        {/*If transfer to external account then set accto = 0*/}
                         <option
-                            value={0} >External Account</option>
+                            value={-1} >External Account</option>
                     </select><br></br><br></br>
 
-                    {Number(this.state.accto) === 0 &&
+                    {/*If external account is chosen then show input for routing 
+                    and account id*/}
+                    {Number(this.state.accto) === -1 &&
                         <div>
                             <label>Routing Number</label><br></br>
                             <input type='text'
                                 name='routing'
+                                placeholder = '9 digits numbers'
+                                title = 'Please enter 9 digit numbers of the bank routing'
                                 onChange={this.handleChange}
                                 value={this.state.routing}></input><br></br>
 
                             <label>External Account Number</label><br></br>
                             <input type='text'
                                 name='externalacc'
+                                title = 'Enter the account number'
                                 onChange={this.handleChange}
                                 value={this.state.externalacc}></input><br></br>
                             <br></br>
                         </div>}<br></br>
 
-                    <label>Recipient Name</label><br></br>
+                    <label>Recipient Name (Optional)</label><br></br>
                     <input type='text'
                         name='recipient'
                         onChange={this.handleChange}
                         value={this.state.recipient} ></input><br></br>
+
                     <label>Amount</label><br></br>
-                    <input type='text' name='amount'
+                    <input type='number' step = '0.01' name='amount'
                         onChange={this.handleChange}
                         value={this.state.amount} ></input><br></br>
-                    <button onClick={this.handleSubmit}>Submit</button>
+                    <button className='submit_butt' onClick={this.handleSubmit}>Submit</button>
+                    {this.state.message}
                 </form>
-                <div>{this.state.message}</div>
+                
             </div>
         )
     }

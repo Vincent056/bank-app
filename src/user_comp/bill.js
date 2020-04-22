@@ -8,6 +8,13 @@ class Bill extends React.Component {
         this.handleDelete = this.handleDelete.bind(this);
     }
 
+    formatAmount(balance) {
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+        return formatter.format(balance);
+    }
 
     handleDelete = (event) => {
         event.preventDefault()
@@ -19,12 +26,12 @@ class Bill extends React.Component {
 
             <tr>
                 <td>{this.props.bill.destination}</td>
-                <td>{this.props.bill.amount}</td>
+                <td>{this.formatAmount(this.props.bill.amount)}</td>
                 <td>{this.props.bill.start_date}</td>
                 <td>{this.props.bill.end_date}</td>
                 <td>{this.props.bill.day}</td>
                 <td>
-                    <button onClick={this.handleDelete}>
+                    <button className='submit_butt' onClick={this.handleDelete}>
                         Cancel
                     </button>
                 </td>

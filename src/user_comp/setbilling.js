@@ -4,220 +4,303 @@ import Bill from './bill.js'
 import styles from './../mystyle.module.css';
 
 class Billing extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state ={
-            chosenacc: this.props.accounts[0].account_id,
+        this.state = {
+            chosenacc: '',
             showbill: false,
             addbill: false,
             destination: '',
-            amount: '',
-            day: '',
+            amount: 0.00,
+            day: 0,
             end: '',
             billing: [],
-            message: "",
+            message1: "",
+            message2: ""
         }
         this.handleChange = this.handleChange.bind(this);
         this.submitAccount = this.submitAccount.bind(this);
-       
+
     }
     //go back to usermain
-    handleCancel =() =>{
+    handleCancel = () => {
         this.props.goback()
     }
 
     //Store input to value of state
     handleChange = (event) => {
-        const {name, value} = event.target
+        const { name, value } = event.target
         this.setState({
             [name]: value
         })
     }
 
     //api call to show all the billing of chosen account
-    showBilling(){
-        console.log(this.state.chosenacc)
-        let userInfo = new FormData();
-        userInfo.append('id',this.state.chosenacc)
-    
-        axios({
-            method: 'post',
-            url: 'https://bank.cvs3.com/bank-app/api/showbilling.php',
-            data: userInfo,
-            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
-        }).then( (response) => {  
-            // handle success
-            console.log(response.data)
+    showBilling = () => {
+        if (this.state.chosenacc === '') {
             this.setState({
-                billing: response.data,
-                showbill: true
+                message1: "Please choose an account!",
+                addbill: false,
+                showbill: false,
             })
-        }).catch(function(error) {
-            // handle error
-            console.log(error)
-        })
+        }
+        else {
+            let userInfo = new FormData();
+            userInfo.append('id', this.state.chosenacc)
+
+            axios({
+                method: 'post',
+                url: 'https://bank.cvs3.com/bank-app/api/showbilling.php',
+                data: userInfo,
+                config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
+            }).then((response) => {
+                // handle success
+
+                this.setState({
+                    billing: response.data,
+                    showbill: true,
+                    addbill: false,
+                    message1: ''
+                })
+            }).catch(function (error) {
+                // handle error
+                console.log(error)
+            })
+        }
     }
-    
+
     //handle submit button after chosing an account
-    submitAccount=(event)=>{
-       event.preventDefault();
-       this.showBilling()
+    submitAccount = (event) => {
+        event.preventDefault();
+        this.showBilling()
     }
-    
+
     //handle button when user click add bill, a form shows up
-    addBilling =() => {
+    addBilling = () => {
         this.setState({
-            showbill:false,
+            showbill: false,
             addbill: true
         })
     }
 
     //handle cancel button when user click cancel add bill
-    CancelAdd =() =>{
+    CancelAdd = () => {
         this.setState({
-            addbill: false
+            addbill: false,
+            showbill: true,
+            addbill: false,
+            destination: '',
+            amount: 0,
+            day: 0,
+            end: '',
+            message2: ''
         })
     }
 
+    //check user input
+    checkInput() {
+        const des = /\d/
+        const date = /^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/
+        let today = new Date()
+        let enddate = new Date(Number(this.state.end.substring(0, 4)), Number(this.state.end.substring(5, 7)) - 1, Number(this.state.end.substring(8)))
+
+        if (this.state.chosenacc === ''
+            || this.state.destination === ''
+            || this.state.day === 0
+            || this.state.end === ''
+            || this.state.amount === 0) return 'E'
+        else if (!(des.test(this.state.destination))
+            || this.state.destination === '0') return 'DEST'
+        else if (this.state.day < 1 || this.state.day > 28) return 'BILL'
+        else if (!(date.test(this.state.end))
+            || today.getTime() >= enddate.getTime()) return "DATE"
+        else if (this.state.amount < 0.00) return "A"
+        else return "OK"
+    }
     //api call to add the given info of new billing to database
-    AddBill = (event) =>{
+    AddBill = (event) => {
         event.preventDefault();
-        let userInfo = new FormData();
-        userInfo.append('id',this.state.chosenacc)
-        userInfo.append('reciver_acc',this.state.destination)
-        userInfo.append('dayinmonth',this.state.day)
-        userInfo.append('end',this.state.end)
-        userInfo.append('amount',this.state.amount)
-       
-        axios({
-            method: 'post',
-            url: 'https://bank.cvs3.com/bank-app/api/autobilling.php',
-            data: userInfo,
-            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
-        }).then( (response) => {  
-            // handle success
-            console.log(response.data)
-            this.setState({
-                addbill: false,
-                destination: '',
-                amount: '',
-                day: '',
-                end: ''
+        let check = this.checkInput()
+        if (check === 'OK') {
+            let userInfo = new FormData();
+            userInfo.append('id', this.state.chosenacc)
+            userInfo.append('reciver_acc', this.state.destination)
+            userInfo.append('dayinmonth', this.state.day)
+            userInfo.append('end', this.state.end)
+            userInfo.append('amount', this.state.amount)
+
+            axios({
+                method: 'post',
+                url: 'https://bank.cvs3.com/bank-app/api/autobilling.php',
+                data: userInfo,
+                config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
+            }).then((response) => {
+                // handle success
+                
+                if (response.data === 'OK') {
+                    //reset the adding form
+                    this.setState({
+                        addbill: false,
+                        destination: '',
+                        amount: 0,
+                        day: 0,
+                        end: '',
+                        message2: ''
+                    })
+                    this.showBilling()
+                }
+                else {
+                    this.setState({
+                        message2: "Oops! Something went wrong! Please try again!"
+                    })
+                }
+            }).catch(function (error) {
+                // handle error
+                console.log(error)
             })
-        }).catch(function(error) {
-            // handle error
-            console.log(error)
-        })
-        this.showBilling()
+        }
+        else if (check === 'E') {
+            this.setState({
+                message2: 'Please fill out all fields!',
+            })
+        }
+        else if (check === 'DEST') {
+            this.setState({
+                message2: 'Invalid destination account!',
+            })
+        }
+        else if (check === 'BILL') {
+            this.setState({
+                message2: 'Invalid bill day!',
+            })
+        }
+        else if (check === 'DATE') {
+            this.setState({
+                message2: 'Invalid end date!',
+            })
+        }
+        else if (check === 'A') {
+            this.setState({
+                message2: 'Invalid amount!',
+            })
+        }
     }
 
-   
-    DeleteBilling = (id) =>{
-        console.log(id)
+    DeleteBilling = (id) => {
         let userInfo = new FormData();
-        userInfo.append('id',id)
+        userInfo.append('id', id)
         axios({
             method: 'post',
             url: 'https://bank.cvs3.com/bank-app/api/cancelbilling.php',
             data: userInfo,
-            config: {headers: {'Content-Type': 'x-www-form-urlencoded'}}
-        }).then( (response) => {  
-            console.log(response.data)
+            config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
+        }).then((response) => {
             this.setState({
                 showbill: false
             })
-        }).catch(function(error) {
+        }).catch(function (error) {
             // handle error
             console.log(error)
         })
         this.showBilling()
-        
+
     }
-    render(){
-        
-        return(
+    render() {
+
+        return (
             <div className={styles.center}>
-				<div className={styles.topnav}>
-					<a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
-				</div>
-            <form className={styles.billing}>
-                <h1>Set Up Billing</h1>
-                <label>Select the account</label><br></br>
-                <select  name = 'chosenacc'
-                        value = {this.state.chosenacc}
+                <div className={styles.topnav}>
+                    <a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
+                </div>
+                <form className={styles.billing}>
+                    <h1 className='bill'>Set Up Billing</h1>
+                    <p>Only checking accounts are allowed for set up billing.</p>
+                    <label>Please select the account: </label><br></br>
+                    <select name='chosenacc'
+                        value={this.state.chosenacc}
                         onChange={this.handleChange} >
-                             {this.props.accounts.filter(account =>{
-                                 if (account.account_type === "saving") return false
-                                 return true
-                             }).map(account => (
-                           <option key = {account.account_id}
-                                value= {account.account_id}>{account.account_id} 
-                                        - {account.account_type} </option>
-                ))}
-                </select><br></br>
-                <button onClick={this.submitAccount}>Submit</button>
-                {this.state.showbill === true && this.state.billing.length !== 0 &&
-                <div>
-                    <button onClick = {this.addBilling}>Add Billing</button><br></br>
-                    <h3>Billings</h3>
-                    <table>
-                        <thead>
-                        <tr>
-                        <th scope ='col'>Destination</th>
-                            <th scope ='col'>Amount</th>
-                            <th scope ='col'>Start Date</th>
-                            <th scope ='col'>End Date</th>
-                            <th scope ='col'>Day</th>
-                            <th scope ='col'> </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {this.state.billing.map(bil => (
-                            <Bill bill = {bil}
-                                key ={bil.auto_billing_id}
-                                delete = {() => this.DeleteBilling(bil.auto_billing_id)}/>
-                ))}
-                        </tbody>
-                    </table>
-                    </div>}
-                    {this.state.billing.length === 0 && this.state.showbill === true &&
-                    <div>
-                        <button onClick = {this.addBilling}>Add Billing</button><br></br>
-                        No billing.
+                        <option value=''> </option>
+                        {this.props.accounts.filter(account => {
+                            if (account.account_type === "saving") return false
+                            return true
+                        }).map(account => (
+                            <option key={account.account_id}
+                                value={account.account_id}>SILICON {account.account_type.toUpperCase()} - {account.account_id} </option>
+                        ))}
+                    </select><br></br>
+                    <button className='submit_butt' onClick={this.submitAccount}>Submit</button>
+                    {this.state.message1}
+
+                    {/*show all billings*/}
+                    {this.state.showbill === true && this.state.billing.length !== 0 &&
+                        <div>
+                            <p className='table_name'>Current Billings</p>
+                            <button className='button' onClick={this.addBilling}>Add Bill</button>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th scope='col'>To Account</th>
+                                        <th scope='col'>Amount</th>
+                                        <th scope='col'>Start Date</th>
+                                        <th scope='col'>End Date</th>
+                                        <th scope='col'>Bill Day</th>
+                                        <th scope='col'> </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {this.state.billing.map(bil => (
+                                        <Bill bill={bil}
+                                            key={bil.auto_billing_id}
+                                            delete={() => this.DeleteBilling(bil.auto_billing_id)} />
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>}
-                    </form>
-                    {this.state.addbill === true &&
+
+                    {/*If no billings then return message*/}
+                    {this.state.billing.length === 0 && this.state.showbill === true &&
+                        <div>
+                            <h3 className='table_name'>Current Billings</h3>
+                            <button className='button' onClick={this.addBilling}>Add Billing</button><br></br>
+                        You have no auto bill.
+                        </div>}
+                </form>
+
+                {/*If choose to add more billings then
+                    show the adding form*/}
+                {this.state.addbill === true &&
                     <form className={styles.billing}>
-                        <label>To Internal Account</label><br></br>
-                        <input type ='text' 
-                        onChange ={this.handleChange}
-                        name = 'destination'
-                        value = {this.state.destination}></input><br></br>
+                        <label>To Account (SILICON bank account only):</label><br></br>
+                        <input type='text'
+                            onChange={this.handleChange}
+                            name='destination'
+                            value={this.state.destination}></input><br></br>
 
-                        <label>Amount</label><br></br>
-                        <input type ='text' 
-                        onChange ={this.handleChange}
-                        name = 'amount'
-                        value = {this.state.amount}></input><br></br>
+                        <label>Amount:</label><br></br>
+                        <input type='number' step='0.01'
+                            onChange={this.handleChange}
+                            name='amount'
+                            value={this.state.amount}></input><br></br>
 
-                        <label>Day</label><br></br>
-                        <input type ='text'
-                        title ='Enter a day from 1 to 28'
-                        onChange ={this.handleChange}
-                        name = 'day'
-                        value = {this.state.day}></input><br></br>
+                        <label>Bill Day:</label><br></br>
+                        <input type='number'
+                            title='Enter a day from 1 to 28'
+                            onChange={this.handleChange}
+                            name='day'
+                            value={this.state.day}></input><br></br>
 
-                        <label>End Date</label><br></br>
-                        <input type ='text' pattern ='YYYY-MM-DD'
-                        placeholder = "YYYY-MM-DD"
-                        onChange ={this.handleChange}
-                        name = 'end'
-                        value = {this.state.end}></input><br></br>
+                        <label>End Date:</label><br></br>
+                        <input type='text' pattern='YYYY-MM-DD'
+                            placeholder="YYYY-MM-DD"
+                            onChange={this.handleChange}
+                            name='end'
+                            value={this.state.end}></input><br></br>
 
                         <button onClick={this.AddBill}>Submit</button>
                         <button onClick={this.CancelAdd}>Cancel</button><br></br>
+                        {this.state.message2}
                     </form>}
-                    </div>
+            </div>
         )
     }
 }

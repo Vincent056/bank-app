@@ -29,12 +29,20 @@ input{
     font: 20px Garamond;
     border-radius: 10px;
 }
-.login_butt{
+.login_butt,.submit_butt{
     width: 150%;
     height: 30px;
     border-radius: 10px;
     transition-duration: 0.3s;
     
+}
+.atm_butt{
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    transition-duration: 0.3s;
+    background-color: darkgray;
+    font: bold 15px Verdana
 }
 button:hover{
     background-color: darkgray;
@@ -45,7 +53,7 @@ button:hover{
     box-shadow: 0 5px #4f4d4d;
     transform: translateY(2px);
   }
-.signup {
+.signup{
     background-color: #800000;
     font-size: 35px;
     width: 550px;
@@ -54,7 +62,33 @@ button:hover{
     
 }
 .error{
-    font: 16px Verada;
+    font: bold 15px Verdana;
     height: 20px;
-    color: red;
+    font-style: italic;
+    color: #ab090b;
+}
+.newacc,.update,.bill,.transfer,.deposit{
+    font: bold 36px Arial;
+    border-bottom: 2px solid #800000;
+}
+.add_bill{
+    border-radius:50px;
+}
+.table_name{
+    border-bottom: 1px solid #800000;
+    border-top: 1px solid #800000;
+    font: bold 20px Calibri;
+}
+th,td{
+    width: 100px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+th{
+    font: bold 18px Calibri;
+}
+.atm{
+    font: bold 30px Arial;
+    color: white;
+    background-color: #2d4752;
 }

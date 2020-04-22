@@ -224,7 +224,6 @@ class SignUpForm extends Component {
                     </label> <br />
                         <input
                             type="text"
-                            pattern="[A-Za-z]{2}" required
                             title="Please enter two letter state code"
                             name="stateInCountry"
                             placeholder="e.g. CA"
@@ -237,7 +236,6 @@ class SignUpForm extends Component {
                         <input
                             type="text"
                             name="zipCode"
-                            pattern="[0-9]{5}" required
                             title="Please enter five number zip code"
                             placeholder="e.g. 12345"
                             value={this.state.zipCode}

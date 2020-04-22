@@ -68,7 +68,7 @@ class UserPage extends React.Component {
                     message: "   No Account.",
                 })
             }
-            console.log(this.state.accounts)
+        
         }).catch(function (error) {
             // handle error
             console.log(error)
@@ -223,7 +223,6 @@ class UserPage extends React.Component {
         }
         //go to set up billing
         if (this.state.tobilling) {
-            console.log(this.state.tobilling)
             return (
                 <div>
                     <Billing accounts={this.state.accounts}
