@@ -28,7 +28,7 @@
                 //Withdraw
                 $query =  "SELECT balance FROM bank_account WHERE account_id = '$acc_id'";
                 $result = $conn->query($query);
-                $row = $result->fetch_array();
+
                 $result->data_seek(0);
                 $balance = $result->fetch_array(MYSQLI_NUM)[0];
 

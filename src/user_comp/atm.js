@@ -33,9 +33,9 @@ class ATM extends React.Component {
         event.preventDefault();
 
         let userInfo = new FormData();
-        userInfo.append('acc_id', '61')
-        userInfo.append('amount', 80.00)
-        userInfo.append('type','withdraw')
+        userInfo.append('acc_id',this.state.accid)
+        userInfo.append('amount',this.state.amount)
+        userInfo.append('type',this.state.type)
         axios({
             method: 'post',
             url: 'https://bank.cvs3.com/bank-app/api/atmtransaction.php',
