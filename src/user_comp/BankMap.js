@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import {Redirect} from 'react-router-dom';
-import chase_icon from '../chase_icon.png';
+import chase_icon from "../chase_icon.png";
+import { Redirect } from 'react-router-dom';
 
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 
@@ -11,13 +11,15 @@ const mapStyles = {
     height: "80%",
 };
 
-const googleAPIKey = "AIzaSyDd8m06Lceut97wZDlpKXejybNGXnjqbyM";
+const googleAPIKey = "AIzaSyD8gwyU7-Ty2s2_IVmz9I3J5cS5JltJ8rM";
 const proxyCorsSite = "https://cors-anywhere.herokuapp.com/";
 
 export class MapContainer extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
+            accounts: this.props.location.state.customer_accounts,
             places: [],
             address: { formatted_address: "San Jose" },
             noError: true,
@@ -63,7 +65,7 @@ export class MapContainer extends Component {
                     if (placesData.length) {
                         return placesData;
                     } else {
-                        alert("No Chase ATMS nearby. Please search again.");
+                        alert("No Chase ATMs nearby. Please search again.");
                         this.setState({
                             search: "",
                         });
@@ -174,17 +176,18 @@ export class MapContainer extends Component {
         }
     };
 
+    
+
     componentDidMount() {
         this.getJSON(this.state.latitude, this.state.longitude);
     }
 
     render() {
-        if(this.state.goBack){
-            return <Redirect to="/usermain/" />
-        }
-
         if(this.state.showATM){
-            return <Redirect to="/atm/" />
+            return <Redirect to={{
+                pathname: '/atm/',
+                state: {customer_accounts: this.state.accounts} }}
+            />
         }
 
         return (
@@ -199,7 +202,7 @@ export class MapContainer extends Component {
                         onChange={(e) => this.updateSearch(e.target.value)}
                         placeholder="San Jose"
                     />
-                    <input type="submit" /> <button onClick={this.handleCancel}>Back to Main page</button>
+                    <input type="submit" />  <button onClick={this.handleCancel}>Back to Main page</button>
                 </form>
                 <Map
                     google={this.props.google}
@@ -249,5 +252,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: "AIzaSyDd8m06Lceut97wZDlpKXejybNGXnjqbyM",
-})(MapContainer);
+    apiKey: "AIzaSyD8gwyU7-Ty2s2_IVmz9I3J5cS5JltJ8rM",
+})(MapContainer)
