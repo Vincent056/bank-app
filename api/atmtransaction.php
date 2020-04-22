@@ -14,12 +14,13 @@
         $amount = floatval($amount);
 
             if($type == 'deposit'){
+                
                 $query = "INSERT into transaction(transaction_type, amount, date, bank_account_account_id) 
                          values('Deposit', $amount, sysdate(), '$acc_id')";
                 $result = $conn->query($query);
 
                 //Update account
-                $query = "UPDATE bank_account set balance = balance + '$amount' where account_id = '$acc_id'";
+                $query = "UPDATE bank_account set balance = balance + $amount where account_id = '$acc_id'";
                 $result = $conn->query($query);
                 $result->close();
             }
