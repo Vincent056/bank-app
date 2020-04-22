@@ -30,7 +30,7 @@
                 $result = $conn->query($query);
                 $row = $result->fetch_array();
                 $result->data_seek(0);
-                $id = $result->fetch_array(MYSQLI_NUM)[0];
+                $balance = $result->fetch_array(MYSQLI_NUM)[0];
 
                 if($balance - $amount < 0){
                     echo "Not enough funds to withdraw set amount";
