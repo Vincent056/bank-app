@@ -70,7 +70,7 @@ class ATM extends React.Component {
                     <h1>ATM</h1>
                     <label>Choose An Account</label><br></br>
                     <select name='accid'
-                        value={this.state.accfrom}
+                        value={this.state.accid}
                         onChange={this.handleChange} >
                         {this.state.accounts.map(account => (
                             <option key={account.account_id}
