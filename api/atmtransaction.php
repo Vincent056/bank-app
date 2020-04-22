@@ -30,9 +30,10 @@
                 $result = $conn->query($query);
                 $row = $result->fetch_array();
                 $balance = $row['balance'];
-                echo strval($balance);
+
                 if($balance - $amount < 0){
                     echo "Not enough funds to withdraw set amount";
+                    strval($balance);
                     //return
                     $id = 0;
                     echo json_encode(strval($id));
