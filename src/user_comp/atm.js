@@ -6,9 +6,8 @@ class ATM extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            //accounts: this.props.location.state.customer_accounts,
-            //accid: '',
-            accid: this.props.accounts[0].account_id,
+            accounts: this.props.location.state.customer_accounts,
+            accid: '',
             amount: 0.00,
             type: '',
             message: '',
