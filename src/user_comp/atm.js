@@ -34,7 +34,7 @@ class ATM extends React.Component {
 
         let userInfo = new FormData();
         userInfo.append('acc_id', this.state.accid)
-        userInfo.append('amount', this.state.amount)
+        userInfo.append('amount', 80.00)
         userInfo.append('type','withdraw')
         axios({
             method: 'post',
