@@ -1,3 +1,27 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@amalachirayil 
+Vincent056
+/
+bank-app
+1
+02
+ Code Issues 0 Pull requests 1 Actions Projects 0 Wiki Security 0 Insights
+bank-app/src/index.js /
+@amalachirayil amalachirayil imported map and atm components
+eea5b44 3 hours ago
+@trandang210@tkglassey@amalachirayil
+68 lines (64 sloc)  2.41 KB
+  
+Code navigation is available!
+Navigate your code with ease. Click on function and method calls to jump to their definitions or references in the same repository. Learn more
+
 import React from 'react';
 import {BrowserRouter,Route,
     Switch} from 'react-router-dom';
@@ -50,11 +74,11 @@ class App extends React.Component{
                  <Route exact path = "/transfer/" render = {() => 
                     <Transfer cus_id = {id}></Transfer>
                 } />
-                <Route exact path="/map/" render = {() => 
-                  <MapContainer />
+                <Route exact path="/map/" render = {(props) => 
+                  <MapContainer {...props}/>
                 } />
-                <Route exact path="/atm/" render = {() => 
-                  <ATM />
+                <Route exact path="/atm/" render = {(props) => 
+                  <ATM {...props}/>
                 } />
             </Switch>
         </main>
@@ -66,3 +90,15 @@ ReactDOM.render(
         <App />
     </BrowserRouter>,
  document.getElementById("root"));
+© 2020 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
