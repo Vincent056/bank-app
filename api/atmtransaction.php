@@ -22,6 +22,7 @@
                 //Update account
                 $query = "UPDATE bank_account set balance = balance + $amount where account_id = '$acc_id'";
                 $result = $conn->query($query);
+                echo $result;
                 $result->close();
             }
             if($type == 'withdraw'){
