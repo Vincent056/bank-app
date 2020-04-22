@@ -8,12 +8,11 @@
     if($conn->connect_error) die($conn->connect_error);
 
     if (isset($_POST['id'])){
-         $bill_id = mysql_entities_fix_string($conn, $_POST['id']);
+         $billid = mysql_entities_fix_string($conn, $_POST['id']);
         
          $query = 
-         "DELETE FROM automated_billing WHERE auto_billing_id = '$bill_id';";
-            $result = $conn->query($query);
-            echo "deleted";     
+        "DELETE FROM automated_billing WHERE auto_billing_id = '$billid';";
+        $result = $conn->query($query);   
         $result->close();
         $conn->close();   
     }
@@ -26,7 +25,3 @@ function mysql_fix_string($conn, $string){
     if(get_magic_quotes_gpc()) $string = stripslashes($string);
         return $conn->real_escape_string($string);
 }
-
-
-
-?>
