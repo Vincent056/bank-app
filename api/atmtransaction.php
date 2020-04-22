@@ -22,7 +22,6 @@
                 //Update account
                 $query = "UPDATE bank_account set balance = balance + $amount where account_id = '$acc_id'";
                 $result = $conn->query($query);
-                echo $result;
                 $result->close();
             }
             if($type == 'withdraw'){
@@ -34,11 +33,8 @@
                 $balance = $result->fetch_array(MYSQLI_NUM)[0];
 
                 if($balance - $amount < 0){
-                    echo "Not enough funds to withdraw set amount";
-                    echo "<script>console.log('Debug Objects: " . $acc_id . "' );</script>";
                     //return
-                    $id = 0;
-                    echo json_encode(strval($id));
+                    echo "SHORT";
                 }
                 else{
                     $query = "INSERT into transaction(transaction_type, amount, date, bank_account_account_id)  
@@ -48,7 +44,6 @@
                     //Update balance value by subtracting the amount value specified by user
                     $query2 = "UPDATE bank_account SET balance = balance - $amount WHERE account_id = '$acc_id'";
                     $result = $conn->query($query2);
-                    echo "withdraw";
                     $result->close();
                 }
             }
