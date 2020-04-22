@@ -48,7 +48,7 @@
                     $query2 = "UPDATE bank_account SET balance = balance - $amount WHERE account_id = '$acc_id'";
                     $result = $conn->query($query2);
                     echo "withdraw";
-                    $result->close();
+                    if($result)$result->close();
                 }
             }
         $conn->close();
