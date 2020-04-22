@@ -23,7 +23,7 @@
             }
             if($type == 'withdraw'){
                 //Withdraw
-                $query =  "SELECT balance FROM bank_account WHERE bank_account_id = '$acc_id'";
+                $query =  "SELECT balance FROM bank_account WHERE account_id = '$acc_id'";
                 $result = $conn->query($query);
                 $row = $result->fetch_array();
                 $balance = $row['balance'];
