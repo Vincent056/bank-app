@@ -26,16 +26,11 @@ class OpenAcc extends React.Component {
             data: userInfo,
             config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
         }).then((response) => {
-            if (response.data === 'OK') {
+            console.log(response.data)
                 this.setState({
                     message: "Account created!"
                 })
-            }
-            else {
-                this.setState({
-                    message: "Oops! Something went wrong! Please try again!"
-                })
-            }
+ 
         }).catch(function (error) {
             // handle error
             console.log(error)
