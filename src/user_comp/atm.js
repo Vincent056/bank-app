@@ -86,6 +86,13 @@ class ATM extends React.Component {
         })
     }
 
+    formatAmount(balance) {
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+        return formatter.format(balance);
+    }
     render() {
         if (this.state.goback) {
             return <Redirect to='/usermain/' />
@@ -102,7 +109,7 @@ class ATM extends React.Component {
                         {this.state.accounts.map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>{account.account_id}
-                                            - {account.account_type}: {account.balance} </option>
+                                            - {account.account_type}: {this.formatAmount(account.balance)} </option>
                         ))}
                     </select><br></br><br></br>
                     <label>Choose Action</label><br></br>
