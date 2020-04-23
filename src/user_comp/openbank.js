@@ -26,6 +26,7 @@ class OpenAcc extends React.Component {
             data: userInfo,
             config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
         }).then((response) => {
+            console.log(response.data)
             if (response.data === 'OK') {
                 this.setState({
                     message: "Account created!"
