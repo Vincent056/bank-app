@@ -11,7 +11,8 @@
         $input = mysql_entities_fix_string($conn, $_POST['input']);
         $attribute = mysql_entities_fix_string($conn, $_POST['attribute']);
         $man_id = mysql_entities_fix_string($conn, $_POST['man_id']);
-        if(strcmp($attribute,"1"))
+        $all_acc = "1";
+        if(strcmp($attribute,$all_acc))
         {
             $input == 1;
         }
