@@ -11,7 +11,10 @@
         $input = mysql_entities_fix_string($conn, $_POST['input']);
         $attribute = mysql_entities_fix_string($conn, $_POST['attribute']);
         $man_id = mysql_entities_fix_string($conn, $_POST['man_id']);
-       
+        if($attribute == 1)
+        {
+            $input == 1;
+        }
         $query = "SELECT customer.customer_id as customer_id, address_id, username, first_name, last_name, street, apartment_number, city, state, zip_code, email, phone, balance
         FROM customer LEFT OUTER JOIN address ON customer.address_address_id = address.address_id LEFT OUTER JOIN balance_total ON customer.customer_id = balance_total.customer_id
         WHERE $attribute = '$input' AND bank_manager_manager_id = '$man_id';";
