@@ -12,8 +12,8 @@
         $attribute = mysql_entities_fix_string($conn, $_POST['attribute']);
         $man_id = mysql_entities_fix_string($conn, $_POST['man_id']);
 
-        $query = "SELECT customer_id, address_id, username, first_name, last_name, street, apartment_number, city, state, zip_code, email, phone, SUM(balance) as 'balance' 
-        FROM customer LEFT OUTER JOIN address ON customer.address_address_id = address.address_id LEFT OUTER JOIN bank_account ON customer.customer_id = bank_account.customer_customer_id
+        $query = "SELECT customer_id, address_id, username, first_name, last_name, street, apartment_number, city, state, zip_code, email, phone, balance
+        FROM customer LEFT OUTER JOIN address ON customer.address_address_id = address.address_id LEFT OUTER JOIN balance_total ON customer.customer_id = balance_total.customer_id
         WHERE $attribute = '$input' AND bank_manager_manager_id = '$man_id';";
     
         $result = $conn->query($query);
