@@ -116,7 +116,7 @@ class ManagerDashboard extends React.Component {
                             <option value='username'>Username</option>
                             <option value='first_name'>First Name</option>
                             <option value='last_name'>Last Name</option>
-			    <option value='1'>Show All Customer Under Management</option>
+			    <option value='all'>Show All Customer Under Management</option>
                         </select>
                     <br></br><br></br>
                     <label>
