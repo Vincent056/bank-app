@@ -145,6 +145,7 @@ class ManagerDashboard extends React.Component {
                                 <th>Zipcode</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+				<th>SUM(balance)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -162,6 +163,7 @@ class ManagerDashboard extends React.Component {
                                     <td>{info.zip_code}</td>
                                     <td>{info.email}</td>
                                     <td>{info.phone}</td>
+				    <td>{info.SUM(balance)}</td>
                                 </tr>
                             ))}
                         </tbody>
