@@ -13,7 +13,7 @@
         $man_id = mysql_entities_fix_string($conn, $_POST['man_id']);
         $all_acc = "all";
         if(strcmp($attribute,$all_acc))
-        {   $attribute = 1;
+        {   $attribute = "true";
             $input = 1;
         }
         $query = "SELECT customer.customer_id as customer_id, address_id, username, first_name, last_name, street, apartment_number, city, state, zip_code, email, phone, balance
