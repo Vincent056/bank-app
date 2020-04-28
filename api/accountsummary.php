@@ -16,7 +16,6 @@
         
         $json_array = array();
         $row = mysqli_fetch_assoc($result);
-        echo json_encode($row);
         $json_array[] = $row;
 
         //Query for account's transactions
