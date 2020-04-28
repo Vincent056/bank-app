@@ -18,7 +18,7 @@ if (isset($_POST['id']) && isset($_POST['acctype'])){
     $result = $conn->query($query);
    
     if(!$result) die("Database access failed:" .$conn->error);
-    else echo 'OK';
+    else echo "OK";
 
     $conn->close();
    }
