@@ -10,6 +10,8 @@ class ForgotPassword extends Component {
 			invalid: "",
 			zipcode: "",
 			sssn: "",
+			userPassword: "",
+            userConfirmPassword: "",
 			success: false,
 			login: false,
 		}
@@ -26,6 +28,10 @@ class ForgotPassword extends Component {
 			return false;
 		else if (this.state.ssn === "")
 			return false;
+		else if (this.state.userPassword === "")
+			return false;
+		else if (this.state.userConfirmPassword === "")
+			return false;
 		else return true;
 	}
 
@@ -40,6 +46,8 @@ class ForgotPassword extends Component {
 			let userInfo = new FormData();
 			userInfo.append('zipcode', this.state.zipcode)
 			userInfo.append('ssn', this.state.ssn)
+			userInfo.append('userPassword', this.state.userPassword);
+            userInfo.append('userConfirmPassword', this.state.userConfirmPassword);
 			axios({
 				method: 'post',
 				url: 'https://bank.cvs3.com/bank-app/api/userLogin.php',
@@ -117,21 +125,41 @@ class ForgotPassword extends Component {
 				<h1>Silicon Bank</h1>
 				<form>
 					<h2>Password Reset Verification</h2>
-					<label>Zipcode  </label>
+					<label>Zipcode  </label> <br />
 					<input type="text"
 						name="zipcode"
 						title="Please enter your zipcode"
 						value={this.state.zipcode}
-						onChange={this.handleChange} /><br></br><br></br>
-					<label>Social Security Number  </label>
+						onChange={this.handleChange} /><br></br>
+					<label>Social Security Number  </label> <br />
 					<input type="ssn"
 						name="ssn"
 						title="Please enter your ssn"
 						value={this.state.ssn}
-						onChange={this.handleChange} /><br /><br />
+						onChange={this.handleChange} /><br />
+					<label>
+                            New Password *:
+                    </label> <br />
+                        <input
+                            type="password"
+                            name="userPassword"
+                            placeholder="**********"
+                            value={this.state.userPassword}
+                            onChange={this.handleChange}
+                        /><br />
+                        <label>
+                            Confirm New Password *:
+                    </label> <br />
+                        <input
+                            type="password"
+                            name="userConfirmPassword"
+                            placeholder="**********"
+                            value={this.state.userConfirmPassword}
+                            onChange={this.handleChange}
+                        />
 					<div className='error'>{this.state.invalid}</div>
 					<button onClick={this.handleSubmit}
-						className='login_butt'>Verify</button>
+						className='login_butt'>Reset Password</button>
 				</form><br />
 				<div>
 					<button className='button' onClick={this.returnLog}>Return to Login</button>
