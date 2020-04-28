@@ -56,6 +56,9 @@ class OpenAcc extends React.Component {
                 <div className={styles.topnav}>
                     <a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
                 </div>
+                {this.props.cus_id === undefined &&
+                <p>Please log in to use this option.</p>}
+                {this.props.cus_id !== undefined &&
                 <form >
                     <h1 className='newacc' >New Account</h1>
                     <p>Please choose the account type:</p>
@@ -66,7 +69,7 @@ class OpenAcc extends React.Component {
                     </select><br />
                     <button className={styles.buttonsmall} onClick={this.handleSubmit}>Submit</button>
                     <div>{this.state.message}</div>
-                </form>
+                </form>}
             </div>
         )
     }

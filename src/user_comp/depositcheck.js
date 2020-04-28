@@ -92,6 +92,11 @@ class Check extends React.Component {
             style: 'currency',
             currency: 'USD',
         });
+        if (formatter.format(balance).length > 16){
+            let format = formatter.format(balance).substring(0,16)
+            format = format.concat('...')
+            return format
+        }
         return formatter.format(balance);
     }
     render() {

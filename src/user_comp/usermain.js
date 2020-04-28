@@ -28,7 +28,7 @@ class UserPage extends React.Component {
             check: false,
             deposit: "Check",
             chosenacc: 0,
-            message: "",
+            message: "", 
         }
     }
 
@@ -44,35 +44,42 @@ class UserPage extends React.Component {
      * retrieve bank account information
      */
     apicall = () => {
-        let userInfo = new FormData();
-        userInfo.append('id', this.props.cus_id)
-        axios({
-            method: 'post',
-            url: 'https://bank.cvs3.com/bank-app/api/usermain.php',
-            data: userInfo,
-            config: { headers: { 'Content-Type': 'x-www-form-urlencoded; charset=UTF-8' } }
-        }).then((response) => {
-            let acc_array = response.data.slice(1)
-            acc_array = acc_array.filter(account => {
-                if (account.status === "close") return false
-                return true
+        if (this.props.cus_id === undefined) {
+            this.setState({
+                message: "   Please log in to view your accounts."
             })
+        }
+        else {
+            let userInfo = new FormData();
+            userInfo.append('id', this.props.cus_id)
+            axios({
+                method: 'post',
+                url: 'https://bank.cvs3.com/bank-app/api/usermain.php',
+                data: userInfo,
+                config: { headers: { 'Content-Type': 'x-www-form-urlencoded; charset=UTF-8' } }
+            }).then((response) => {
+                let acc_array = response.data.slice(1)
+                acc_array = acc_array.filter(account => {
+                    if (account.status === "close") return false
+                    return true
+                })
                 this.setState({
                     accounts: acc_array,
                     firstname: response.data[0].first_name,
                     lastname: response.data[0].last_name,
                     message: "",
                 })
-            if (this.state.accounts.length === 0) {
-                this.setState({
-                    message: "   No Account.",
-                })
-            }
-        
-        }).catch(function (error) {
-            // handle error
-            console.log(error)
-        });
+                if (this.state.accounts.length === 0) {
+                    this.setState({
+                        message: "   No Account.",
+                    })
+                }
+
+            }).catch(function (error) {
+                // handle error
+                console.log(error)
+            });
+        }
     }
 
     //set state to set up billing
@@ -156,7 +163,7 @@ class UserPage extends React.Component {
         this.apicall()
     }
 
-      //set state to go from find atm to atm simulation (maybe remove later)
+    //set state to go from find atm to atm simulation (maybe remove later)
     fakeatm = () => {
         this.setState({
             openatm: true,
@@ -209,7 +216,8 @@ class UserPage extends React.Component {
             // )
             return <Redirect to={{
                 pathname: '/map/',
-                state: {customer_accounts: this.state.accounts} }}
+                state: { customer_accounts: this.state.accounts }
+            }}
             />
         }
         //go to atm simulation
@@ -269,12 +277,13 @@ class UserPage extends React.Component {
 					<a><button className={styles.buttontopnav} onClick={this.logout}>Log Out</button></a>
                     <a><button className={styles.buttontopnav} onClick={this.updateInfo}>Update Information</button></a>
                 </div><br></br>
-                {this.state.message}
+
                 <div className={styles.main}>
+                    {this.state.message}
                     {this.state.accounts.map(account => (
                         <Account acc={account}
                             key={account.account_id}
-                            sum={() => this.accsum(account.account_id)}/>
+                            sum={() => this.accsum(account.account_id)} />
                     ))}
                 </div>
                 <div className={styles.sidenav}>
