@@ -8,7 +8,6 @@
 
     if (isset($_POST['acc_id'])){
         $acc_id = mysql_entities_fix_string($conn, $_POST['acc_id']);
-        echo json_encode($acc_id);
         //Query for bank_account info
         $query = "SELECT account_type, balance, date_created, balance
         FROM bank_account WHERE account_id = '$acc_id'";   
@@ -17,6 +16,7 @@
         
         $json_array = array();
         $row = mysqli_fetch_assoc($result);
+        echo json_encode($row);
         $json_array[] = $row;
 
         //Query for account's transactions
