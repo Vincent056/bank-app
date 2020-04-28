@@ -12,7 +12,6 @@
         $type = mysql_entities_fix_string($conn, $_POST['type']);
 
         $amount = floatval($amount);
-        echo "<script>console.log('Debug Objects: " . $type . "' );</script>";
             if($type == 'deposit'){
                 
                 $query = "INSERT into transaction(transaction_type, amount, date, bank_account_account_id) 
@@ -34,7 +33,7 @@
 
                 if($balance - $amount < 0){
                     //return
-                    echo "SHORT";
+                    echo json_encode("SHORT");
                 }
                 else{
                     $query = "INSERT into transaction(transaction_type, amount, date, bank_account_account_id)  
