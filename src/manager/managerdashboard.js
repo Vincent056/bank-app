@@ -107,6 +107,9 @@ class ManagerDashboard extends React.Component {
 					<a><button className={styles.buttontopnav} onClick={this.logout}>Log Out</button></a>
                 </div>
                 <p>Fill out the following to perform a search. Attribute is the column being searched, input is what is being searched for.</p>
+                {this.props.man_id === undefined &&
+                <p>Please log in to use this option.</p>}
+                {this.props.man_id !== undefine &&
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Customer Attribute:  </label>
@@ -136,7 +139,7 @@ class ManagerDashboard extends React.Component {
                         onChange={this.handleChange}
                     />   <br />
                     <button className={styles.buttonsmall} onClick={this.handleSubmit}>Submit</button>
-                </form>
+                </form>}
                 <p className='error'>{this.state.message}</p>
                 {this.state.showdashboard === true &&
                     <table>
