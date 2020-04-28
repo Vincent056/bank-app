@@ -80,6 +80,14 @@ class Check extends React.Component {
     handleCancel = () => {
         this.props.goback()
     }
+
+    formatAmount(balance) {
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+        return formatter.format(balance);
+    }
     render() {
 
         return (
@@ -101,7 +109,7 @@ class Check extends React.Component {
                         {this.props.accounts.map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>
-                                {account.account_id} - {account.account_type.toUpperCase()}: ${account.balance}
+                                {account.account_id} - {account.account_type.toUpperCase()}: ${this.formatAmount(account.balance)}
                             </option>
                         ))}
                     </select><br></br><br></br>

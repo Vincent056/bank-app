@@ -124,7 +124,7 @@ class Transfer extends React.Component {
                         {this.props.accounts.map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>
-                                    {account.account_id} - {account.account_type.toUpperCase()}: ${account.balance}</option>
+                                    {account.account_id} - {account.account_type.toUpperCase()}: ${this.formatAmount(account.balance)}</option>
                         ))}
 
                     </select><br></br><br></br>
@@ -137,7 +137,7 @@ class Transfer extends React.Component {
                         {this.props.accounts.map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>{account.account_id} - {account.account_type.toUpperCase()}:
-                               {account.balance} </option>
+                               {this.formatAmount(account.balance)} </option>
                         ))}
                         {/*If transfer to external account then set accto = 0*/}
                         <option

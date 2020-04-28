@@ -51,7 +51,6 @@ class ATM extends React.Component {
                 config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
             }).then((response) => {
                 // handle success
-                console.log(response.data)
                 if (response.data === "SHORT") {
                     this.setState({
                         message: "Not enough fund to withdraw!",
