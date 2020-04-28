@@ -12,7 +12,6 @@ class ResetPassword extends Component {
             userName: "",
             userPassword: "",
             userConfirmPassword: "",
-            loginRedirect: false,
             goBack: false,
             message: "",
         }
@@ -70,11 +69,10 @@ class ResetPassword extends Component {
                 // Successfully added user
                 // Redirect user to login page
                 // Determine how to successfully add a user
-                // console.log(response.data.customerAdded);
+                console.log(response.data.pwdCreated);
                 if (response.data.pwdCreated === true) {
                     {
                         this.setState({
-                            loginRedirect: true,
                             message: 'Password has been reset! Please go back to Login.'
                         })
                     }
@@ -129,9 +127,6 @@ class ResetPassword extends Component {
     //render the page
     render() {
         if (this.state.goBack) {
-            return <Redirect to="/" />
-        }
-        if (this.state.loginRedirect) {
             return <Redirect to="/" />
         }
 
