@@ -33,7 +33,7 @@
 
                 if($balance - $amount < 0){
                     //return
-                    echo "SHORT";
+                    echo json_encode("SHORT");
                 }
                 else{
                     $query = "INSERT into transaction(transaction_type, amount, date, bank_account_account_id)  
