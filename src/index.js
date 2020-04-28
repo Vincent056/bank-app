@@ -7,6 +7,7 @@ import OpenAcc from './user_comp/openbank.js'
 import Billing from './user_comp/setbilling.js'
 import UpdateInfo from './user_comp/update_Info.js'
 import {LoginPage, id} from './login/loginpage.js'
+import ForgotPassword from './login/forgotpassword.js'
 import {ManagerLogin, manID,manuser} from './login/managerlogin.js'
 import ManagerDashboard from './manager/managerdashboard.js'
 import SignUpForm from './user_comp/SignUpForm.js'
@@ -28,6 +29,9 @@ class App extends React.Component{
                 } />
 				<Route exact path = "/signUp/" render = {() => 
                      <SignUpForm cus_id = {id}></SignUpForm>
+                } />
+				<Route exact path = "/forgotpassword/" render = {() => 
+                     <ForgotPassword cus_id = {id}></ForgotPassword>
                 } />
 				<Route exact path = "/managerlogin/" render = {() => 
                     <ManagerLogin/>
