@@ -13,8 +13,6 @@ if(isset($_POST['zipCode']) && isset($_POST['ssn']) && isset($_POST['userName'])
     $username = mysql_entities_fix_string($conn, $_POST['userName']);
 	$password = mysql_entities_fix_string($conn, $_POST['userPassword']);
 	$confirmPassword = mysql_entities_fix_string($conn, $_POST['userConfirmPassword']);
-	$salt1 = uniqid();
-	$salt2 = uniqid();
 
 	if($password == $confirmPassword){
         // Check if user is in database
@@ -26,6 +24,13 @@ if(isset($_POST['zipCode']) && isset($_POST['ssn']) && isset($_POST['userName'])
         $result = $conn->query($query);
         $row = $result->fetch_array();
         $customerId = $row['customer_id'];
+
+        $query = "SELECT salt1, salt2 FROM customer
+                  WHERE username = '$username'";
+        $result = $conn->query($query);
+        $row = $result->fetch_array();
+        $salt1 = $row['salt1'];
+        $salt2 = $row['salt2'];
 
         $token = hash('ripemd128', "$salt1$password$salt2");
 
