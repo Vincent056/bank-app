@@ -19,7 +19,7 @@
         $json_array[] = $row;
 
         //Query for account's transactions
-        $query = "SELECT transaction_id,date,recipient,recipient_account,transaction_type,amount
+        $query = "SELECT transaction_id,date,recipient,recipient_account_num,transaction_type,amount
                  FROM transaction WHERE bank_account_account_id = '$acc_id'";
         $result = $conn->query($query);
         if(!$result) die("Database access failed:" .$conn->error);
