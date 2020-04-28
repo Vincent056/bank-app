@@ -23,6 +23,7 @@
         $result = $conn->query($query);
         if(!$result) die("Database access failed:" .$conn->error);
         while($row = mysqli_fetch_assoc($result)){
+            echo json_encode($row);
             $json_array[] = $row;
         }
 
