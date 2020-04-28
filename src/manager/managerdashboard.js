@@ -109,7 +109,7 @@ class ManagerDashboard extends React.Component {
                 <p>Fill out the following to perform a search. Attribute is the column being searched, input is what is being searched for.</p>
                 {this.props.man_id === undefined &&
                 <p>Please log in to use this option.</p>}
-                {this.props.man_id !== undefine &&
+                {this.props.man_id !== undefined &&
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Customer Attribute:  </label>
