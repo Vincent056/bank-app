@@ -116,6 +116,9 @@ class ManagerDashboard extends React.Component {
                             <option value='username'>Username</option>
                             <option value='first_name'>First Name</option>
                             <option value='last_name'>Last Name</option>
+			    <option value='all'>Show All Customer Under Management</option>
+		            <option value='b_desc'>Balance Descending</option>
+		            <option value='b_asc'>Balance Ascending</option>
                         </select>
                     <br></br><br></br>
                     <label>
@@ -145,6 +148,7 @@ class ManagerDashboard extends React.Component {
                                 <th>Zipcode</th>
                                 <th>Email</th>
                                 <th>Phone</th>
+				<th>Total Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -162,6 +166,7 @@ class ManagerDashboard extends React.Component {
                                     <td>{info.zip_code}</td>
                                     <td>{info.email}</td>
                                     <td>{info.phone}</td>
+				    <td>{info.balance}</td>
                                 </tr>
                             ))}
                         </tbody>
