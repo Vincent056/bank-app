@@ -14,6 +14,7 @@ import SignUpForm from './user_comp/SignUpForm.js'
 import Transfer from './user_comp/transaction.js'
 import MapContainer from './user_comp/BankMap.js'
 import ATM from './user_comp/atm.js'
+import ResetPassword from './user_comp/ResetPassword.js'
 import './index.css';
 
 //connect to database here
@@ -31,7 +32,7 @@ class App extends React.Component{
                      <SignUpForm cus_id = {id}></SignUpForm>
                 } />
 				<Route exact path = "/forgotpassword/" render = {() => 
-                     <ForgotPassword cus_id = {id}></ForgotPassword>
+                     <ResetPassword cus_id = {id}></ResetPassword>
                 } />
 				<Route exact path = "/managerlogin/" render = {() => 
                     <ManagerLogin/>
