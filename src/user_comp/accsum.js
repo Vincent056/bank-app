@@ -28,7 +28,6 @@ class AccSum extends React.Component {
             data: userInfo,
             config: { headers: { 'Content-Type': 'x-www-form-urlencoded; charset=UTF-8' } }
         }).then((response) => {
-            
             let trans_array = response.data.slice(1)
             this.setState({
                 acc_type: response.data[0].account_type,

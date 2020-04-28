@@ -88,7 +88,13 @@ class ManagerDashboard extends React.Component {
             loggedOut: true
         })
     }
-
+    formatAmount(balance) {
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+        return formatter.format(balance);
+    }
     //render the page
     render() {
         if (this.state.loggedOut) {
@@ -96,7 +102,7 @@ class ManagerDashboard extends React.Component {
         }
         return (
             <div className={styles.center}>
-				<div className={styles.topnav}>
+                <div className={styles.topnav}>
                     <a>Welcome {this.props.man_user}</a>\
 					<a><button className={styles.buttontopnav} onClick={this.logout}>Log Out</button></a>
                 </div>
@@ -104,31 +110,31 @@ class ManagerDashboard extends React.Component {
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Customer Attribute:  </label>
-                        <select className={styles.selectbox} onChange={this.handleChange}
-                            name='attribute'
-                            value={this.state.attribute}>
-                            <option value=''>Chose An Attribute</option>
-                            <option value='state'>State</option>
-                            <option value='city'>City</option>
-                            <option value='zip_code'>ZipCode</option>
-                            <option value='street'>Street</option>
-                            <option value='customer_id'>ID</option>
-                            <option value='username'>Username</option>
-                            <option value='first_name'>First Name</option>
-                            <option value='last_name'>Last Name</option>
-			    <option value='all'>Show All Customer Under Management</option>
-		            <option value='b_desc'>Balance Descending</option>
-		            <option value='b_asc'>Balance Ascending</option>
-                        </select>
+                    <select className={styles.selectbox} onChange={this.handleChange}
+                        name='attribute'
+                        value={this.state.attribute}>
+                        <option value=''>Chose An Attribute</option>
+                        <option value='state'>State</option>
+                        <option value='city'>City</option>
+                        <option value='zip_code'>ZipCode</option>
+                        <option value='street'>Street</option>
+                        <option value='customer_id'>ID</option>
+                        <option value='username'>Username</option>
+                        <option value='first_name'>First Name</option>
+                        <option value='last_name'>Last Name</option>
+                        <option value='all'>Show All Customer Under Management</option>
+                        <option value='b_desc'>Balance Descending</option>
+                        <option value='b_asc'>Balance Ascending</option>
+                    </select>
                     <br></br><br></br>
                     <label>
                         Attribute Input:  </label>
-                        <input
-                            type="text"
-                            name="input"
-                            value={this.state.input}
-                            onChange={this.handleChange}
-                        />   <br/>
+                    <input
+                        type="text"
+                        name="input"
+                        value={this.state.input}
+                        onChange={this.handleChange}
+                    />   <br />
                     <button className={styles.buttonsmall} onClick={this.handleSubmit}>Submit</button>
                 </form>
                 <p className='error'>{this.state.message}</p>
@@ -148,7 +154,7 @@ class ManagerDashboard extends React.Component {
                                 <th>Zipcode</th>
                                 <th>Email</th>
                                 <th>Phone</th>
-				<th>Total Balance</th>
+                                <th>Total Balance</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -166,7 +172,7 @@ class ManagerDashboard extends React.Component {
                                     <td>{info.zip_code}</td>
                                     <td>{info.email}</td>
                                     <td>{info.phone}</td>
-				    <td>{info.balance}</td>
+                                    <td>{this.formatAmount(info.balance)}</td>
                                 </tr>
                             ))}
                         </tbody>

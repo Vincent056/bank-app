@@ -11,6 +11,10 @@ class Account extends React.Component {
             style: 'currency',
             currency: 'USD',
         });
+        if (formatter.format(balance).length > 16){
+            formatter.format(balance).splice(16)
+            formatter.format(balance).splice(16,0,'...')
+        }
         return formatter.format(balance);
     }
     render() {

@@ -38,17 +38,23 @@ class Check extends React.Component {
             let userInfo = new FormData();
             userInfo.append('acc_id', this.state.accid)
             userInfo.append('amount', this.state.amount)
-            userInfo.append('type', 'deposit')
+            userInfo.append('check', this.state.file)
             axios({
                 method: 'post',
-                url: 'https://bank.cvs3.com/bank-app/api/atmtransaction.php',
+                url: 'https://bank.cvs3.com/bank-app/api/checkdeposit.php',
                 data: userInfo,
-                config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
+                config: { headers: { 'Content-Type': 'multipart/form-data' } }
             }).then((response) => {
-                // handle success
+                console.log(response.data)
+                if (response.data === 'OK')
                 this.setState({
                     message: "Deposit Complete!"
                 })
+                else{
+                    this.setState({
+                        message: "Oops! Something went wrong! Please try again!"
+                    })
+                }
             }).catch(function (error) {
                 // handle error
                 console.log(error)
@@ -109,7 +115,7 @@ class Check extends React.Component {
                         {this.props.accounts.map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>
-                                {account.account_id} - {account.account_type.toUpperCase()}: ${this.formatAmount(account.balance)}
+                                {account.account_id} - {account.account_type.toUpperCase()}: {this.formatAmount(account.balance)}
                             </option>
                         ))}
                     </select><br></br><br></br>
