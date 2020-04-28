@@ -21,14 +21,15 @@ if(isset($_POST['zipCode']) && isset($_POST['ssn']) && isset($_POST['userName'])
         $query = "SELECT address_id, customer_id FROM address, customer 
                   WHERE address_address_id = address_id 
                   AND zip_code = '$zip_code' 
-                  AND ssn = '$ssn'";
+                  AND ssn = '$ssn'
+                  AND username = '$username'";
         $result = $conn->query($query);
         $row = $result->fetch_array();
         $customerId = $row['customer_id'];
 
         $token = hash('ripemd128', "$salt1$password$salt2");
 
-        $query2 = "UPDATE customer SET password = '$token' WHERE customer_id = '$customerId'";
+        $query2 = "UPDATE customer SET customer.password = '$token' WHERE customer_id = '$customerId'";
         $result = $conn->query($query2);
 			
 		$json = array(
