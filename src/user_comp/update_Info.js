@@ -132,8 +132,12 @@ class UpdateInfo extends React.Component {
                 <div className={styles.topnav}>
                     <a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
                 </div>
+                {this.props.cus_id === undefined &&
+                    <p>Please log in to use this option.</p>}
+                 {this.props.cus_id !== undefined &&
                 <form className={styles.signup}>
                     <h1 className ='update'>Update Information</h1>
+                   
                     <label>Email</label><br></br>
                     <input type='text'
                         name='email'
@@ -182,7 +186,7 @@ class UpdateInfo extends React.Component {
                         value={this.state.aptnum}></input><br></br><br></br>
                     <button className ='submit_butt' onClick={this.handleSubmit}>Submit</button>
                     {this.state.message}
-                </form>
+                </form>}
             </div>
         )
     }
