@@ -9,8 +9,8 @@ if ($conn->connect_error) die($conn->connect_error);
 if (isset($_POST['acc_id']) && isset($_POST['amount'])) {
     $acc_id = mysql_entities_fix_string($conn, $_POST['acc_id']);
     $amount = mysql_entities_fix_string($conn, $_POST['amount']);
-    $file = addslashes(file_get_contents($_FILES['check']["tmp_name"]));
-
+    $file = addslashes(file_get_contents($_FILES['check']['tmp_name']));
+    echo json_decode($file);
     $amount = floatval($amount);
 
     $query = "INSERT into transaction(transaction_type, amount, file, date, bank_account_account_id) 
