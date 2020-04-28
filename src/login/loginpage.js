@@ -131,7 +131,7 @@ class LoginPage extends React.Component {
 			return <Redirect to="/managerlogin/" />
 		}
 		if (this.state.forgotPassword) {
-			//return <Redirect to="/forgotpassword/"/>
+			return <Redirect to="/forgotpassword/"/>
 		}
 		if (this.state.signUp) {
 			return <Redirect to="/signUp/" />
