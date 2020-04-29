@@ -109,7 +109,8 @@ class SignUpForm extends Component {
                 }
                 else if(response.data.customerAdded === false) {
                     this.setState({
-                        message: 'Username already exists! Please try a different username.'
+                        message: 'Username already exists! Please try a different username.',
+                        userName: ''
                     })
                 }
             }).catch(function (error) {
