@@ -192,7 +192,7 @@ export class MapContainer extends Component {
         }
 
         return (
-            <div className={styles.center}>
+            <div className={styles.mapcenter}>
                 <div className={styles.topnav}>
                     <a><button className={styles.buttontopnav} onClick={this.handleCancel}>Back</button></a>
                 </div>

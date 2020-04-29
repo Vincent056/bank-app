@@ -7,10 +7,17 @@
   background: #eee;
   overflow-x: hidden;
   float: left;
+  height: 100%;
 }
 h1{
   font-family: Garamond 20px;
 }
+
+body {
+	background-color:gray;
+	background-image:url("background2.jpg");
+}
+
 .sidenav a {
   padding-left: 10px;
   padding-right: 10px;
@@ -64,6 +71,14 @@ h1{
 .center {
   width: 1000px;
   margin: auto;
+  background: #FFFFFF;
+  height: 100vh;
+}
+
+.mapcenter {
+  width: 1000px;
+  margin: auto;
+  background: #FFFFFF;
 }
 
 .topnav {
@@ -88,11 +103,14 @@ h1{
   width: 800px;
   /*padding: 0px 10px;*/
   float: right;
+  background: #FFFFFF;
+  height: 100%;
 }
 
 .signup {
   width: 1000px;
   margin: auto;
+  background: #FFFFFF
 }
 
 .signup input {
@@ -155,6 +173,8 @@ h1{
 .billing {
   width: 1000px;
   margin: auto;
+  background: #FFFFFF;
+  height: 100%;
 }
 
 .billing button{
