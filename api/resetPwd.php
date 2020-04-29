@@ -22,9 +22,9 @@ if(isset($_POST['zipCode']) && isset($_POST['ssn']) && isset($_POST['userName'])
                   AND ssn = '$ssn'
                   AND username = '$username'";
         $result = $conn->query($query);
-        $rows = $result->fetch_array(MYSQLI_NUM)[0];
-        echo $rows;
-        if($rows != 0){
+        // $rows = $result->fetch_array(MYSQLI_NUM)[0];
+        // echo $rows;
+        if(mysqli_num_rows($result) != 0){
             $row = $result->fetch_array();
             $customerId = $row['customer_id'];
 
