@@ -213,7 +213,8 @@ class ResetPassword extends Component {
                     </form>
                 </div>
                 <div>
-                    <button className={styles.buttonsmall} onClick={this.handleCancel}>Back</button>
+                    <button className={styles.buttonsmall} onClick={this.handleCancel}>Back to Login</button>
+                    <br></br>
                     <button className={styles.buttonsmall} onClick={this.handleSignUp}>Sign Up</button>
                 </div>
             </div>
