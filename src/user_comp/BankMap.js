@@ -37,7 +37,7 @@ export class MapContainer extends Component {
 
     checkInput = () => {
         // const search = /^[a-z0-9]+$/i
-        const search = /^[a-zA-Z0-9,.- ]*$/
+        const search = /^[a-zA-Z0-9,. ]*$/
         if (this.state.search === "")
             return 'E';
         else if (!(search.test(this.state.search))) return 'Z'
