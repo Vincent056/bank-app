@@ -14,7 +14,7 @@
     
     $today = date('Y-m-d');
     $dayinmonth = date('j');
-    echo date("Y-m-d h:i:sa") . ": script started" . $dayinmonth;
+    echo date("Y-m-d h:i:sa") . ": script started Day:" . $dayinmonth;
     echo "\r\n";
     
     $query = "SELECT * FROM automated_billing WHERE start_date <= '$today' AND end_date >= '$today' AND day = '$dayinmonth' AND last_date < '$today' or last_date is NULL;";
