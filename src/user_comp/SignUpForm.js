@@ -53,6 +53,7 @@ class SignUpForm extends Component {
             || this.state.userConfirmPassword === ""
             || this.state.ssn === "")
             return 'E';
+        else if(this.state.userPassword != this.state.userConfirmPassword) return 'NEQ'
         else if (!(state.test(this.state.stateInCountry))) return 'S'
         else if (!(zip.test(this.state.zipCode))) return 'Z'
         else if (!(phone.test(this.state.phone))) return 'P'
@@ -146,6 +147,13 @@ class SignUpForm extends Component {
                 ssn: ''
             })
         }
+        else if (check === 'NEQ') {
+            this.setState({
+                message: 'Password fields do not match!',
+                userPassword: '',
+                userConfirmPassword: ''
+            })
+        }
 
     }
 
@@ -224,6 +232,7 @@ class SignUpForm extends Component {
                     </label> <br />
                         <input
                             type="text"
+                            pattern="[A-Za-z]{2}" required
                             title="Please enter two letter state code"
                             name="stateInCountry"
                             placeholder="e.g. CA"
@@ -236,6 +245,7 @@ class SignUpForm extends Component {
                         <input
                             type="text"
                             name="zipCode"
+                            pattern="[0-9]{5}" required
                             title="Please enter five number zip code"
                             placeholder="e.g. 12345"
                             value={this.state.zipCode}
