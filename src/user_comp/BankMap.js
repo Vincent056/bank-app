@@ -166,6 +166,9 @@ export class MapContainer extends Component {
         }
         else{
             this.getLatLngJSON(this.state.search);
+            this.setState({
+                message: '',
+            })
         }
     }
 
