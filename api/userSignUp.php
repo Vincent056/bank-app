@@ -61,7 +61,12 @@ if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['st
 			echo json_encode($json);
 		}
 		else{
-			print_r("Username already in database");
+            $json = array(
+				"customerAdded" => FALSE
+			);
+
+			echo json_encode($json);
+			// print_r("Username already in database");
 		}
 	}
 }
