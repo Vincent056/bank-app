@@ -44,6 +44,12 @@ input{
     background-color: darkgray;
     font: bold 15px Verdana
 }
+.atm_con{
+    background-color: white;
+    height: 300px;
+    width: 500px;
+    border-radius: 10px;
+}
 button:hover{
     background-color: darkgray;
     color: white;
@@ -91,4 +97,7 @@ th{
     font: bold 30px Arial;
     color: white;
     background-color: #2d4752;
+}
+#root{
+    opacity: 0.97;
 }

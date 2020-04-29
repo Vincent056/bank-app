@@ -8,9 +8,10 @@ class Billing extends React.Component {
         super(props)
         this.state = {
             chosenacc: '',
+            accto: '',
+            otheracc: 0,
             showbill: false,
             addbill: false,
-            destination: '',
             amount: 0.00,
             day: 0,
             end: '',
@@ -99,18 +100,17 @@ class Billing extends React.Component {
 
     //check user input
     checkInput() {
-        const des = /\d/
+
         const date = /^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/
         let today = new Date()
         let enddate = new Date(Number(this.state.end.substring(0, 4)), Number(this.state.end.substring(5, 7)) - 1, Number(this.state.end.substring(8)))
 
         if (this.state.chosenacc === ''
-            || this.state.destination === ''
             || this.state.day === 0
             || this.state.end === ''
+            || this.accto === ''
             || this.state.amount === 0) return 'E'
-        else if (!(des.test(this.state.destination))
-            || this.state.destination === '0') return 'DEST'
+        else if (this.state.accto ==='-1' && this.state.otheracc < 1) return 'O'
         else if (this.state.day < 1 || this.state.day > 28) return 'BILL'
         else if (!(date.test(this.state.end))
             || today.getTime() >= enddate.getTime()) return "DATE"
@@ -124,7 +124,12 @@ class Billing extends React.Component {
         if (check === 'OK') {
             let userInfo = new FormData();
             userInfo.append('id', this.state.chosenacc)
-            userInfo.append('reciver_acc', this.state.destination)
+        if (this.state.accto === '-1'){
+            userInfo.append('reciver_acc', this.state.otheracc)
+        }
+        else{
+            userInfo.append('reciver_acc', this.state.accto)
+        }
             userInfo.append('dayinmonth', this.state.day)
             userInfo.append('end', this.state.end)
             userInfo.append('amount', this.state.amount)
@@ -149,6 +154,11 @@ class Billing extends React.Component {
                     })
                     this.showBilling()
                 }
+                else if(response.data ==='NE'){
+                    this.setState({
+                        message2: "The destination account does not exist."
+                    })
+                }
                 else {
                     this.setState({
                         message2: "Oops! Something went wrong! Please try again!"
@@ -164,9 +174,9 @@ class Billing extends React.Component {
                 message2: 'Please fill out all fields!',
             })
         }
-        else if (check === 'DEST') {
+        else if (check === 'O') {
             this.setState({
-                message2: 'Invalid destination account!',
+                message2: 'Invalid To Account field!',
             })
         }
         else if (check === 'BILL') {
@@ -230,7 +240,7 @@ class Billing extends React.Component {
                     </select><br></br>
                     <button className='submit_butt' onClick={this.submitAccount}>Submit</button>
                     {this.state.message1}
-
+                    </form>
                     {/*show all billings*/}
                     {this.state.showbill === true && this.state.billing.length !== 0 &&
                         <div>
@@ -264,20 +274,38 @@ class Billing extends React.Component {
                             <button className='button' onClick={this.addBilling}>Add Billing</button><br></br>
                         You have no auto bill.
                         </div>}
-                </form>
+                
 
                 {/*If choose to add more billings then
                     show the adding form*/}
                 {this.state.addbill === true &&
-                    <form className={styles.billing}>
+                    <form className>
                         <label>To Account (SILICON bank account only):</label><br></br>
-                        <input type='text'
-                            onChange={this.handleChange}
-                            name='destination'
-                            value={this.state.destination}></input><br></br>
-
+                        <select
+                        name='accto'
+                        value={this.state.accto}
+                        onChange={this.handleChange} >
+                        <option value=''> </option>
+                        {this.props.accounts.filter(account => {
+                            if (account.account_id === this.state.chosenacc) return false
+                            return true
+                        }).map(account => (
+                            <option key={account.account_id}
+                                value={account.account_id}>SILICON {account.account_type.toUpperCase()} - {account.account_id}
+                            </option>
+                        ))}
+                        <option
+                            value={-1} >OTHER SILICON ACCOUNT</option>
+                    </select><br></br>
+                    {Number(this.state.accto) === -1 &&
+                        <div>
+                            <label>Account Number</label><br></br>
+                            <input type='number'
+                                name='otheracc'
+                                onChange={this.handleChange}
+                                value={this.state.otheracc}></input></div>}<br></br>
                         <label>Amount:</label><br></br>
-                        <input type='number' step='0.01'
+                        $ <input type='number' step='0.01'
                             onChange={this.handleChange}
                             name='amount'
                             value={this.state.amount}></input><br></br>

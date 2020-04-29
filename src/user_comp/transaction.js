@@ -35,7 +35,7 @@ class Transfer extends React.Component {
         if (this.state.accfrom === ''
             ||this.state.accto ===''
             ||this.state.amount === 0.00) return 'E'
-        else if(this.state.accto === '-1'&& !(/\d/.test(this.state.externalacc)))
+        else if(this.state.accto === '-1'&& this.state.externalacc < 1)
             return 'X'
         else if(this.state.accto === '-1'&& !(/\d{9}/.test(this.state.routing)))
             return 'R'
@@ -69,6 +69,10 @@ class Transfer extends React.Component {
             this.setState({
                 message: "Transaction Complete!"
             })}
+            else if(response.data === 'SHORT'){
+                this.setState({
+                    message: 'The transfer amount excceds available balance, Please transfer a smaller amount!'
+                })}
             else{
                 this.setState({
                     message: "Oops! Something went wrong! Please try again!"
@@ -129,7 +133,7 @@ class Transfer extends React.Component {
                         {this.props.accounts.map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>
-                                    {account.account_id} - {account.account_type.toUpperCase()}: ${this.formatAmount(account.balance)}</option>
+                                    {account.account_id} - {account.account_type.toUpperCase()}: {this.formatAmount(account.balance)}</option>
                         ))}
 
                     </select><br></br><br></br>
@@ -139,7 +143,10 @@ class Transfer extends React.Component {
                         value={this.state.accto}
                         onChange={this.handleChange} >
                         <option value=''> </option>
-                        {this.props.accounts.map(account => (
+                        {this.props.accounts.filter(account => {
+                            if (account.account_id === this.state.accfrom) return false
+                            return true
+                        }).map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>{account.account_id} - {account.account_type.toUpperCase()}:
                                {this.formatAmount(account.balance)} </option>
@@ -162,7 +169,7 @@ class Transfer extends React.Component {
                                 value={this.state.routing}></input><br></br>
 
                             <label>External Account Number</label><br></br>
-                            <input type='text'
+                            <input type='number'
                                 name='externalacc'
                                 title = 'Enter the account number'
                                 onChange={this.handleChange}
@@ -177,7 +184,7 @@ class Transfer extends React.Component {
                         value={this.state.recipient} ></input><br></br>
 
                     <label>Amount</label><br></br>
-                    <input type='number' step = '0.01' name='amount'
+                    $ <input type='number' step = '0.01' name='amount'
                         onChange={this.handleChange}
                         value={this.state.amount} ></input><br></br>
                     <button className='submit_butt' onClick={this.handleSubmit}>Submit</button>

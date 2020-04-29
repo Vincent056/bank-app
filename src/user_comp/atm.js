@@ -125,7 +125,7 @@ class ATM extends React.Component {
                         <option value='withdraw'>Withdraw</option>
                     </select><br></br>
                     <label>Amount</label><br></br>
-                    <input type='number' step='0.01'
+                    $ <input type='number' step='0.01'
                         onChange={this.handleChange}
                         name='amount'
                         value={this.state.amount}></input><br></br><br></br>

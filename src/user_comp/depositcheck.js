@@ -125,7 +125,7 @@ class Check extends React.Component {
                         ))}
                     </select><br></br><br></br>
                     <label>Amount</label><br></br>
-                    <input type='number' step='0.01'
+                    $ <input type='number' step='0.01'
                         onChange={this.handleChange}
                         name='amount'
                         value={this.state.amount}></input>

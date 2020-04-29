@@ -23,6 +23,7 @@ class Account extends React.Component {
         return (
             <div>
                 <button className='account'
+                    title = 'View summary'
                     onClick={this.accsummary}>
                     <p className='acc_name'>SILICON  {this.props.acc.account_type.toUpperCase()}   -   {this.props.acc.account_id}</p>
                     <p className='acc_money' >{this.formatAmount(this.props.acc.balance)}</p>
