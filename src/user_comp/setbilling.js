@@ -110,7 +110,11 @@ class Billing extends React.Component {
             || this.state.end === ''
             || this.accto === ''
             || this.state.amount === 0) return 'E'
-        else if (this.state.accto ==='-1' && this.state.otheracc < 1) return 'O'
+        else if (this.state.accto === '-1' && this.state.otheracc === '') return 'O'
+        else if (this.state.accto === '-1' && !(/^[0-9]+$/.test(this.state.otheracc)))
+            return 'O'
+        else if (this.state.accto === '-1' && (/0+/.test(this.state.otheracc)))
+            return 'O'
         else if (this.state.day < 1 || this.state.day > 28) return 'BILL'
         else if (!(date.test(this.state.end))
             || today.getTime() >= enddate.getTime()) return "DATE"

@@ -23,21 +23,25 @@ class Transfer extends React.Component {
             style: 'currency',
             currency: 'USD',
         });
-        if (formatter.format(balance).length > 16){
-            let format = formatter.format(balance).substring(0,16)
+        if (formatter.format(balance).length > 16) {
+            let format = formatter.format(balance).substring(0, 16)
             format = format.concat('...')
             return format
         }
         return formatter.format(balance);
     }
 
-    checkInput(){
+    checkInput() {
         if (this.state.accfrom === ''
-            ||this.state.accto ===''
-            ||this.state.amount === 0.00) return 'E'
-        else if(this.state.accto === '-1'&& this.state.externalacc < 1)
+            || this.state.accto === ''
+            || this.state.amount === 0.00) return 'E'
+        else if (this.state.accto === '-1' && this.state.externalacc === '')
             return 'X'
-        else if(this.state.accto === '-1'&& !(/\d{9}/.test(this.state.routing)))
+        else if (this.state.accto === '-1' && !(/^[0-9]+$/.test(this.state.externalacc)))
+            return 'X'
+        else if (this.state.accto === '-1' && (/0+/.test(this.state.externalacc)))
+            return 'X'
+        else if (this.state.accto === '-1' && !(/\d{9}/.test(this.state.routing)))
             return 'R'
         else if (this.state.amount < 0) return 'A'
         else return 'OK'
@@ -45,64 +49,66 @@ class Transfer extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         let check = this.checkInput()
-        if (check === 'OK'){
-        let userInfo = new FormData();
-        userInfo.append('id', this.state.accfrom)
-        if (this.state.externalacc === '') {
-            userInfo.append('acct_num', this.state.accto)
-        }
-        else {
-            userInfo.append('acct_num', this.state.externalacc)
-            userInfo.append('routing', this.state.routing)
-        }
-        userInfo.append('receiver', this.state.recipient)
-        userInfo.append('amount', this.state.amount)
-
-        axios({
-            method: 'post',
-            url: 'https://bank.cvs3.com/bank-app/api/trasnferfund.php',
-            data: userInfo,
-            config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
-        }).then((response) => {
-            // handle success
-            if (response.data === 'OK'){
-            this.setState({
-                message: "Transaction Complete!"
-            })}
-            else if(response.data === 'SHORT'){
-                this.setState({
-                    message: 'The transfer amount excceds available balance, Please transfer a smaller amount!'
-                })}
-            else{
-                this.setState({
-                    message: "Oops! Something went wrong! Please try again!"
-                }) 
+        if (check === 'OK') {
+            let userInfo = new FormData();
+            userInfo.append('id', this.state.accfrom)
+            if (this.state.externalacc === '') {
+                userInfo.append('acct_num', this.state.accto)
             }
-        }).catch(function (error) {
-            // handle error
-            console.log(error)
-        })
-    }
-    else if (check === 'E'){
-        this.setState({
-            message: 'Please fill out all required fields!',
-        })
-    }
-    else if (check === 'X'){
-        this.setState({
-            message: 'Invalid external account number!',
-        })
-    }
-    else if (check === 'R'){
-        this.setState({
-            message: 'Invalid routing number',
-        })
-    }
-    else if (check === 'A'){
-        this.setState({
-            message: 'Invalid amount!',
-        })
-    }
+            else {
+                userInfo.append('acct_num', this.state.externalacc)
+                userInfo.append('routing', this.state.routing)
+            }
+            userInfo.append('receiver', this.state.recipient)
+            userInfo.append('amount', this.state.amount)
+
+            axios({
+                method: 'post',
+                url: 'https://bank.cvs3.com/bank-app/api/trasnferfund.php',
+                data: userInfo,
+                config: { headers: { 'Content-Type': 'x-www-form-urlencoded' } }
+            }).then((response) => {
+                // handle success
+                if (response.data === 'OK') {
+                    this.setState({
+                        message: "Transaction Complete!"
+                    })
+                }
+                else if (response.data === 'SHORT') {
+                    this.setState({
+                        message: 'The transfer amount excceds available balance, Please transfer a smaller amount!'
+                    })
+                }
+                else {
+                    this.setState({
+                        message: "Oops! Something went wrong! Please try again!"
+                    })
+                }
+            }).catch(function (error) {
+                // handle error
+                console.log(error)
+            })
+        }
+        else if (check === 'E') {
+            this.setState({
+                message: 'Please fill out all required fields!',
+            })
+        }
+        else if (check === 'X') {
+            this.setState({
+                message: 'Invalid external account number!',
+            })
+        }
+        else if (check === 'R') {
+            this.setState({
+                message: 'Invalid routing number',
+            })
+        }
+        else if (check === 'A') {
+            this.setState({
+                message: 'Invalid amount!',
+            })
+        }
 
     }
     handleChange = (event) => {
@@ -133,7 +139,7 @@ class Transfer extends React.Component {
                         {this.props.accounts.map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>
-                                    {account.account_id} - {account.account_type.toUpperCase()}: {this.formatAmount(account.balance)}</option>
+                                {account.account_id} - {account.account_type.toUpperCase()}: {this.formatAmount(account.balance)}</option>
                         ))}
 
                     </select><br></br><br></br>
@@ -149,7 +155,7 @@ class Transfer extends React.Component {
                         }).map(account => (
                             <option key={account.account_id}
                                 value={account.account_id}>{account.account_id} - {account.account_type.toUpperCase()}:
-                               {this.formatAmount(account.balance)} </option>
+                                {this.formatAmount(account.balance)} </option>
                         ))}
                         {/*If transfer to external account then set accto = 0*/}
                         <option
@@ -163,15 +169,15 @@ class Transfer extends React.Component {
                             <label>Routing Number</label><br></br>
                             <input type='text'
                                 name='routing'
-                                placeholder = '9 digits numbers'
-                                title = 'Please enter 9 digit numbers of the bank routing'
+                                placeholder='9 digits numbers'
+                                title='Please enter 9 digit numbers of the bank routing'
                                 onChange={this.handleChange}
                                 value={this.state.routing}></input><br></br>
 
                             <label>External Account Number</label><br></br>
-                            <input type='number'
+                            <input type='text'
                                 name='externalacc'
-                                title = 'Enter the account number'
+                                title='Enter the account number'
                                 onChange={this.handleChange}
                                 value={this.state.externalacc}></input><br></br>
                             <br></br>
@@ -184,13 +190,13 @@ class Transfer extends React.Component {
                         value={this.state.recipient} ></input><br></br>
 
                     <label>Amount</label><br></br>
-                    $ <input type='number' step = '0.01' name='amount'
+                    $ <input type='number' step='0.01' name='amount'
                         onChange={this.handleChange}
                         value={this.state.amount} ></input><br></br>
                     <button className='submit_butt' onClick={this.handleSubmit}>Submit</button>
                     {this.state.message}
                 </form>
-                
+
             </div>
         )
     }
