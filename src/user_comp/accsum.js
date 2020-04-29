@@ -145,7 +145,8 @@ class AccSum extends React.Component {
                                         <td>{tran.transaction_type}</td>
                                         {(tran.transaction_type === "Internal" ||
                                             tran.transaction_type === "External" ||
-                                            tran.transaction_type === "Withdraw") &&
+                                            tran.transaction_type === "Withdraw"||
+                                            tran.transaction_type === "automated_billing") &&
                                             <td>-{this.formatAmount(tran.amount)}</td>}
                                         {(tran.transaction_type === "Deposit" ||
                                             tran.transaction_type === "Received") &&
