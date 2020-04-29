@@ -20,18 +20,19 @@ if (isset($_POST['id']) && isset($_POST['acct_num']) && isset($_POST['amount'])&
 
             if($amount>$balance)
             {
-                echo "The transfer amount excceds available balance, Please transfer a smaller amount!";
+                echo json_encode('SHORT');
             }else
             {
                 if (isset($_POST['routing']) ){ //external
                     $routing = mysql_entities_fix_string($conn, $_POST['routing']);
-           
+                    
+                    
                     $trans_type = "External";
                      $query2 = "INSERT INTO transaction (routing_number, recipient, recipient_account_num, transaction_type, amount, date, bank_account_account_id) 
                      VALUES ('$routing','$receiver','$acct_num','$trans_type','$amount',current_timestamp(),'$id');";
                     $query2 .= "UPDATE bank_account SET balance = balance - $amount WHERE bank_account.account_id = '$id';";
                     $conn->multi_query($query2);
-                    echo 'OK';
+                    echo json_encode('OK');
                 }
                 else{ //internal
                     $trans_type = "Internal";
@@ -42,7 +43,7 @@ if (isset($_POST['id']) && isset($_POST['acct_num']) && isset($_POST['amount'])&
                     $query2 .= "UPDATE bank_account SET balance = balance - $amount WHERE bank_account.account_id = '$id';";
                     $query2 .= "UPDATE bank_account SET balance = balance + $amount WHERE bank_account.account_id = '$acct_num';";
                     $conn->multi_query($query2);
-                    echo 'OK';
+                    echo json_encode('OK');
                 }
                 
                 

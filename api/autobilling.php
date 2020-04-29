@@ -15,11 +15,19 @@
          $amount = mysql_entities_fix_string($conn, $_POST['amount']);
          $dayinmonth = mysql_entities_fix_string($conn, $_POST['dayinmonth']);
         
+         $query = "SELECT COUNT(*) FROM bank_account WHERE account_id='$reciver_acc'";
+         $result = $conn->query($query);
+         if (!$result) die($conn->connect_error);
+         $rows = $result->fetch_array(MYSQLI_NUM)[0];
+         if ($rows == 0) {
+             echo json_encode('NE');
+         }
+         else{
             $query1 = "INSERT INTO automated_billing (destination, amount, start_date, end_date, day, bank_account_account_id) 
             VALUES ('$reciver_acc', '$amount', sysdate(),'$end','$dayinmonth','$id');";
              $conn->query($query1);
-            echo 'OK';
-                  
+            echo json_encode('OK');
+         }                    
     }
     
     $conn->close();
