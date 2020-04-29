@@ -166,12 +166,6 @@ h1{
 	border-radius: 5px;
 }
 
-.billing {
-  width: 1000px;
-  margin: auto;
-  background: #FFFFFF;
-  height: 100%;
-}
 
 .billing button{
   background-color: #800000; /* Maroon*/
