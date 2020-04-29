@@ -13,6 +13,7 @@ class ResetPassword extends Component {
             userPassword: "",
             userConfirmPassword: "",
             goBack: false,
+            signUp: false,
             message: "",
         }
         this.handleChange = this.handleChange.bind(this);
@@ -70,16 +71,23 @@ class ResetPassword extends Component {
                 // Redirect user to login page
                 // Determine how to successfully add a user
                 console.log(response.data.pwdCreated);
-                if (response.data.pwdCreated === true) {
+                if (response.data.userFound === true && response.data.pwdCreated === true) {
                     {
                         this.setState({
                             message: 'Password has been reset! Please go back to Login.'
                         })
                     }
                 }
-                else if (response.data.pwdCreated === false) {
+                else if(response.data.userFound === false){
+                    {
+                        this.setState({
+                            message: 'User not found. Please sign up for an account.'
+                        })
+                    }
+                }
+                else if (response.data.userFound === true && response.data.pwdCreated === false) {
                     this.setState({
-                        message: 'Incorrect password fields'
+                        message: 'Unable to reset password'
                     })
                 }
             }).catch(function (error) {
@@ -117,6 +125,12 @@ class ResetPassword extends Component {
 
     }
 
+    handleSignUp = () => {
+        this.setState({
+            signUp: true
+        })
+    }
+
     //set state to go back
     handleCancel = () => {
         this.setState({
@@ -128,6 +142,9 @@ class ResetPassword extends Component {
     render() {
         if (this.state.goBack) {
             return <Redirect to="/" />
+        }
+        if (this.state.signUp) {
+            return <Redirect to="/signUp/" />
         }
 
         return (
@@ -196,7 +213,9 @@ class ResetPassword extends Component {
                     </form>
                 </div>
                 <div>
-                    <button className={styles.buttonsmall} onClick={this.handleCancel}>Back</button>
+                    <button className={styles.buttonsmall} onClick={this.handleCancel}>Back to Login</button>
+                    <br></br>
+                    <button className={styles.buttonsmall} onClick={this.handleSignUp}>Sign Up</button>
                 </div>
             </div>
         );

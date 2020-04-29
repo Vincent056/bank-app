@@ -22,29 +22,40 @@ if(isset($_POST['zipCode']) && isset($_POST['ssn']) && isset($_POST['userName'])
                   AND ssn = '$ssn'
                   AND username = '$username'";
         $result = $conn->query($query);
-        $row = $result->fetch_array();
-        $customerId = $row['customer_id'];
+        $rows = $result->fetch_array(MYSQLI_NUM)[0];
+        if($rows != 0){
+            $row = $result->fetch_array();
+            $customerId = $row['customer_id'];
 
-        $query = "SELECT salt1, salt2 FROM customer
-                  WHERE username = '$username'";
-        $result = $conn->query($query);
-        $row = $result->fetch_array();
-        $salt1 = $row['salt1'];
-        $salt2 = $row['salt2'];
+            $query = "SELECT salt1, salt2 FROM customer
+                    WHERE username = '$username'";
+            $result = $conn->query($query);
+            $row = $result->fetch_array();
+            $salt1 = $row['salt1'];
+            $salt2 = $row['salt2'];
 
-        $token = hash('ripemd128', "$salt1$password$salt2");
+            $token = hash('ripemd128', "$salt1$password$salt2");
 
-        $query2 = "UPDATE customer SET customer.password = '$token' WHERE customer_id = '$customerId'";
-        $result = $conn->query($query2);
-			
-		$json = array(
-				"pwdCreated" => TRUE
-		);
+            $query2 = "UPDATE customer SET customer.password = '$token' WHERE customer_id = '$customerId'";
+            $result = $conn->query($query2);
+                
+            $json = array(
+                    "userFound" => TRUE,
+                    "pwdCreated" => TRUE
+            );
+        }
+        else{
+            $json = array(
+                "userFound" => FALSE,
+                "pwdCreated" => FALSE
+            );
+        }
 
 		echo json_encode($json);
 	}
 	else{
         $json = array(
+            "userFound" => FALSE,
             "pwdCreated" => FALSE
         );
         echo json_encode($json);
