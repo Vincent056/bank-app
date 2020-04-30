@@ -59,7 +59,7 @@ class LoginPage extends React.Component {
 				//if back end return error code 0, meaning invalid username/password
 				if (user_id === 0) {
 					this.setState({
-						invalid: "Invalid Username or Password! Please enter again!"
+						invalid: "Invalid Username or Password!"
 					})
 				}
 				else {
