@@ -7,14 +7,14 @@ $conn = new mysqli($servername, $user, $password, $db);
 if ($conn->connect_error) die($conn->connect_error);
 
 if (isset($_POST['olduserPassword']) && isset($_POST['userPassword']) && isset($_POST['userConfirmPassword']) && isset($_POST['userName'])) {
-    $username = mysql_entities_fix_string($conn, $_POST['userName']);
+    $userid = mysql_entities_fix_string($conn, $_POST['userName']);
     $password = mysql_entities_fix_string($conn, $_POST['userPassword']);
     $confirmPassword = mysql_entities_fix_string($conn, $_POST['userConfirmPassword']);
     $opassword = mysql_entities_fix_string($conn, $_POST['olduserPassword']);
 
     // Get user's password and salts to check with inputted password
     $query = "SELECT password, salt1, salt2 FROM customer
-			  WHERE username = '$username'";
+			  WHERE customer_id = '$userid'";
     $result = $conn->query($query);
     $row = $result->fetch_array();
     $pass = $row['password'];
