@@ -6,8 +6,8 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 $conn = new mysqli($servername, $user, $password, $db);
 if ($conn->connect_error) die($conn->connect_error);
 
-if (isset($_POST['olduserPassword']) && isset($_POST['userPassword']) && isset($_POST['userConfirmPassword']) && isset($_POST['userName'])) {
-    $userid = mysql_entities_fix_string($conn, $_POST['userName']);
+if (isset($_POST['olduserPassword']) && isset($_POST['userPassword']) && isset($_POST['userConfirmPassword']) && isset($_POST['userid'])) {
+    $userid = mysql_entities_fix_string($conn, $_POST['userid']);
     $password = mysql_entities_fix_string($conn, $_POST['userPassword']);
     $confirmPassword = mysql_entities_fix_string($conn, $_POST['userConfirmPassword']);
     $opassword = mysql_entities_fix_string($conn, $_POST['olduserPassword']);
