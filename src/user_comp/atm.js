@@ -8,7 +8,7 @@ class ATM extends React.Component {
         this.state = {
             accounts: this.props.location.state.customer_accounts,
             accid: '',
-            amount: 0.00,
+            amount: '',
             type: '',
             message: '',
             goback: false
@@ -31,8 +31,9 @@ class ATM extends React.Component {
 
     checkInput() {
         if (this.state.accid === '' || this.state.type == ''
-            || this.state.amount === 0.00) return "E"
-        else if (this.state.amount < 0) return "A"
+            || this.state.amount === '') return "E"
+            else if (!(/^([0-9]+|([0-9]+).([0-9]{1})|([0-9]+).([0-9]{2}))$/.test(this.state.amount))
+            ||(/^(0+|(0+).(0+))$/.test(this.state.amount))) return "A"
         else return "OK"
     }
 
@@ -125,12 +126,12 @@ class ATM extends React.Component {
                         <option value='withdraw'>Withdraw</option>
                     </select><br></br>
                     <label>Amount</label><br></br>
-                    $ <input type='number' step='0.01'
+                    $ <input type='text'
                         onChange={this.handleChange}
                         name='amount'
                         value={this.state.amount}></input><br></br><br></br>
                     <button className ='atm_butt'onClick={this.handleSubmit}>Go</button>
-                    <button className ='atm_butt'onClick={this.handleCancel}>Back To Bank</button>
+                    <button className ='atm_butt'onClick={this.handleCancel}>Back To Bank</button><br></br>
                     {this.state.message}<br></br><br></br>
                 </form>
                 

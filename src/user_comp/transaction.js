@@ -10,8 +10,9 @@ class Transfer extends React.Component {
             accfrom: '',
             externalacc: '',
             routing: '',
+            otheracc: '',
             recipient: '',
-            amount: 0.00,
+            amount: '',
             message: '',
         }
         this.handleChange = this.handleChange.bind(this);
@@ -34,7 +35,7 @@ class Transfer extends React.Component {
     checkInput() {
         if (this.state.accfrom === ''
             || this.state.accto === ''
-            || this.state.amount === 0.00) return 'E'
+            || this.state.amount === '') return 'E'
         else if (this.state.accto === '-1' && this.state.externalacc === '')
             return 'X'
         else if (this.state.accto === '-1' && !(/^[0-9]+$/.test(this.state.externalacc)))
@@ -43,7 +44,13 @@ class Transfer extends React.Component {
             return 'X'
         else if (this.state.accto === '-1' && !(/\d{9}/.test(this.state.routing)))
             return 'R'
-        else if (this.state.amount < 0) return 'A'
+        else if (this.state.accto === '-2' && this.state.otheracc === '') return 'O'
+        else if (this.state.accto === '-2' && !(/^[0-9]+$/.test(this.state.otheracc)))
+            return 'O'
+        else if (this.state.accto === '-2' && (/0+/.test(this.state.otheracc)))
+            return 'O'
+        else if (!(/^([0-9]+|([0-9]+).([0-9]{1})|([0-9]+).([0-9]{2}))$/.test(this.state.amount))
+            || (/^(0+|(0+).(0+))$/.test(this.state.amount))) return 'A'
         else return 'OK'
     }
     handleSubmit = (event) => {
@@ -53,7 +60,12 @@ class Transfer extends React.Component {
             let userInfo = new FormData();
             userInfo.append('id', this.state.accfrom)
             if (this.state.externalacc === '') {
-                userInfo.append('acct_num', this.state.accto)
+                if (this.state.accto === '-2'){
+                    userInfo.append('acct_num', this.state.otheracc)
+                }
+                else{
+                    userInfo.append('acct_num', this.state.accto)
+                }
             }
             else {
                 userInfo.append('acct_num', this.state.externalacc)
@@ -79,6 +91,11 @@ class Transfer extends React.Component {
                         message: 'The transfer amount excceds available balance, Please transfer a smaller amount!'
                     })
                 }
+                else if(response.data ==='NE'){
+                    this.setState({
+                        message: "The destination account does not exist."
+                    })
+                }
                 else {
                     this.setState({
                         message: "Oops! Something went wrong! Please try again!"
@@ -102,6 +119,11 @@ class Transfer extends React.Component {
         else if (check === 'R') {
             this.setState({
                 message: 'Invalid routing number',
+            })
+        }
+        else if (check === 'O') {
+            this.setState({
+                message: 'Invalid To Account field!',
             })
         }
         else if (check === 'A') {
@@ -159,7 +181,9 @@ class Transfer extends React.Component {
                         ))}
                         {/*If transfer to external account then set accto = 0*/}
                         <option
-                            value={-1} >External Account</option>
+                            value={-2} >OTHER SILICON ACCOUNT</option>
+                        <option
+                            value={-1} >EXTERNAL ACCOUNT</option>
                     </select><br></br><br></br>
 
                     {/*If external account is chosen then show input for routing 
@@ -183,6 +207,14 @@ class Transfer extends React.Component {
                             <br></br>
                         </div>}<br></br>
 
+                    {/*If other account is chosen then show input for the account id*/}
+                    {Number(this.state.accto) === -2 &&
+                        <div>
+                            <label>Account Number</label><br></br>
+                            <input type='text'
+                                name='otheracc'
+                                onChange={this.handleChange}
+                                value={this.state.otheracc}></input></div>}<br></br>
                     <label>Recipient Name (Optional)</label><br></br>
                     <input type='text'
                         name='recipient'
@@ -190,7 +222,8 @@ class Transfer extends React.Component {
                         value={this.state.recipient} ></input><br></br>
 
                     <label>Amount</label><br></br>
-                    $ <input type='number' step='0.01' name='amount'
+                    $ <input type='text'
+                        name = 'amount'
                         onChange={this.handleChange}
                         value={this.state.amount} ></input><br></br>
                     <button className='submit_butt' onClick={this.handleSubmit}>Submit</button>

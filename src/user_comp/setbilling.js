@@ -9,11 +9,11 @@ class Billing extends React.Component {
         this.state = {
             chosenacc: '',
             accto: '',
-            otheracc: 0,
+            otheracc: '',
             showbill: false,
             addbill: false,
-            amount: 0.00,
-            day: 0,
+            amount: '',
+            day: '',
             end: '',
             billing: [],
             message1: "",
@@ -106,20 +106,22 @@ class Billing extends React.Component {
         let enddate = new Date(Number(this.state.end.substring(0, 4)), Number(this.state.end.substring(5, 7)) - 1, Number(this.state.end.substring(8)))
 
         if (this.state.chosenacc === ''
-            || this.state.day === 0
+            || this.state.day === ''
             || this.state.end === ''
             || this.accto === ''
-            || this.state.amount === 0) return 'E'
+            || this.state.amount === '') return 'E'
         else if (this.state.accto === '-1' && this.state.otheracc === '') return 'O'
         else if (this.state.accto === '-1' && !(/^[0-9]+$/.test(this.state.otheracc)))
             return 'O'
         else if (this.state.accto === '-1' && (/0+/.test(this.state.otheracc)))
             return 'O'
-        else if (this.state.day < 1 || this.state.day > 28) return 'BILL'
+        else if (!(/^([1-9]{1}|1[0-9]{1}|2[0-8]{1})$/.test(this.state.day))) return 'BILL'
         else if (!(date.test(this.state.end))
             || today.getTime() >= enddate.getTime()) return "DATE"
-        else if (this.state.amount < 0.00) return "A"
-        else return "OK"
+        else if (!(/^([0-9]+|([0-9]+).([0-9]{1})|([0-9]+).([0-9]{2}))$/.test(this.state.amount))
+                ||(/^(0+|(0+).(0+))$/.test(this.state.amount))) return "A"
+        else if (Number(this.state.amount) >1000) return "LIMIT"
+        else return "OK" 
     }
     //api call to add the given info of new billing to database
     AddBill = (event) => {
@@ -196,6 +198,11 @@ class Billing extends React.Component {
         else if (check === 'A') {
             this.setState({
                 message2: 'Invalid amount!',
+            })
+        }
+        else if (check === 'LIMIT') {
+            this.setState({
+                message2: 'Limit for the amount is $1000!',
             })
         }
     }
@@ -304,18 +311,18 @@ class Billing extends React.Component {
                     {Number(this.state.accto) === -1 &&
                         <div>
                             <label>Account Number</label><br></br>
-                            <input type='number'
+                            <input type='text'
                                 name='otheracc'
                                 onChange={this.handleChange}
                                 value={this.state.otheracc}></input></div>}<br></br>
                         <label>Amount:</label><br></br>
-                        $ <input type='number' step='0.01'
+                        $ <input type='text'
                             onChange={this.handleChange}
                             name='amount'
                             value={this.state.amount}></input><br></br>
 
                         <label>Bill Day:</label><br></br>
-                        <input type='number'
+                        <input type='text'
                             title='Enter a day from 1 to 28'
                             onChange={this.handleChange}
                             name='day'

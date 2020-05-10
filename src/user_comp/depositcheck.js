@@ -7,7 +7,7 @@ class Check extends React.Component {
         super(props)
         this.state = {
             accid: '',
-            amount: 0.00,
+            amount: '',
             preview_file: null,
             file: null,
             message: ''
@@ -18,11 +18,12 @@ class Check extends React.Component {
     }
     checkInput() {
         if (this.state.file === null || this.state.accid === ''
-            || this.state.amount === 0.00) return "E"
+            || this.state.amount === '') return "E"
         else if (this.state.file.type !== "image/jpeg"
             && this.state.file.type !== "image/png"
             && this.state.file.type !== "image/jpg") return "I"
-        else if (this.state.amount < 0) return "A"
+            else if (!(/^([0-9]+|([0-9]+).([0-9]{1})|([0-9]+).([0-9]{2}))$/.test(this.state.amount))
+            ||(/^(0+|(0+).(0+))$/.test(this.state.amount))) return "A"
         else return "OK"
     }
     previewImage = (event) => {
@@ -125,7 +126,7 @@ class Check extends React.Component {
                         ))}
                     </select><br></br><br></br>
                     <label>Amount</label><br></br>
-                    $ <input type='number' step='0.01'
+                    $ <input type='text'
                         onChange={this.handleChange}
                         name='amount'
                         value={this.state.amount}></input>
