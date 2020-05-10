@@ -23,7 +23,7 @@ if (isset($_POST['olduserPassword']) && isset($_POST['userPassword']) && isset($
 
     // Hash inputted password
     $token = hash('ripemd128', "$salt1$opassword$salt2");
-    echo json_decode($username);
+    echo json_decode($pass);
     
     // Check if hashed passwords match
     if ($token == $pass) {
