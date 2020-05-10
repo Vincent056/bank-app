@@ -23,19 +23,11 @@ if (isset($_POST['olduserPassword']) && isset($_POST['userPassword']) && isset($
 
     // Hash inputted password
     $token = hash('ripemd128', "$salt1$opassword$salt2");
-    echo json_decode($pass);
     
     // Check if hashed passwords match
     if ($token == $pass) {
 
         if ($password == $confirmPassword) {
-
-            $query = "SELECT salt1, salt2 FROM customer
-                    WHERE username = '$username'";
-            $result = $conn->query($query);
-            $row = $result->fetch_array();
-            $salt1 = $row['salt1'];
-            $salt2 = $row['salt2'];
 
             $token = hash('ripemd128', "$salt1$password$salt2");
 
