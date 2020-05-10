@@ -39,7 +39,7 @@ if (isset($_POST['olduserPassword']) && isset($_POST['userPassword']) && isset($
 
             $token = hash('ripemd128', "$salt1$password$salt2");
 
-            $query2 = "UPDATE customer SET customer.password = '$token' WHERE customer_id = '$customerId'";
+            $query2 = "UPDATE customer SET customer.password = '$token' WHERE customer_id = '$userid'";
             $result = $conn->query($query2);
 
             echo json_encode('OK');
