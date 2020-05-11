@@ -105,7 +105,11 @@ class Billing extends React.Component {
         let today = new Date()
         let enddate = new Date(Number(this.state.end.substring(0, 4)), Number(this.state.end.substring(5, 7)) - 1, Number(this.state.end.substring(8)))
 
-        if (this.state.chosenacc === ''
+        let toacc = this.props.accounts.find((element) =>{
+            if (this.state.chosenacc === element.account_id) return true
+        })
+        if (Number(toacc.balance) <0) return 'NO'
+        else if (this.state.chosenacc === ''
             || this.state.day === ''
             || this.state.end === ''
             || this.accto === ''
@@ -178,6 +182,11 @@ class Billing extends React.Component {
         else if (check === 'E') {
             this.setState({
                 message2: 'Please fill out all fields!',
+            })
+        }
+        else if (check === 'NO') {
+            this.setState({
+                message2: 'Cannot set sp new Billing with negative balance!',
             })
         }
         else if (check === 'O') {
