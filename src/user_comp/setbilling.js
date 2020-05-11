@@ -186,7 +186,7 @@ class Billing extends React.Component {
         }
         else if (check === 'NO') {
             this.setState({
-                message2: 'Cannot set sp new Billing with negative balance!',
+                message2: 'Cannot set up new Billing with negative balance!',
             })
         }
         else if (check === 'O') {
