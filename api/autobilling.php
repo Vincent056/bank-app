@@ -15,7 +15,7 @@
          $amount = mysql_entities_fix_string($conn, $_POST['amount']);
          $dayinmonth = mysql_entities_fix_string($conn, $_POST['dayinmonth']);
         
-         $query = "SELECT COUNT(*) FROM bank_account WHERE account_id='$reciver_acc'";
+         $query = "SELECT COUNT(*) FROM bank_account WHERE account_id='$reciver_acc' AND status = 'open'";
          $result = $conn->query($query);
          if (!$result) die($conn->connect_error);
          $rows = $result->fetch_array(MYSQLI_NUM)[0];
