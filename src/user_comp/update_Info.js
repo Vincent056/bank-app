@@ -266,17 +266,17 @@ class UpdateInfo extends React.Component {
                         {this.state.updatepwd === true &&
                             <div>
                                 <label>Current Password</label><br></br>
-                                <input type='text'
+                                <input type='password'
                                     name='currpwd'
                                     onChange={this.handleChange}
                                     value={this.state.currpwd}></input><br></br>
                                 <label>New Password</label><br></br>
-                                <input type='text'
+                                <input type='password'
                                     name='newpwd'
                                     onChange={this.handleChange}
                                     value={this.state.newpwd}></input><br></br>
                                 <label>Confirm New Password</label><br></br>
-                                <input type='text'
+                                <input type='password'
                                     name='confirmpwd'
                                     onChange={this.handleChange}
                                     value={this.state.confirmpwd}></input><br></br>
