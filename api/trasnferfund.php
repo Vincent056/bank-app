@@ -32,7 +32,7 @@ if (isset($_POST['id']) && isset($_POST['acct_num']) && isset($_POST['amount']) 
             $conn->multi_query($query2);
             echo json_encode('OK');
         } else { //internal
-            $query = "SELECT COUNT(*) FROM bank_account WHERE account_id='$acct_num'";
+            $query = "SELECT COUNT(*) FROM bank_account WHERE account_id='$acct_num' AND status = 'open'";
             $result = $conn->query($query);
             if (!$result) die($conn->connect_error);
             $rows = $result->fetch_array(MYSQLI_NUM)[0];
